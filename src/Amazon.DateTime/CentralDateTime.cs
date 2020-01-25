@@ -3,9 +3,11 @@
     using Amazon.DateTime.Calculators;
     using System;
 
-
     public class CentralDateTime
     {
+        /// <summary>
+        /// Get the Current 'Now' time in Central Timezone
+        /// </summary>
         public static DateTime Now
         {
             get

@@ -5,6 +5,9 @@
 
     public class AlaskaDateTime
     {
+        /// <summary>
+        /// Get the Current 'Now' time in Alaska
+        /// </summary>
         public static DateTime Now
         {
             get

@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Amazon.DateTime</name>
+    </assembly>
+    <members>
+        <member name="P:Amazon.DateTime.AlaskaDateTime.Now">
+            <summary>
+            Get the Current 'Now' time in Alaska
+            </summary>
+        </member>
+        <member name="T:Amazon.DateTime.Calculators.DateTimeCalculator">
+            <summary>
+            DateTimeCalculator
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.Calculators.DateTimeCalculator.NthOf(System.DateTime,System.Int32,System.DayOfWeek)">
+            <summary>
+            Get the nth day of a specific month
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.Calculators.DateTimeCalculator.DaylightStartDate(System.DateTime)">
+            <summary>
+            Daylight Savings starts on the Second Sunday in March at 2am
+            <para>https://greenwichmeantime.com/time-zone/rules/usa/</para>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.Calculators.DateTimeCalculator.DaylightEndDate(System.DateTime)">
+            <summary>
+            Daylight Savings ends on the First Sunday in November at 2am
+            <para>https://greenwichmeantime.com/time-zone/rules/usa/</para>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.Calculators.DateTimeCalculator.IsInDaylightSavingsTime(System.DateTime)">
+            <summary>
+            Figures out if the current date time falls inside Daylight savings time
+            <para>https://greenwichmeantime.com/time-zone/rules/usa/</para>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.Calculators.DateTimeCalculator.ToEastern(System.DateTime)">
+            <summary>
+            Converts <see cref="T:System.DateTime"/> to an Eastern <see cref="T:System.DateTime"/>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.Calculators.DateTimeCalculator.ToCentral(System.DateTime)">
+            <summary>
+            Converts <see cref="T:System.DateTime"/> to an Central <see cref="T:System.DateTime"/>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.Calculators.DateTimeCalculator.ToMountain(System.DateTime)">
+            <summary>
+            Converts <see cref="T:System.DateTime"/> to an Mountain <see cref="T:System.DateTime"/>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.Calculators.DateTimeCalculator.ToPacific(System.DateTime)">
+            <summary>
+            Converts <see cref="T:System.DateTime"/> to an Pacific <see cref="T:System.DateTime"/>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.Calculators.DateTimeCalculator.ToAlaska(System.DateTime)">
+            <summary>
+            Converts <see cref="T:System.DateTime"/> to an Alaska <see cref="T:System.DateTime"/>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.Calculators.DateTimeCalculator.ToHawaii(System.DateTime)">
+            <summary>
+            Converts <see cref="T:System.DateTime"/> to an Hawaii <see cref="T:System.DateTime"/>
+            </summary>
+        </member>
+        <member name="T:Amazon.DateTime.Calculators.TimezoneCalculator">
+            <summary>
+            Timezone Calculator
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.Calculators.TimezoneCalculator.GetTimezoneByCode(System.TimeZoneInfo,Amazon.DateTime.Timezone)">
+            <summary>
+            Get <see cref="T:System.TimeZoneInfo"/> by <see cref="T:Amazon.DateTime.Timezone"/> code
+            </summary>
+        </member>
+        <member name="P:Amazon.DateTime.CentralDateTime.Now">
+            <summary>
+            Get the Current 'Now' time in Central Timezone
+            </summary>
+        </member>
+        <member name="P:Amazon.DateTime.EasternDateTime.Now">
+            <summary>
+            Get the Current 'Now' time in Eastern Timezone
+            </summary>
+        </member>
+        <member name="P:Amazon.DateTime.HawaiiDateTime.Now">
+            <summary>
+            Get the Current 'Now' time in Hawaii
+            </summary>
+        </member>
+        <member name="P:Amazon.DateTime.MountainDateTime.Now">
+            <summary>
+            Get the Current 'Now' time in Mountain Timezone
+            </summary>
+        </member>
+        <member name="P:Amazon.DateTime.PacificDateTime.Now">
+            <summary>
+            Get the Current 'Now' time in Pacific Timezone
+            </summary>
+        </member>
+        <member name="T:Amazon.DateTime.Timezone">
+            <summary>
+            Timezone Enum
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.Timezone.Default">
+            <summary>
+            Default
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.Timezone.Eastern">
+            <summary>
+            Eastern Timezone
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.Timezone.Central">
+            <summary>
+            Central Timezone
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.Timezone.Mountain">
+            <summary>
+            Mountain Timezone
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.Timezone.Pacific">
+            <summary>
+            Pacific Timezone
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.Timezone.Alaska">
+            <summary>
+            Alaska Timezone
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.Timezone.Hawaii">
+            <summary>
+            Hawaii Timezone
+            </summary>
+        </member>
+    </members>
+</doc>

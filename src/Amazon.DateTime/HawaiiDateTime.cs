@@ -5,6 +5,9 @@
 
     public class HawaiiDateTime
     {
+        /// <summary>
+        /// Get the Current 'Now' time in Hawaii
+        /// </summary>
         public static DateTime Now
         {
             get

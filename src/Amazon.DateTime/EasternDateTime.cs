@@ -5,6 +5,9 @@
 
     public class EasternDateTime 
     {
+        /// <summary>
+        /// Get the Current 'Now' time in Eastern Timezone
+        /// </summary>
         public static DateTime Now
         {
             get

@@ -4,9 +4,15 @@ using System.Linq;
 
 namespace Amazon.DateTime.Calculators
 {
+    /// <summary>
+    /// Timezone Calculator
+    /// </summary>
     public static class TimezoneCalculator
     {
         private static ConcurrentDictionary<Timezone, TimeZoneInfo> _selfGenTimezones;
+        /// <summary>
+        /// Get <see cref="TimeZoneInfo"/> by <see cref="Timezone"/> code
+        /// </summary>
         public static TimeZoneInfo GetTimezoneByCode(this TimeZoneInfo tz, Timezone timezone)
         {
             if (timezone == default(Timezone))

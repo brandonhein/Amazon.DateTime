@@ -5,6 +5,9 @@
 
     public class PacificDateTime
     {
+        /// <summary>
+        /// Get the Current 'Now' time in Pacific Timezone
+        /// </summary>
         public static DateTime Now
         {
             get

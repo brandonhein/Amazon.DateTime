@@ -5,6 +5,9 @@
 
     public class MountainDateTime
     {
+        /// <summary>
+        /// Get the Current 'Now' time in Mountain Timezone
+        /// </summary>
         public static DateTime Now
         {
             get
