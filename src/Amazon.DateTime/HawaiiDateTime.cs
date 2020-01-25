@@ -1,10 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Amazon.DateTime
+﻿namespace Amazon.DateTime
 {
-    class HawaiiDateTime
+    using Amazon.DateTime.Calculators;
+    using System;
+
+    public class HawaiiDateTime
     {
+        public static DateTime Now
+        {
+            get
+            {
+                return DateTime.UtcNow.ToHawaii();
+            }
+        }
+
+        public static DateTime Parse(string utcTime)
+        {
+            var result = DateTime.Parse(utcTime);
+            return result.ToEastern();
+        }
+
+        public static bool TryParse(string utcTime, out DateTime hawaiianDateTime)
+        {
+            try
+            {
+                hawaiianDateTime = Parse(utcTime);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                hawaiianDateTime = default(DateTime);
+                return false;
+            }
+        }
     }
 }

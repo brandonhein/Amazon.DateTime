@@ -1,10 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Amazon.DateTime
+﻿namespace Amazon.DateTime
 {
-    class AlaskaDateTime
+    using Amazon.DateTime.Calculators;
+    using System;
+
+    public class AlaskaDateTime
     {
+        public static DateTime Now
+        {
+            get
+            {
+                return DateTime.UtcNow.ToAlaska();
+            }
+        }
+
+        public static DateTime Parse(string utcTime)
+        {
+            var result = DateTime.Parse(utcTime);
+            return result.ToAlaska();
+        }
+
+        public static bool TryParse(string utcTime, out DateTime alaskaDateTime)
+        {
+            try
+            {
+                alaskaDateTime = Parse(utcTime);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                alaskaDateTime = default(DateTime);
+                return false;
+            }
+        }
     }
 }

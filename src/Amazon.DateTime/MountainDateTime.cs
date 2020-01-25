@@ -1,10 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Amazon.DateTime
+﻿namespace Amazon.DateTime
 {
-    class MountainDateTime
+    using Amazon.DateTime.Calculators;
+    using System;
+
+    public class MountainDateTime
     {
+        public static DateTime Now
+        {
+            get
+            {
+                return DateTime.UtcNow.ToMountain();
+            }
+        }
+
+        public static DateTime Parse(string utcTime)
+        {
+            var result = DateTime.Parse(utcTime);
+            return result.ToMountain();
+        }
+
+        public static bool TryParse(string utcTime, out DateTime mountainDateTime)
+        {
+            try
+            {
+                mountainDateTime = Parse(utcTime);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                mountainDateTime = default(DateTime);
+                return false;
+            }
+        }
     }
 }
