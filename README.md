@@ -4,6 +4,10 @@ The biggest challenge I always have... is remembering timezone offsets.  Working
 
 Here's a library, trying to help try and eliminate the burden, of remembering UTC-offsets.
 
+### NuGet Information
+[AmazonDateTimeConversion](https://www.nuget.org/packages/AmazonDateTimeConversion/)   
+![NuGet](https://img.shields.io/nuget/v/AmazonDateTimeConversion.svg?style=flat-square&label=nuget)
+
 Enjoy
 
 ### DateTime.Now (for a specific timezone)
