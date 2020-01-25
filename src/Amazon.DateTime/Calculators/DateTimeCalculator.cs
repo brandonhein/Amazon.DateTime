@@ -1,15 +1,15 @@
-﻿using System;
-
-namespace Amazon.DateTime.Calculators
+﻿namespace Amazon.DateTime.Calculators
 {
+    using System;
+
     public static class DateTimeCalculator
     {
         /// <summary>
         /// Get the nth day of a specific month
         /// </summary>
-        public static System.DateTime NthOf(this System.DateTime date, int occurance, DayOfWeek dayOfWeek)
+        public static DateTime NthOf(this DateTime date, int occurance, DayOfWeek dayOfWeek)
         {
-            var firstDay = new System.DateTime(date.Year, date.Month, 1);
+            var firstDay = new DateTime(date.Year, date.Month, 1);
 
             var fOc = firstDay.DayOfWeek == dayOfWeek ? firstDay : firstDay.AddDays(dayOfWeek - firstDay.DayOfWeek);
 
@@ -21,49 +21,29 @@ namespace Amazon.DateTime.Calculators
         /// Daylight Savings starts on the Second Sunday in March at 2am
         /// https://greenwichmeantime.com/time-zone/rules/usa/
         /// </summary>
-        public static System.DateTime DaylightStartDate(this System.DateTime date)
+        public static DateTime DaylightStartDate(this DateTime date)
         {
-            return new System.DateTime(date.Year, 3, 1).NthOf(2, DayOfWeek.Sunday).AddHours(2);
-        }
-
-        /// <summary>
-        /// Daylight Savings starts on the Second Sunday in March at 2am
-        /// https://greenwichmeantime.com/time-zone/rules/usa/
-        /// </summary>
-        public static System.DateTime DaylightStartDate()
-        {
-            return DaylightStartDate(System.DateTime.Now);
+            return new DateTime(date.Year, 3, 1).NthOf(2, DayOfWeek.Sunday).AddHours(2);
         }
 
         /// <summary>
         /// Daylight Savings ends on the First Sunday in November at 2am
         /// https://greenwichmeantime.com/time-zone/rules/usa/
         /// </summary>
-        public static System.DateTime DaylightEndDate(this System.DateTime date)
+        public static DateTime DaylightEndDate(this DateTime date)
         {
-            return new System.DateTime(date.Year, 11, 1).NthOf(1, DayOfWeek.Sunday).AddHours(2);
+            return new DateTime(date.Year, 11, 1).NthOf(1, DayOfWeek.Sunday).AddHours(2);
         }
 
         /// <summary>
-        /// Daylight Savings ends on the First Sunday in November at 2am
-        /// https://greenwichmeantime.com/time-zone/rules/usa/
+        /// Figures out if the current date time falls inside Daylight savings time
         /// </summary>
-        public static System.DateTime DaylightEndDate()
+        public static bool IsInDaylightSavingsTime(this DateTime dateTime)
         {
-            return DaylightEndDate(System.DateTime.Now);
+            return DaylightStartDate(dateTime) <= dateTime && DaylightEndDate(dateTime) >= dateTime;
         }
 
-        public static bool IsInDaylightSavingsTime(this System.DateTime dateTime)
-        {
-            return DaylightStartDate() <= dateTime && DaylightEndDate() >= dateTime;
-        }
-
-        public static bool IsInDaylightSavingsTime()
-        {
-            return IsInDaylightSavingsTime(System.DateTime.Now);
-        }
-
-        private static System.DateTime DateTimeCoversion(this System.DateTime dateTime, Timezone timezone)
+        private static DateTime DateTimeCoversion(this DateTime dateTime, Timezone timezone, bool observesDaylight)
         {
             var dt = dateTime.ToUniversalTime();
             var tz = TimeZoneInfo.Utc;
@@ -75,45 +55,50 @@ namespace Amazon.DateTime.Calculators
 
             dt = dt.AddHours(hourOffset);
 
-            var result = new System.DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
+            if (dateTime.IsInDaylightSavingsTime() && observesDaylight)
+            {
+                dt = dt.AddHours(-1);
+            }
+
+            var result = new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
             return result;
         }
 
-        public static System.DateTime ToEastern(this System.DateTime dateTime)
+        public static DateTime ToEastern(this DateTime dateTime)
         {
-            return Calculate(dateTime, Timezone.Eastern);
+            return Calculate(dateTime, Timezone.Eastern, true);
         }
 
-        public static System.DateTime ToCentral(this System.DateTime dateTime)
+        public static DateTime ToCentral(this DateTime dateTime)
         {
-            return Calculate(dateTime, Timezone.Central);
+            return Calculate(dateTime, Timezone.Central, true);
         }
 
-        public static System.DateTime ToMountain(this System.DateTime dateTime)
+        public static DateTime ToMountain(this DateTime dateTime)
         {
-            return Calculate(dateTime, Timezone.Mountain);
+            return Calculate(dateTime, Timezone.Mountain, true);
         }
 
-        public static System.DateTime ToPacific(this System.DateTime dateTime)
+        public static DateTime ToPacific(this DateTime dateTime)
         {
-            return Calculate(dateTime, Timezone.Pacific);
+            return Calculate(dateTime, Timezone.Pacific, true);
         }
 
-        public static System.DateTime ToAlaska(this System.DateTime dateTime)
+        public static DateTime ToAlaska(this DateTime dateTime)
         {
-            return Calculate(dateTime, Timezone.Alaska);
+            return Calculate(dateTime, Timezone.Alaska, true);
         }
 
-        public static System.DateTime ToHawaii(this System.DateTime dateTime)
+        public static DateTime ToHawaii(this DateTime dateTime)
         {
-            return Calculate(dateTime, Timezone.Hawaii);
+            return Calculate(dateTime, Timezone.Hawaii, false);
         }
 
-        public static System.DateTime Calculate(this System.DateTime dateTime, Timezone timezone)
+        private static DateTime Calculate(this DateTime dateTime, Timezone timezone, bool observesDaylight)
         {
-            var dt = dateTime.DateTimeCoversion(timezone);
+            var dt = dateTime.DateTimeCoversion(timezone, observesDaylight);
 
-            var result = new System.DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
+            var result = new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
             return result;
         }
     }
