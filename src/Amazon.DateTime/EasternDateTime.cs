@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class EasternDateTime
+    public class EasternDateTime : DateTimeBase
     {
         public EasternDateTime(int year, int month, int day)
         {
@@ -66,25 +66,6 @@
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
             TimeOfDay = dateTimeParse.TimeOfDay;
-        }
-
-        public long Ticks { get; }
-        public int Second { get; }
-        public DateTime Date { get; }
-        public int Month { get; }
-        public int Minute { get; }
-        public int Millisecond { get; }
-        public int Hour { get; }
-        public int DayOfYear { get; }
-        public DayOfWeek DayOfWeek { get; }
-        public int Day { get; }
-        public TimeSpan TimeOfDay { get; }
-        public int Year { get; }
-        public string Offset { get; }
-
-        public DateTime ToUniversalTime()
-        {
-            return DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond, Offset)).ToUniversalTime();
         }
 
         /// <summary>
