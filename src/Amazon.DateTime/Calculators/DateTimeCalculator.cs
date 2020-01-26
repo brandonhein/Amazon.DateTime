@@ -57,12 +57,11 @@
             double hourOffset;
             hourOffset = utcOffset.TotalHours;
 
-            dt = dt.AddHours(hourOffset);
+            hourOffset = dateTime.IsInDaylightSavingsTime() && observesDaylight
+                ? hourOffset - 1
+                : hourOffset;
 
-            if (dateTime.IsInDaylightSavingsTime() && observesDaylight)
-            {
-                dt = dt.AddHours(-1);
-            }
+            dt = dt.AddHours(hourOffset);
 
             var result = new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
             return result;

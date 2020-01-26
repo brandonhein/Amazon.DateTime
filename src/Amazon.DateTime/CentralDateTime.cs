@@ -4,6 +4,89 @@
 
     public class CentralDateTime
     {
+        public CentralDateTime(int year, int month, int day)
+        {
+            Year = year;
+            Month = month;
+            Day = day;
+
+            var dateTimeParse = DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T00:00:00"))
+                .ToUniversalTime()
+                .ToCentral();
+
+            Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
+            Date = dateTimeParse.Date;
+            Ticks = dateTimeParse.Ticks;
+            DayOfYear = dateTimeParse.DayOfYear;
+            DayOfWeek = dateTimeParse.DayOfWeek;
+            TimeOfDay = dateTimeParse.TimeOfDay;
+        }
+
+        public CentralDateTime(int year, int month, int day, int hour, int minute, int second)
+        {
+            Year = year;
+            Month = month;
+            Day = day;
+            Hour = hour;
+            Minute = minute;
+            Second = second;
+
+            var dateTimeParse =
+                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00")))
+                .ToUniversalTime()
+                .ToCentral();
+
+            Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
+            Date = dateTimeParse.Date;
+            Ticks = dateTimeParse.Ticks;
+            DayOfYear = dateTimeParse.DayOfYear;
+            DayOfWeek = dateTimeParse.DayOfWeek;
+            TimeOfDay = dateTimeParse.TimeOfDay;
+        }
+
+        public CentralDateTime(int year, int month, int day, int hour, int minute, int second, int millisecond)
+        {
+            Year = year;
+            Month = month;
+            Day = day;
+            Hour = hour;
+            Minute = minute;
+            Second = second;
+            Millisecond = millisecond;
+
+            var dateTimeParse =
+                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond))
+                .ToUniversalTime()
+                .ToCentral();
+
+            Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
+
+            Date = dateTimeParse.Date;
+            Ticks = dateTimeParse.Ticks;
+            DayOfYear = dateTimeParse.DayOfYear;
+            DayOfWeek = dateTimeParse.DayOfWeek;
+            TimeOfDay = dateTimeParse.TimeOfDay;
+        }
+
+        public long Ticks { get; }
+        public int Second { get; }
+        public DateTime Date { get; }
+        public int Month { get; }
+        public int Minute { get; }
+        public int Millisecond { get; }
+        public int Hour { get; }
+        public int DayOfYear { get; }
+        public DayOfWeek DayOfWeek { get; }
+        public int Day { get; }
+        public TimeSpan TimeOfDay { get; }
+        public int Year { get; }
+        public string Offset { get; }
+
+        public DateTime ToUniversalTime()
+        {
+            return DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond, Offset)).ToUniversalTime();
+        }
+
         /// <summary>
         /// Get the Current 'Now' time in Central Timezone
         /// </summary>
