@@ -1,6 +1,5 @@
 ﻿namespace Amazon.DateTime.Tests
 {
-    using Amazon.DateTime.Calculators;
     using System;
     using Xunit;
 

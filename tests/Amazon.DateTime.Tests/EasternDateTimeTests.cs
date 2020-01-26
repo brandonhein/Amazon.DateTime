@@ -1,6 +1,5 @@
 namespace Amazon.DateTime.Tests
 {
-    using Amazon.DateTime.Calculators;
     using System;
     using Xunit;
 
@@ -21,6 +20,17 @@ namespace Amazon.DateTime.Tests
             {
                 Assert.Equal(5, compare.Hours);
             }
+        }
+
+        [Fact]
+        public void Should_create_a_new_eastern_time_date()
+        {
+            var eastern = new EasternDateTime(2020, 1, 26);
+            var date = eastern.ToUniversalTime();
+
+
+            var central = new CentralDateTime(2020, 1, 26, 8, 51, 8, 900);
+            var cDate = central.ToUniversalTime();
         }
     }
 }
