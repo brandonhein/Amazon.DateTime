@@ -164,6 +164,114 @@
             TryParse a utc time string to get the central timezone <see cref="T:System.DateTime"/>
             </summary>
         </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.ToUniversalTime">
+            <summary>
+            Converts the value of the current DateTimeBase object to Coordinated Universal Time (UTC)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.op_Equality(Amazon.DateTime.DateTimeBase,Amazon.DateTime.DateTimeBase)">
+            <summary>
+            D1 is equal to D2.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.op_Equality(System.DateTime,Amazon.DateTime.DateTimeBase)">
+            <summary>
+            D1 is equal to D2.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.op_Equality(Amazon.DateTime.DateTimeBase,System.DateTime)">
+            <summary>
+            D1 is equal to D2.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.op_Inequality(Amazon.DateTime.DateTimeBase,Amazon.DateTime.DateTimeBase)">
+            <summary>
+            D1 is not equal to D2.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.op_Inequality(System.DateTime,Amazon.DateTime.DateTimeBase)">
+            <summary>
+            D1 is not equal to D2.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.op_Inequality(Amazon.DateTime.DateTimeBase,System.DateTime)">
+            <summary>
+            D1 is not equal to D2.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.op_LessThan(Amazon.DateTime.DateTimeBase,Amazon.DateTime.DateTimeBase)">
+            <summary>
+            D1 is earlier than D2.
+            <para>D2 is later than D1</para>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.op_LessThan(System.DateTime,Amazon.DateTime.DateTimeBase)">
+            <summary>
+            D1 is earlier than D2.
+            <para>D2 is later than D1</para>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.op_LessThan(Amazon.DateTime.DateTimeBase,System.DateTime)">
+            <summary>
+            D1 is earlier than D2.
+            <para>D2 is later than D1</para>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.op_GreaterThan(Amazon.DateTime.DateTimeBase,Amazon.DateTime.DateTimeBase)">
+            <summary>
+            D2 is earlier than D1.
+            <para>D1 is later than D2</para>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.op_GreaterThan(System.DateTime,Amazon.DateTime.DateTimeBase)">
+            <summary>
+            D2 is earlier than D1.
+            <para>D1 is later than D2</para>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.op_GreaterThan(Amazon.DateTime.DateTimeBase,System.DateTime)">
+            <summary>
+            D2 is earlier than D1.
+            <para>D1 is later than D2</para>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.op_LessThanOrEqual(Amazon.DateTime.DateTimeBase,Amazon.DateTime.DateTimeBase)">
+            <summary>
+            D1 is earlier or the same as D2.
+            <para>D2 is later or the same as D1</para>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.op_LessThanOrEqual(System.DateTime,Amazon.DateTime.DateTimeBase)">
+            <summary>
+            D1 is earlier or thae same as D2.
+            <para>D2 is later or the same as D1</para>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.op_LessThanOrEqual(Amazon.DateTime.DateTimeBase,System.DateTime)">
+            <summary>
+            D1 is earlier or the same as D2.
+            <para>D2 is later or the same as D1</para>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.op_GreaterThanOrEqual(Amazon.DateTime.DateTimeBase,Amazon.DateTime.DateTimeBase)">
+            <summary>
+            D2 is earlier or the same as D1.
+            <para>D1 is later or the same as D2</para>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.op_GreaterThanOrEqual(System.DateTime,Amazon.DateTime.DateTimeBase)">
+            <summary>
+            D2 is earlier or the same as D1.
+            <para>D1 is later or the same as D2</para>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.op_GreaterThanOrEqual(Amazon.DateTime.DateTimeBase,System.DateTime)">
+            <summary>
+            D2 is earlier or the same as D1.
+            <para>D1 is later or the same as D2</para>
+            </summary>
+        </member>
         <member name="M:Amazon.DateTime.DateTimeExtensions.ToEasternString(System.DateTime)">
             <summary>
             Converts a UTC <see cref="T:System.DateTime"/> to a eastern time string format

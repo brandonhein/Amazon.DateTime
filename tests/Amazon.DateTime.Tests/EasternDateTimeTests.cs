@@ -34,6 +34,7 @@ namespace Amazon.DateTime.Tests
             var startDate = easternStart.ToUniversalTime();
             var endDate = easternEnd.ToUniversalTime();
 
+            var result = easternStart > easternEnd;
 
 
             var central = new CentralDateTime(2020, 1, 26, 8, 51, 8, 900);

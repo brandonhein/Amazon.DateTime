@@ -78,6 +78,16 @@
             return Dates(t1.ToUniversalTime(), t2.ToUniversalTime());
         }
 
+        public static int Dates(DateTimeBase t1, DateTime t2)
+        {
+            return Dates(t1.ToUniversalTime(), t2.ToUniversalTime());
+        }
+
+        public static int Dates(DateTime t1, DateTimeBase t2)
+        {
+            return Dates(t1.ToUniversalTime(), t2.ToUniversalTime());
+        }
+
         public static int Dates(DateTime t1, DateTime t2)
         {
             return DateTime.Compare(t1, t2);
