@@ -87,7 +87,7 @@
 
             //6/26/2020 11AM EST (6/26/2020 3PM UTC) 
             //    is earlier than (<)
-            //6/26/2020 6AM HST (6/26/2020 4PM UTC)
+            //6/26/2020 6AM HAST (6/26/2020 4PM UTC)
             Assert.True(eastern < hawaii);
         }
     }
