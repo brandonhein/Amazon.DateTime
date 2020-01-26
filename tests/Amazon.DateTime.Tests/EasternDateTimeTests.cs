@@ -25,8 +25,15 @@ namespace Amazon.DateTime.Tests
         [Fact]
         public void Should_create_a_new_eastern_time_date()
         {
-            var eastern = new EasternDateTime(2020, 1, 26);
-            var date = eastern.ToUniversalTime();
+            var today = DateTime.UtcNow.Date;
+
+
+            var easternStart = new EasternDateTime(today.Year, today.Month, today.Day, 11, 0, 0);
+            var easternEnd = new EasternDateTime(today.Year, today.Month, today.Day, 19, 55, 0);
+
+            var startDate = easternStart.ToUniversalTime();
+            var endDate = easternEnd.ToUniversalTime();
+
 
 
             var central = new CentralDateTime(2020, 1, 26, 8, 51, 8, 900);
