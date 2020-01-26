@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using System.Linq;
 
-namespace Amazon.DateTime.Calculators
+namespace Amazon.DateTime
 {
     /// <summary>
     /// Timezone Calculator

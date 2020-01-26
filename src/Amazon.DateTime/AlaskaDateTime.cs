@@ -1,6 +1,5 @@
 ﻿namespace Amazon.DateTime
 {
-    using Amazon.DateTime.Calculators;
     using System;
 
     public class AlaskaDateTime
@@ -24,29 +23,51 @@
         {
             get
             {
-                return string.Concat(Now.ToString("yyyy-MM-ddTHH:mm:ss.fff"), OffsetString);
+                return string.Concat(Now.ToString("yyyy-MM-ddTHH:mm:ss.fff"), NowOffsetString);
             }
         }
 
         /// <summary>
-        /// Get the <see cref="TimeSpan"/> hour offset to apply to a utc time
+        /// Get the <see cref="TimeSpan"/> hour offset to apply to a utc now time
         /// </summary>
-        public static TimeSpan Offset
+        public static TimeSpan NowOffset
         {
             get
             {
-                return TimeSpan.Parse(OffsetString);
+                return TimeSpan.Parse(NowOffsetString);
             }
         }
 
         /// <summary>
-        /// Get the string timespan hour offset to apply to a utc time
+        /// Get the string timespan hour offset to apply to a utc now time
         /// </summary>
-        public static string OffsetString
+        public static string NowOffsetString
         {
             get
             {
-                return Now.IsInDaylightSavingsTime() ? "-08:00" : "-09:00";
+                return Now.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
+            }
+        }
+
+        /// <summary>
+        /// Hour offset for when in daylight time
+        /// </summary>
+        public static string DaylightOffset
+        {
+            get
+            {
+                return "-08:00";
+            }
+        }
+
+        /// <summary>
+        /// Hour offset for when in standard time
+        /// </summary>
+        public static string StandardOffset
+        {
+            get
+            {
+                return "-09:00";
             }
         }
 

@@ -1,4 +1,4 @@
-﻿namespace Amazon.DateTime.Calculators
+﻿namespace Amazon.DateTime
 {
     using System;
 

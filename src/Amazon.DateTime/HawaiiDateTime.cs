@@ -1,6 +1,5 @@
 ﻿namespace Amazon.DateTime
 {
-    using Amazon.DateTime.Calculators;
     using System;
 
     public class HawaiiDateTime
@@ -24,25 +23,47 @@
         {
             get
             {
-                return string.Concat(Now.ToString("yyyy-MM-ddTHH:mm:ss.fff"), OffsetString);
+                return string.Concat(Now.ToString(Format.StandardDateTime), NowOffsetString);
             }
         }
 
         /// <summary>
         /// Get the <see cref="TimeSpan"/> hour offset to apply to a utc time
         /// </summary>
-        public static TimeSpan Offset
+        public static TimeSpan NowOffset
         {
             get
             {
-                return TimeSpan.Parse(OffsetString);
+                return TimeSpan.Parse(NowOffsetString);
             }
         }
 
         /// <summary>
         /// Get the string timespan hour offset to apply to a utc time
         /// </summary>
-        public static string OffsetString
+        public static string NowOffsetString
+        {
+            get
+            {
+                return "-10:00";
+            }
+        }
+
+        /// <summary>
+        /// Hour offset for when in daylight time
+        /// </summary>
+        public static string DaylightOffset
+        {
+            get
+            {
+                return "-10:00";
+            }
+        }
+
+        /// <summary>
+        /// Hour offset for when in standard time
+        /// </summary>
+        public static string StandardOffset
         {
             get
             {
