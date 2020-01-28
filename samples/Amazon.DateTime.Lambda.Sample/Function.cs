@@ -33,8 +33,8 @@ namespace Amazon.DateTime.Lambda.Sample
                 { "Eastern755PMconvertedToUtc", DateTime.Parse(eastern755pm.Value).ToUniversalTime().ToString(Format.StandardDateTime + "zzz") },
                 { "DoesEastern@11==", (eastern11am == DateTime.Parse(eastern11am.Value)).ToString() },
                 { "DoesEastern@755==", (eastern755pm == DateTime.Parse(eastern755pm.Value)).ToString() },
-                { "345utc_fallsbetween_11and755_eastern", isInBetween.ToString() },
-                { "445utc_fallsbetween_11and755_eastern", isInBetween2.ToString() }
+                { "345utc(1045eastern)_fallsbetween_11and755_eastern", isInBetween.ToString() },
+                { "445utc(1145eastern)_fallsbetween_11and755_eastern", isInBetween2.ToString() }
             };
 
             var result = string.Empty;
