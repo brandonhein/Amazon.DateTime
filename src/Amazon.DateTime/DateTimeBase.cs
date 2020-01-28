@@ -1,10 +1,13 @@
 ﻿namespace Amazon.DateTime
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.Runtime.Serialization;
     using System.Xml.Serialization;
 
+    [Serializable]
+    [JsonConverter(typeof(JsonDateTimeConverter))]
     public abstract class DateTimeBase : IEquatable<DateTimeBase>
     {
         protected DateTimeBase()
@@ -50,6 +53,10 @@
         [IgnoreDataMember]
         public string Offset { get; protected set; }
 
+        ///<summary>
+        ///Creates a timestamp of the format of 'yyyy-MM-ddTHH:mm:ss.fffzzz'
+        ///<para>Sample: 2020-01-28T16:09:05.366-05:00</para>
+        ///</summary>
         [XmlText]
         [DataMember]
         public string Value
@@ -63,12 +70,14 @@
         /// <summary>
         /// Converts the value of the current DateTimeBase object to Coordinated Universal Time (UTC)
         /// </summary>
-        /// <returns></returns>
         public DateTime ToUniversalTime()
         {
             return DateTime.Parse(Value).ToUniversalTime();
         }
 
+        /// <summary>
+        /// returns same string as the <see cref="Value"/> property
+        /// </summary>
         public override string ToString()
         {
             return Value;

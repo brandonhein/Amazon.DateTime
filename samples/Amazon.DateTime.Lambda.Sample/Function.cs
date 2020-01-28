@@ -5,6 +5,7 @@ using Amazon.Lambda.Core;
 
 namespace Amazon.DateTime.Lambda.Sample
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
 
@@ -15,14 +16,17 @@ namespace Amazon.DateTime.Lambda.Sample
             var eastern11am = new EasternDateTime(TimeSpan.Parse("11:00"));
             var eastern755pm = new EasternDateTime(TimeSpan.Parse("19:55"));
 
+            Console.WriteLine($"{eastern11am}");
+
             var utcDate = DateTime.UtcNow.Date;
             var utcFor1045eastern = DateTime.Parse($"{utcDate.Year}-{utcDate.Month}-{utcDate.Day}T15:45:41.016+00:00");
             var utcfor1145eastern = DateTime.Parse($"{utcDate.Year}-{utcDate.Month}-{utcDate.Day}T16:45:41.016+00:00");
 
-            var isInBetween = (eastern11am < utcFor1045eastern) && (eastern755pm >= utcFor1045eastern);
-            var isInBetween2 = (eastern11am < utcfor1145eastern) && (eastern755pm >= utcfor1145eastern);
+            var isInBetween = (eastern11am <= utcFor1045eastern) && (eastern755pm > utcFor1045eastern); //false
+            var isInBetween2 = (eastern11am <= utcfor1145eastern) && (eastern755pm > utcfor1145eastern); //true
 
-            Console.WriteLine($"{eastern11am}");
+            var utcTimeFromTicks = new DateTime(637160846720000000);
+            var easternTime = new EasternDateTime(2020, 1, 31, 11, 24, 32);
 
             var dictionary = new Dictionary<string, string>()
             {
@@ -39,7 +43,11 @@ namespace Amazon.DateTime.Lambda.Sample
                 { "345utc(1045eastern)_fallsbetween_11and755_eastern", isInBetween.ToString() },
                 { "445utc(1145eastern)_fallsbetween_11and755_eastern", isInBetween2.ToString() },
                 { "eastern_specificDate(2020-1-28)", new EasternDateTime(2020, 1, 28).Value },
-                { "eastern_specificDate(2020-6-28)", new EasternDateTime(2020, 6, 28).Value }
+                { "eastern_specificDate(2020-6-28)", new EasternDateTime(2020, 6, 28).Value },
+                { "dayoftheweek_for_2020-1-31", new EasternDateTime(2020, 1, 31).DayOfWeek.ToString() },
+                { "jsonObjectOf2020-1-31", string.Concat("\n", JsonConvert.SerializeObject(easternTime)) },
+                { "jsonObjectOfutcTicks", string.Concat("\n", JsonConvert.SerializeObject(utcTimeFromTicks)) },
+                { "justtyringthisout", string.Concat("\n", JsonConvert.SerializeObject(eastern11am)) }
             };
 
             var result = string.Empty;

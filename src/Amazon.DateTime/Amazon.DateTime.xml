@@ -164,11 +164,21 @@
             TryParse a utc time string to get the central timezone <see cref="T:System.DateTime"/>
             </summary>
         </member>
+        <member name="P:Amazon.DateTime.DateTimeBase.Value">
+            <summary>
+            Creates a timestamp of the format of 'yyyy-MM-ddTHH:mm:ss.fffzzz'
+            <para>Sample: 2020-01-28T16:09:05.366-05:00</para>
+            </summary>
+        </member>
         <member name="M:Amazon.DateTime.DateTimeBase.ToUniversalTime">
             <summary>
             Converts the value of the current DateTimeBase object to Coordinated Universal Time (UTC)
             </summary>
-            <returns></returns>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.ToString">
+            <summary>
+            returns same string as the <see cref="P:Amazon.DateTime.DateTimeBase.Value"/> property
+            </summary>
         </member>
         <member name="M:Amazon.DateTime.DateTimeBase.op_Equality(Amazon.DateTime.DateTimeBase,Amazon.DateTime.DateTimeBase)">
             <summary>
@@ -339,9 +349,31 @@
             <para>IF result is greater than 0; THEN t1 is later than t2</para>
             </summary>
         </member>
+        <member name="M:Amazon.DateTime.EasternDateTime.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Creates a EasternDateTime of a specific day
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.EasternDateTime.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Creates a EasternDateTime of a specific date and time
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.EasternDateTime.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Creates a EasternDateTime of a specific date and time
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.EasternDateTime.#ctor(System.TimeSpan)">
+            <summary>
+            Creates a new EasternDateTime of 'Today at this time (hours and minutes)'
+            </summary>
+        </member>
         <member name="P:Amazon.DateTime.EasternDateTime.Now">
             <summary>
             Get the Current 'Now' time in Eastern Timezone
+            <para>BEWARE!... as it'll return with the incorrect offset in AWS</para>
+            <para>Best bet would be to use <see cref="P:Amazon.DateTime.EasternDateTime.NowString"/></para>
             </summary>
         </member>
         <member name="P:Amazon.DateTime.EasternDateTime.NowString">
@@ -362,12 +394,12 @@
         </member>
         <member name="P:Amazon.DateTime.EasternDateTime.DaylightOffset">
             <summary>
-            Hour offset for when in daylight time
+            UTC Hour offset for when in daylight time
             </summary>
         </member>
         <member name="P:Amazon.DateTime.EasternDateTime.StandardOffset">
             <summary>
-            Hour offset for when in standard time
+            UTC Hour offset for when in standard time
             </summary>
         </member>
         <member name="M:Amazon.DateTime.EasternDateTime.Convert(System.DateTime)">
@@ -377,12 +409,12 @@
         </member>
         <member name="M:Amazon.DateTime.EasternDateTime.Parse(System.String)">
             <summary>
-            Parse a utc time string to get the eastern timezone <see cref="T:System.DateTime"/>
+            Parse a utc time string to get the eastern timezone
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.EasternDateTime.TryParse(System.String,System.DateTime@)">
+        <member name="M:Amazon.DateTime.EasternDateTime.TryParse(System.String,Amazon.DateTime.EasternDateTime@)">
             <summary>
-            TryParse a utc time string to get the eastern timezone <see cref="T:System.DateTime"/>
+            TryParse a utc time string to get the eastern timezone
             </summary>
         </member>
         <member name="P:Amazon.DateTime.HawaiiDateTime.Now">

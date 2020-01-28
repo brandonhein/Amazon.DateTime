@@ -17,7 +17,6 @@
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
             Date = dateTimeParse.Date;
-            Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
             TimeOfDay = dateTimeParse.TimeOfDay;
@@ -39,7 +38,6 @@
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
             Date = dateTimeParse.Date;
-            Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
             TimeOfDay = dateTimeParse.TimeOfDay;
@@ -63,7 +61,6 @@
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
             Date = dateTimeParse.Date;
-            Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
             TimeOfDay = dateTimeParse.TimeOfDay;

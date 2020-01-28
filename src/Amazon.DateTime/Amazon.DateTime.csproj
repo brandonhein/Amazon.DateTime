@@ -20,4 +20,8 @@
     <DocumentationFile>C:\Development\git\Amazon.DateTime\src\Amazon.DateTime\Amazon.DateTime.xml</DocumentationFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+  </ItemGroup>
+
 </Project>

@@ -119,7 +119,7 @@
         {
             var dt = dateTime.DateTimeCoversion(timezone, observesDaylight);
 
-            var result = new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond, DateTimeKind.Local);
+            var result = new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
             return result;
         }
     }
