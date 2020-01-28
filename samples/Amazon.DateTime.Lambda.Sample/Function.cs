@@ -22,6 +22,8 @@ namespace Amazon.DateTime.Lambda.Sample
             var isInBetween = (eastern11am < utcFor1045eastern) && (eastern755pm >= utcFor1045eastern);
             var isInBetween2 = (eastern11am < utcfor1145eastern) && (eastern755pm >= utcfor1145eastern);
 
+            Console.WriteLine($"{eastern11am}");
+
             var dictionary = new Dictionary<string, string>()
             {
                 { "DateTime.Now", DateTime.Now.ToString(Format.StandardDateTime + "zzz") },
@@ -35,7 +37,9 @@ namespace Amazon.DateTime.Lambda.Sample
                 { "DoesEastern@11==", (eastern11am == DateTime.Parse(eastern11am.Value)).ToString() },
                 { "DoesEastern@755==", (eastern755pm == DateTime.Parse(eastern755pm.Value)).ToString() },
                 { "345utc(1045eastern)_fallsbetween_11and755_eastern", isInBetween.ToString() },
-                { "445utc(1145eastern)_fallsbetween_11and755_eastern", isInBetween2.ToString() }
+                { "445utc(1145eastern)_fallsbetween_11and755_eastern", isInBetween2.ToString() },
+                { "eastern_specificDate(2020-1-28)", new EasternDateTime(2020, 1, 28).Value },
+                { "eastern_specificDate(2020-6-28)", new EasternDateTime(2020, 6, 28).Value }
             };
 
             var result = string.Empty;
