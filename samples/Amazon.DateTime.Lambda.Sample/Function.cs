@@ -15,8 +15,9 @@ namespace Amazon.DateTime.Lambda.Sample
             var eastern11am = new EasternDateTime(TimeSpan.Parse("11:00"));
             var eastern755pm = new EasternDateTime(TimeSpan.Parse("19:55"));
 
-            var utcFor1045eastern = DateTime.Parse("2020-01-28T15:45:41.016+00:00");
-            var utcfor1145eastern = DateTime.Parse("2020-01-28T16:45:41.016+00:00");
+            var utcDate = DateTime.UtcNow.Date;
+            var utcFor1045eastern = DateTime.Parse($"{utcDate.Year}-{utcDate.Month}-{utcDate.Day}T15:45:41.016+00:00");
+            var utcfor1145eastern = DateTime.Parse($"{utcDate.Year}-{utcDate.Month}-{utcDate.Day}T16:45:41.016+00:00");
 
             var isInBetween = (eastern11am < utcFor1045eastern) && (eastern755pm >= utcFor1045eastern);
             var isInBetween2 = (eastern11am < utcfor1145eastern) && (eastern755pm >= utcfor1145eastern);
