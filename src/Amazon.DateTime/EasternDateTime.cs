@@ -68,6 +68,33 @@
             TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
+        public EasternDateTime(TimeSpan timeOfDay)
+        {
+            var easternNow = DateTime.UtcNow.ToEastern();
+
+            Year = easternNow.Year;
+            Month = easternNow.Month;
+            Day = easternNow.Day;
+
+            Hour = timeOfDay.Hours;
+            Minute = timeOfDay.Minutes;
+            Second = timeOfDay.Seconds;
+            Millisecond = timeOfDay.Milliseconds;
+
+            var dateTimeParse =
+                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond))
+                .ToUniversalTime()
+                .ToEastern();
+
+            Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
+
+            Date = dateTimeParse.Date;
+            Ticks = dateTimeParse.Ticks;
+            DayOfYear = dateTimeParse.DayOfYear;
+            DayOfWeek = dateTimeParse.DayOfWeek;
+            TimeOfDay = dateTimeParse.TimeOfDay;
+        }
+
         /// <summary>
         /// Get the Current 'Now' time in Eastern Timezone
         /// </summary>
