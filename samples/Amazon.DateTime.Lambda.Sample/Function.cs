@@ -13,51 +13,50 @@ namespace Amazon.DateTime.Lambda.Sample
     {
         public string FunctionHandler(object input, ILambdaContext context)
         {
-            var eastern11am = new EasternDateTime(TimeSpan.Parse("11:00"));
-            var eastern755pm = new EasternDateTime(TimeSpan.Parse("19:55"));
-
-            Console.WriteLine($"{eastern11am}");
-
-            var utcDate = DateTime.UtcNow.Date;
-            var utcFor1045eastern = DateTime.Parse($"{utcDate.Year}-{utcDate.Month}-{utcDate.Day}T15:45:41.016+00:00");
-            var utcfor1145eastern = DateTime.Parse($"{utcDate.Year}-{utcDate.Month}-{utcDate.Day}T16:45:41.016+00:00");
-
-            var isInBetween = (eastern11am <= utcFor1045eastern) && (eastern755pm > utcFor1045eastern); //false
-            var isInBetween2 = (eastern11am <= utcfor1145eastern) && (eastern755pm > utcfor1145eastern); //true
-
-            var utcTimeFromTicks = new DateTime(637160846720000000);
-            var easternTime = new EasternDateTime(2020, 1, 31, 11, 24, 32);
-
-            var dictionary = new Dictionary<string, string>()
+            var sampleObj = new SampleObject()
             {
-                { "DateTime.Now", DateTime.Now.ToString(Format.StandardDateTime + "zzz") },
-                { "DateTime.UtcNow", DateTime.UtcNow.ToString(Format.StandardDateTime + "zzz") },
-                { "EasternDateTime.Now", EasternDateTime.Now.ToString(Format.StandardDateTime + "zzz") },
-                { "EasternDateTime.NowString", EasternDateTime.NowString },
-                { "Eastern11AM", eastern11am.Value },
-                { "Eastern11AMconvertedToUtc", DateTime.Parse(eastern11am.Value).ToUniversalTime().ToString(Format.StandardDateTime + "zzz") },
-                { "Eastern755PM", eastern755pm.Value },
-                { "Eastern755PMconvertedToUtc", DateTime.Parse(eastern755pm.Value).ToUniversalTime().ToString(Format.StandardDateTime + "zzz") },
-                { "DoesEastern@11==", (eastern11am == DateTime.Parse(eastern11am.Value)).ToString() },
-                { "DoesEastern@755==", (eastern755pm == DateTime.Parse(eastern755pm.Value)).ToString() },
-                { "345utc(1045eastern)_fallsbetween_11and755_eastern", isInBetween.ToString() },
-                { "445utc(1145eastern)_fallsbetween_11and755_eastern", isInBetween2.ToString() },
-                { "eastern_specificDate(2020-1-28)", new EasternDateTime(2020, 1, 28).Value },
-                { "eastern_specificDate(2020-6-28)", new EasternDateTime(2020, 6, 28).Value },
-                { "dayoftheweek_for_2020-1-31", new EasternDateTime(2020, 1, 31).DayOfWeek.ToString() },
-                { "jsonObjectOf2020-1-31", string.Concat("\n", JsonConvert.SerializeObject(easternTime)) },
-                { "jsonObjectOfutcTicks", string.Concat("\n", JsonConvert.SerializeObject(utcTimeFromTicks)) },
-                { "justtyringthisout", string.Concat("\n", JsonConvert.SerializeObject(eastern11am)) }
+                DateTime = EasternDateTime.Now,
+                Hour = EasternDateTime.Now.Hour,
+                Second = EasternDateTime.Now.Second
+            };
+
+            var json = JsonConvert.SerializeObject(sampleObj);
+            Console.WriteLine(json);
+
+            var sampleJson = "{\"DateTime\":\"2020-01-29T13:49:57.901\",\"Hour\":8,\"Second\":57}";
+            var res = JsonConvert.DeserializeObject<SampleObject>(sampleJson);
+
+            Console.WriteLine("sweet serialized");
+            Console.WriteLine($"res.Now: {res.DateTime}");
+            Console.WriteLine($"res.Hour: {res.Hour}");
+            Console.WriteLine($"res.Second: {res.Second}");
+
+            var dictionary = new Dictionary<string, object>()
+            {
+                { "UniversalDateTime.Now", UniversalDateTime.Now },
+                { "EasternDateTime.Now", EasternDateTime.Now },
+                { "CentralDateTime.Now", CentralDateTime.Now },
+                { "MountainDateTime.Now", MountainDateTime.Now },
+                { "PacificDateTime.Now", PacificDateTime.Now },
+                { "AlaskaDateTime.Now", AlaskaDateTime.Now },
+                { "HawaiiDateTime.Now", HawaiiDateTime.Now }
             };
 
             var result = string.Empty;
             foreach (var item in dictionary)
             {
                 Console.WriteLine($"{item.Key}: {item.Value}");
-                result = string.Concat(result, item.Key, ": ", item.Value, "\n");
+                result = string.Concat($"{result} {item.Key} : {item.Value} \n");
             }
 
             return result;
         }
+    }
+
+    public class SampleObject
+    {
+        public EasternDateTime DateTime { get; set; }
+        public int Hour { get; set; }
+        public int Second { get; set; }
     }
 }

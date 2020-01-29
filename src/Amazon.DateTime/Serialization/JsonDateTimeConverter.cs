@@ -1,4 +1,4 @@
-﻿namespace Amazon.DateTime
+﻿namespace Amazon.DateTime.Serailization
 {
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
@@ -19,6 +19,30 @@
                 if (objectType == typeof(EasternDateTime))
                 {
                     return EasternDateTime.Convert(dateTime.Value);
+                }
+                else if (objectType == typeof(CentralDateTime))
+                {
+                    return CentralDateTime.Convert(dateTime.Value);
+                }
+                else if (objectType == typeof(MountainDateTime))
+                {
+                    return MountainDateTime.Convert(dateTime.Value);
+                }
+                else if (objectType == typeof(PacificDateTime))
+                {
+                    return PacificDateTime.Convert(dateTime.Value);
+                }
+                else if (objectType == typeof(AlaskaDateTime))
+                {
+                    return AlaskaDateTime.Convert(dateTime.Value);
+                }
+                else if (objectType == typeof(HawaiiDateTime))
+                {
+                    return HawaiiDateTime.Convert(dateTime.Value);
+                }
+                else if (objectType == typeof(UniversalDateTime))
+                {
+                    return UniversalDateTime.Convert(dateTime.Value);
                 }
             }
 

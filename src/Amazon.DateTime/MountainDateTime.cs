@@ -4,6 +4,30 @@
 
     public class MountainDateTime : DateTimeBase
     {
+        public MountainDateTime(long ticks)
+        {
+            var dateTime = new DateTime(ticks)
+                .ToUniversalTime()
+                .ToMountain();
+
+            Year = dateTime.Year;
+            Month = dateTime.Month;
+            Day = dateTime.Day;
+            Hour = dateTime.Hour;
+            Minute = dateTime.Minute;
+            Second = dateTime.Second;
+            Millisecond = dateTime.Millisecond;
+            Ticks = ticks;
+
+            Offset = dateTime.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
+
+            var dateTimeParse = DateTime.Parse(Value);
+            Date = dateTimeParse.Date;
+            DayOfYear = dateTimeParse.DayOfYear;
+            DayOfWeek = dateTimeParse.DayOfWeek;
+            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+        }
+
         public MountainDateTime(int year, int month, int day)
         {
             Year = year;
@@ -15,10 +39,14 @@
                 .ToMountain();
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
+
+            dateTimeParse = DateTime.Parse(Value);
+
             Date = dateTimeParse.Date;
+            Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay;
+            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
         }
 
         public MountainDateTime(int year, int month, int day, int hour, int minute, int second)
@@ -36,10 +64,14 @@
                 .ToMountain();
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
+
+            dateTimeParse = DateTime.Parse(Value);
+
             Date = dateTimeParse.Date;
+            Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay;
+            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
         }
 
         public MountainDateTime(int year, int month, int day, int hour, int minute, int second, int millisecond)
@@ -59,100 +91,90 @@
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
+            dateTimeParse = DateTime.Parse(Value);
+
             Date = dateTimeParse.Date;
+            Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay;
+            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+        }
+
+        public MountainDateTime(TimeSpan timeOfDay)
+        {
+            var mountainNow = DateTime.UtcNow.ToMountain();
+
+            Year = mountainNow.Year;
+            Month = mountainNow.Month;
+            Day = mountainNow.Day;
+
+            Hour = timeOfDay.Hours;
+            Minute = timeOfDay.Minutes;
+            Second = timeOfDay.Seconds;
+            Millisecond = timeOfDay.Milliseconds;
+
+            var dateTimeParse =
+                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond))
+                .ToUniversalTime()
+                .ToMountain();
+
+            Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
+
+            dateTimeParse = DateTime.Parse(Value);
+
+            Date = dateTimeParse.Date;
+            Ticks = dateTimeParse.Ticks;
+            DayOfYear = dateTimeParse.DayOfYear;
+            DayOfWeek = dateTimeParse.DayOfWeek;
+            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
         }
 
         /// <summary>
         /// Get the Current 'Now' time in Mountain Timezone
         /// </summary>
-        public static DateTime Now
-        {
-            get
-            {
-                return DateTime.UtcNow.ToMountain();
-            }
-        }
+        public static MountainDateTime Now => Convert(DateTime.UtcNow);
 
-        /// <summary>
-        /// Get the Current 'Now' time in Mountain timezone as a string. 
-        /// <para>FORMAT: yyyy-MM-ddTHH:mm:ss.fffzzz</para>
-        /// </summary>
-        public static string NowString
+        public static MountainDateTime Today
         {
             get
             {
-                return string.Concat(Now.ToString("yyyy-MM-ddTHH:mm:ss.fff"), NowOffsetString);
-            }
-        }
-
-        /// <summary>
-        /// Get the <see cref="TimeSpan"/> hour offset to apply to a utc time
-        /// </summary>
-        public static TimeSpan NowOffset
-        {
-            get
-            {
-                return TimeSpan.Parse(NowOffsetString);
-            }
-        }
-
-        /// <summary>
-        /// Get the string timespan hour offset to apply to a utc time
-        /// </summary>
-        public static string NowOffsetString
-        {
-            get
-            {
-                return Now.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
+                var utcNow = DateTime.UtcNow;
+                return new MountainDateTime(utcNow.Year, utcNow.Month, utcNow.Day);
             }
         }
 
         /// <summary>
         /// Hour offset for when in daylight time
         /// </summary>
-        public static string DaylightOffset
-        {
-            get
-            {
-                return "-06:00";
-            }
-        }
+        public static string DaylightOffset => "-06:00";
 
         /// <summary>
         /// Hour offset for when in standard time
         /// </summary>
-        public static string StandardOffset
-        {
-            get
-            {
-                return "-07:00";
-            }
-        }
+        public static string StandardOffset => "-07:00";
 
         /// <summary>
         /// Convert a utc <see cref="DateTime"/> value to the mountain timezone equivalent 
         /// </summary>
-        public static DateTime Convert(DateTime utcDateTime)
+        public static MountainDateTime Convert(DateTime utcDateTime)
         {
-            return utcDateTime.ToUniversalTime().ToMountain();
+            var mountainTime = utcDateTime.ToUniversalTime().ToMountain();
+            return new MountainDateTime(mountainTime.Year, mountainTime.Month, mountainTime.Day, mountainTime.Hour, mountainTime.Minute, mountainTime.Second, mountainTime.Millisecond);
         }
 
         /// <summary>
-        /// Parse a utc time string to get the mountain timezone <see cref="DateTime"/>
+        /// Parse a utc time string to get the mountain timezone
         /// </summary>
-        public static DateTime Parse(string utcTime)
+        public static MountainDateTime Parse(string utcTime)
         {
             var result = DateTime.Parse(utcTime).ToUniversalTime();
-            return result.ToMountain();
+            return Convert(result);
         }
 
         /// <summary>
-        /// TryParse a utc time string to get the mountain timezone <see cref="DateTime"/>
+        /// TryParse a utc time string to get the mountain timezone
         /// </summary>
-        public static bool TryParse(string utcTime, out DateTime mountainDateTime)
+        public static bool TryParse(string utcTime, out MountainDateTime mountainDateTime)
         {
             try
             {
@@ -161,7 +183,7 @@
             }
             catch (Exception ex)
             {
-                mountainDateTime = default(DateTime);
+                mountainDateTime = default(MountainDateTime);
                 return false;
             }
         }

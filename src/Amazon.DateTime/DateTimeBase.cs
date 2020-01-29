@@ -1,5 +1,6 @@
 ﻿namespace Amazon.DateTime
 {
+    using Amazon.DateTime.Serailization;
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
@@ -8,49 +9,61 @@
 
     [Serializable]
     [JsonConverter(typeof(JsonDateTimeConverter))]
-    public abstract class DateTimeBase : IEquatable<DateTimeBase>
+    public abstract class DateTimeBase : IEquatable<DateTimeBase>//, IComparable, IComparable<DateTime>, IEquatable<DateTime>, IFormattable, ISerializable
     {
         protected DateTimeBase()
         { }
 
         [XmlIgnore]
         [IgnoreDataMember]
+        [JsonIgnore]
         public long Ticks { get; protected set; }
         [XmlIgnore]
         [IgnoreDataMember]
+        [JsonIgnore]
         public int Second { get; protected set; }
         [XmlIgnore]
         [IgnoreDataMember]
         public DateTime Date { get; protected set; }
         [XmlIgnore]
         [IgnoreDataMember]
+        [JsonIgnore]
         public int Month { get; protected set; }
         [XmlIgnore]
         [IgnoreDataMember]
+        [JsonIgnore]
         public int Minute { get; protected set; }
         [XmlIgnore]
         [IgnoreDataMember]
+        [JsonIgnore]
         public int Millisecond { get; protected set; }
         [XmlIgnore]
         [IgnoreDataMember]
+        [JsonIgnore]
         public int Hour { get; protected set; }
         [XmlIgnore]
         [IgnoreDataMember]
+        [JsonIgnore]
         public int DayOfYear { get; protected set; }
         [XmlIgnore]
         [IgnoreDataMember]
+        [JsonIgnore]
         public DayOfWeek DayOfWeek { get; protected set; }
         [XmlIgnore]
         [IgnoreDataMember]
+        [JsonIgnore]
         public int Day { get; protected set; }
         [XmlIgnore]
         [IgnoreDataMember]
+        [JsonIgnore]
         public TimeSpan TimeOfDay { get; protected set; }
         [XmlIgnore]
         [IgnoreDataMember]
+        [JsonIgnore]
         public int Year { get; protected set; }
         [XmlIgnore]
         [IgnoreDataMember]
+        [JsonIgnore]
         public string Offset { get; protected set; }
 
         ///<summary>
@@ -63,7 +76,8 @@
         {
             get
             {
-                return string.Concat(Year.ToString("0000"), "-", Month.ToString("00"), "-", Day.ToString("00"), "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond.ToString("000"), Offset);
+                var offset = Offset.StartsWith("-") ? Offset : string.Concat("+", Offset);
+                return string.Concat(Year.ToString("0000"), "-", Month.ToString("00"), "-", Day.ToString("00"), "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond.ToString("000"), offset);
             }
         }
 

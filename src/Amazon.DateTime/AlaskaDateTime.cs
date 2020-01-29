@@ -4,6 +4,30 @@
 
     public class AlaskaDateTime : DateTimeBase
     {
+        public AlaskaDateTime(long ticks)
+        {
+            var dateTime = new DateTime(ticks)
+                .ToUniversalTime()
+                .ToAlaska();
+
+            Year = dateTime.Year;
+            Month = dateTime.Month;
+            Day = dateTime.Day;
+            Hour = dateTime.Hour;
+            Minute = dateTime.Minute;
+            Second = dateTime.Second;
+            Millisecond = dateTime.Millisecond;
+            Ticks = ticks;
+
+            Offset = dateTime.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
+
+            var dateTimeParse = DateTime.Parse(Value);
+            Date = dateTimeParse.Date;
+            DayOfYear = dateTimeParse.DayOfYear;
+            DayOfWeek = dateTimeParse.DayOfWeek;
+            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+        }
+
         public AlaskaDateTime(int year, int month, int day)
         {
             Year = year;
@@ -15,10 +39,14 @@
                 .ToAlaska();
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
+
+            dateTimeParse = DateTime.Parse(Value);
+
             Date = dateTimeParse.Date;
+            Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay;
+            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
         }
 
         public AlaskaDateTime(int year, int month, int day, int hour, int minute, int second)
@@ -59,92 +87,81 @@
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
+            dateTimeParse = DateTime.Parse(Value);
+
             Date = dateTimeParse.Date;
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay;
+            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+        }
+
+        public AlaskaDateTime(TimeSpan timeOfDay)
+        {
+            var alaskaNow = DateTime.UtcNow.ToAlaska();
+
+            Year = alaskaNow.Year;
+            Month = alaskaNow.Month;
+            Day = alaskaNow.Day;
+
+            Hour = timeOfDay.Hours;
+            Minute = timeOfDay.Minutes;
+            Second = timeOfDay.Seconds;
+            Millisecond = timeOfDay.Milliseconds;
+
+            var dateTimeParse =
+                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond))
+                .ToUniversalTime()
+                .ToAlaska();
+
+            Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
+
+            dateTimeParse = DateTime.Parse(Value);
+
+            Date = dateTimeParse.Date;
+            Ticks = dateTimeParse.Ticks;
+            DayOfYear = dateTimeParse.DayOfYear;
+            DayOfWeek = dateTimeParse.DayOfWeek;
+            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
         }
 
         /// <summary>
         /// Get the Current 'Now' time in Alaska
         /// </summary>
-        public static DateTime Now
-        {
-            get
-            {
-                return DateTime.UtcNow.ToAlaska();
-            }
-        }
+        public static AlaskaDateTime Now => Convert(DateTime.UtcNow);
 
-        /// <summary>
-        /// Get the Current 'Now' time in Alaska as a string. 
-        /// <para>FORMAT: yyyy-MM-ddTHH:mm:ss.fffzzz</para>
-        /// </summary>
-        public static string NowString
+        public static AlaskaDateTime Today
         {
             get
             {
-                return string.Concat(Now.ToString("yyyy-MM-ddTHH:mm:ss.fff"), NowOffsetString);
-            }
-        }
-
-        /// <summary>
-        /// Get the <see cref="TimeSpan"/> hour offset to apply to a utc now time
-        /// </summary>
-        public static TimeSpan NowOffset
-        {
-            get
-            {
-                return TimeSpan.Parse(NowOffsetString);
-            }
-        }
-
-        /// <summary>
-        /// Get the string timespan hour offset to apply to a utc now time
-        /// </summary>
-        public static string NowOffsetString
-        {
-            get
-            {
-                return Now.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
+                var utcNow = DateTime.UtcNow;
+                return new AlaskaDateTime(utcNow.Year, utcNow.Month, utcNow.Day);
             }
         }
 
         /// <summary>
         /// Hour offset for when in daylight time
         /// </summary>
-        public static string DaylightOffset
-        {
-            get
-            {
-                return "-08:00";
-            }
-        }
+        public static string DaylightOffset => "-08:00";
 
         /// <summary>
         /// Hour offset for when in standard time
         /// </summary>
-        public static string StandardOffset
-        {
-            get
-            {
-                return "-09:00";
-            }
-        }
+        public static string StandardOffset => "-09:00";
 
         /// <summary>
         /// Convert a utc <see cref="DateTime"/> value to the alaska equivalent 
         /// </summary>
-        public static DateTime Convert(DateTime utcDateTime)
+        public static AlaskaDateTime Convert(DateTime utcDateTime)
         {
-            return utcDateTime.ToUniversalTime().ToAlaska();
+            var alaskaTime = utcDateTime.ToUniversalTime().ToAlaska();
+            return new AlaskaDateTime(alaskaTime.Year, alaskaTime.Month, alaskaTime.Day, alaskaTime.Hour, alaskaTime.Minute, alaskaTime.Second, alaskaTime.Millisecond);
         }
 
         /// <summary>
         /// Parse a utc time string to get the alaska <see cref="DateTime"/>
         /// </summary>
-        public static DateTime Parse(string utcTime)
+        public static AlaskaDateTime Parse(string utcTime)
         {
             var result = DateTime.Parse(utcTime).ToUniversalTime();
             return Convert(result);
@@ -153,7 +170,7 @@
         /// <summary>
         /// TryParse a utc time string to get the alaska <see cref="DateTime"/>
         /// </summary>
-        public static bool TryParse(string utcTime, out DateTime alaskaDateTime)
+        public static bool TryParse(string utcTime, out AlaskaDateTime alaskaDateTime)
         {
             try
             {
@@ -162,7 +179,7 @@
             }
             catch (Exception ex)
             {
-                alaskaDateTime = default(DateTime);
+                alaskaDateTime = default(AlaskaDateTime);
                 return false;
             }
         }

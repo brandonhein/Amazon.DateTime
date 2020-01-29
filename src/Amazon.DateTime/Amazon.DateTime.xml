@@ -9,22 +9,6 @@
             Get the Current 'Now' time in Alaska
             </summary>
         </member>
-        <member name="P:Amazon.DateTime.AlaskaDateTime.NowString">
-            <summary>
-            Get the Current 'Now' time in Alaska as a string. 
-            <para>FORMAT: yyyy-MM-ddTHH:mm:ss.fffzzz</para>
-            </summary>
-        </member>
-        <member name="P:Amazon.DateTime.AlaskaDateTime.NowOffset">
-            <summary>
-            Get the <see cref="T:System.TimeSpan"/> hour offset to apply to a utc now time
-            </summary>
-        </member>
-        <member name="P:Amazon.DateTime.AlaskaDateTime.NowOffsetString">
-            <summary>
-            Get the string timespan hour offset to apply to a utc now time
-            </summary>
-        </member>
         <member name="P:Amazon.DateTime.AlaskaDateTime.DaylightOffset">
             <summary>
             Hour offset for when in daylight time
@@ -45,7 +29,7 @@
             Parse a utc time string to get the alaska <see cref="T:System.DateTime"/>
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.AlaskaDateTime.TryParse(System.String,System.DateTime@)">
+        <member name="M:Amazon.DateTime.AlaskaDateTime.TryParse(System.String,Amazon.DateTime.AlaskaDateTime@)">
             <summary>
             TryParse a utc time string to get the alaska <see cref="T:System.DateTime"/>
             </summary>
@@ -118,25 +102,14 @@
             Get <see cref="T:System.TimeZoneInfo"/> by <see cref="T:Amazon.DateTime.Timezone"/> code
             </summary>
         </member>
+        <member name="M:Amazon.DateTime.CentralDateTime.#ctor(System.Int64)">
+            <summary>
+            Create a CentralDateTime by ticks
+            </summary>
+        </member>
         <member name="P:Amazon.DateTime.CentralDateTime.Now">
             <summary>
             Get the Current 'Now' time in Central Timezone
-            </summary>
-        </member>
-        <member name="P:Amazon.DateTime.CentralDateTime.NowString">
-            <summary>
-            Get the Current 'Now' time in Central Timezone as a string. 
-            <para>FORMAT: yyyy-MM-ddTHH:mm:ss.fffzzz</para>
-            </summary>
-        </member>
-        <member name="P:Amazon.DateTime.CentralDateTime.NowOffset">
-            <summary>
-            Get the <see cref="T:System.TimeSpan"/> hour offset to apply to a utc now time
-            </summary>
-        </member>
-        <member name="P:Amazon.DateTime.CentralDateTime.NowOffsetString">
-            <summary>
-            Get the string timespan hour offset to apply to a utc now time
             </summary>
         </member>
         <member name="P:Amazon.DateTime.CentralDateTime.DaylightOffset">
@@ -156,12 +129,12 @@
         </member>
         <member name="M:Amazon.DateTime.CentralDateTime.Parse(System.String)">
             <summary>
-            Parse a utc time string to get the central timezone <see cref="T:System.DateTime"/>
+            Parse a utc time string to get the central timezone
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.CentralDateTime.TryParse(System.String,System.DateTime@)">
+        <member name="M:Amazon.DateTime.CentralDateTime.TryParse(System.String,Amazon.DateTime.CentralDateTime@)">
             <summary>
-            TryParse a utc time string to get the central timezone <see cref="T:System.DateTime"/>
+            TryParse a utc time string to get the central timezone
             </summary>
         </member>
         <member name="P:Amazon.DateTime.DateTimeBase.Value">
@@ -349,6 +322,11 @@
             <para>IF result is greater than 0; THEN t1 is later than t2</para>
             </summary>
         </member>
+        <member name="M:Amazon.DateTime.EasternDateTime.#ctor(System.Int64)">
+            <summary>
+            Create a EasternDateTime by ticks
+            </summary>
+        </member>
         <member name="M:Amazon.DateTime.EasternDateTime.#ctor(System.Int32,System.Int32,System.Int32)">
             <summary>
             Creates a EasternDateTime of a specific day
@@ -372,24 +350,11 @@
         <member name="P:Amazon.DateTime.EasternDateTime.Now">
             <summary>
             Get the Current 'Now' time in Eastern Timezone
-            <para>BEWARE!... as it'll return with the incorrect offset in AWS</para>
-            <para>Best bet would be to use <see cref="P:Amazon.DateTime.EasternDateTime.NowString"/></para>
             </summary>
         </member>
-        <member name="P:Amazon.DateTime.EasternDateTime.NowString">
+        <member name="P:Amazon.DateTime.EasternDateTime.Today">
             <summary>
-            Get the Current 'Now' time in Eastern timezone as a string. 
-            <para>FORMAT: yyyy-MM-ddTHH:mm:ss.fffzzz</para>
-            </summary>
-        </member>
-        <member name="P:Amazon.DateTime.EasternDateTime.NowOffset">
-            <summary>
-            Get the <see cref="T:System.TimeSpan"/> hour offset to apply to a utc now time
-            </summary>
-        </member>
-        <member name="P:Amazon.DateTime.EasternDateTime.NowOffsetString">
-            <summary>
-            Get the string timespan hour offset to apply to a utc now time
+            Get the Current 'Today' date in Eastern Timezone
             </summary>
         </member>
         <member name="P:Amazon.DateTime.EasternDateTime.DaylightOffset">
@@ -422,22 +387,6 @@
             Get the Current 'Now' time in Hawaii
             </summary>
         </member>
-        <member name="P:Amazon.DateTime.HawaiiDateTime.NowString">
-            <summary>
-            Get the Current 'Now' time in Hawaii as a string. 
-            <para>FORMAT: yyyy-MM-ddTHH:mm:ss.fffzzz</para>
-            </summary>
-        </member>
-        <member name="P:Amazon.DateTime.HawaiiDateTime.NowOffset">
-            <summary>
-            Get the <see cref="T:System.TimeSpan"/> hour offset to apply to a utc time
-            </summary>
-        </member>
-        <member name="P:Amazon.DateTime.HawaiiDateTime.NowOffsetString">
-            <summary>
-            Get the string timespan hour offset to apply to a utc time
-            </summary>
-        </member>
         <member name="P:Amazon.DateTime.HawaiiDateTime.DaylightOffset">
             <summary>
             Hour offset for when in daylight time
@@ -455,33 +404,17 @@
         </member>
         <member name="M:Amazon.DateTime.HawaiiDateTime.Parse(System.String)">
             <summary>
-            Parse a utc time string to get the hawaii timezone <see cref="T:System.DateTime"/>
+            Parse a utc time string to get the hawaii timezone
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.HawaiiDateTime.TryParse(System.String,System.DateTime@)">
+        <member name="M:Amazon.DateTime.HawaiiDateTime.TryParse(System.String,Amazon.DateTime.HawaiiDateTime@)">
             <summary>
-            TryParse a utc time string to get the hawaii timezone <see cref="T:System.DateTime"/>
+            TryParse a utc time string to get the hawaii timezone
             </summary>
         </member>
         <member name="P:Amazon.DateTime.MountainDateTime.Now">
             <summary>
             Get the Current 'Now' time in Mountain Timezone
-            </summary>
-        </member>
-        <member name="P:Amazon.DateTime.MountainDateTime.NowString">
-            <summary>
-            Get the Current 'Now' time in Mountain timezone as a string. 
-            <para>FORMAT: yyyy-MM-ddTHH:mm:ss.fffzzz</para>
-            </summary>
-        </member>
-        <member name="P:Amazon.DateTime.MountainDateTime.NowOffset">
-            <summary>
-            Get the <see cref="T:System.TimeSpan"/> hour offset to apply to a utc time
-            </summary>
-        </member>
-        <member name="P:Amazon.DateTime.MountainDateTime.NowOffsetString">
-            <summary>
-            Get the string timespan hour offset to apply to a utc time
             </summary>
         </member>
         <member name="P:Amazon.DateTime.MountainDateTime.DaylightOffset">
@@ -501,33 +434,17 @@
         </member>
         <member name="M:Amazon.DateTime.MountainDateTime.Parse(System.String)">
             <summary>
-            Parse a utc time string to get the mountain timezone <see cref="T:System.DateTime"/>
+            Parse a utc time string to get the mountain timezone
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.MountainDateTime.TryParse(System.String,System.DateTime@)">
+        <member name="M:Amazon.DateTime.MountainDateTime.TryParse(System.String,Amazon.DateTime.MountainDateTime@)">
             <summary>
-            TryParse a utc time string to get the mountain timezone <see cref="T:System.DateTime"/>
+            TryParse a utc time string to get the mountain timezone
             </summary>
         </member>
         <member name="P:Amazon.DateTime.PacificDateTime.Now">
             <summary>
             Get the Current 'Now' time in Pacific Timezone
-            </summary>
-        </member>
-        <member name="P:Amazon.DateTime.PacificDateTime.NowString">
-            <summary>
-            Get the Current 'Now' time in Pacific timezone as a string. 
-            <para>FORMAT: yyyy-MM-ddTHH:mm:ss.fffzzz</para>
-            </summary>
-        </member>
-        <member name="P:Amazon.DateTime.PacificDateTime.NowOffset">
-            <summary>
-            Get the <see cref="T:System.TimeSpan"/> hour offset to apply to a utc time
-            </summary>
-        </member>
-        <member name="P:Amazon.DateTime.PacificDateTime.NowOffsetString">
-            <summary>
-            Get the string timespan hour offset to apply to a utc time
             </summary>
         </member>
         <member name="P:Amazon.DateTime.PacificDateTime.DaylightOffset">
@@ -547,12 +464,12 @@
         </member>
         <member name="M:Amazon.DateTime.PacificDateTime.Parse(System.String)">
             <summary>
-            Parse a utc time string to get the pacific timezone <see cref="T:System.DateTime"/>
+            Parse a utc time string to get the pacific timezone
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.PacificDateTime.TryParse(System.String,System.DateTime@)">
+        <member name="M:Amazon.DateTime.PacificDateTime.TryParse(System.String,Amazon.DateTime.PacificDateTime@)">
             <summary>
-            TryParse a utc time string to get the pacific timezone <see cref="T:System.DateTime"/>
+            TryParse a utc time string to get the pacific timezone
             </summary>
         </member>
         <member name="T:Amazon.DateTime.Timezone">
@@ -593,6 +510,31 @@
         <member name="F:Amazon.DateTime.Timezone.Hawaii">
             <summary>
             Hawaii Timezone
+            </summary>
+        </member>
+        <member name="P:Amazon.DateTime.UniversalDateTime.DaylightOffset">
+            <summary>
+            Hour offset for when in daylight time
+            </summary>
+        </member>
+        <member name="P:Amazon.DateTime.UniversalDateTime.StandardOffset">
+            <summary>
+            Hour offset for when in standard time
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.UniversalDateTime.Convert(System.DateTime)">
+            <summary>
+            Convert a utc <see cref="T:System.DateTime"/> value to the hawaii timezone equivalent 
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.UniversalDateTime.Parse(System.String)">
+            <summary>
+            Parse a utc time string to get the hawaii timezone
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.UniversalDateTime.TryParse(System.String,Amazon.DateTime.UniversalDateTime@)">
+            <summary>
+            TryParse a utc time string to get the hawaii timezone
             </summary>
         </member>
     </members>
