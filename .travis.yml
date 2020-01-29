@@ -1,0 +1,11 @@
+language: csharp  
+mono: none
+dotnet: 2.0.0
+dist: trusty
+sudo: false
+solution: Amazon.DateTime.Master.sln
+
+script:
+  - dotnet restore
+  - dotnet build
+  - dotnet test tests/Amazon.DateTime.Tests/Amazon.DateTime.Tests.csproj
