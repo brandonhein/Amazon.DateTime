@@ -54,5 +54,5 @@ var alaska = AlaskaDateTime.Now;
 var hawaii = HawaiiDateTime.Now;
 var universal = UniversalDateTime.Now;
 ```
-
+![](/.gifs/when_will_then_be_now.gif)  
 Enjoy
