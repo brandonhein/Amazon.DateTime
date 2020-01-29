@@ -1,8 +1,18 @@
 # Amazon.DateTime
 
-The biggest challenge I always have... is remembering timezone offsets.  Working with onprem applications in the eastern timezone, I had no problem with 'if a `DateTime` fell in between two other `DateTime`.  With the big push to get applications into the cloud, the conversion to UTC as messing with my head.  Debugging apps locally suck, especially if folks are using `DateTime.Now` everywhere, since AWS uses UTC.  And linux apps use GMT.  Ughhhh.
+Handling timezones and daylight savings can be a nightmare.  Such a 'simple' concept makes everyone gang up on each other.  `DateTime` can be your friend, although, it can bite you in the butt when you deploy your code to an OS doesn't use the same `TimeZoneInfo`.  `DateTime` does magic when it parses, serializes, etc, by auto converting to the local time for you...  
 
-Here's a library, trying to help try and eliminate the burden, of remembering UTC-offsets.
+I work in the Eastern Timezone.  But when I deploy to AWS Lambda... it's UTC/GMT time.  So `DateTime.Now` give me two different values (notice how there is NO hour offset):
+```csharp
+var local = DateTime.Now.ToString(); //2020-01-29T08:56:01.411
+var aws = DateTime.Now.ToString(); //2020-01-29T13:56:01.393
+```
+Makes it very difficult to manage, especially if you have time sensitive requirements, and the requirements are given in for a specific timezone.
+
+At the end of the day, TIME IS TIME!  
+![](/.gifs/time_is_time.PNG)
+
+This package allows
 
 ### NuGet Information
 [AmazonDateTimeConversion](https://www.nuget.org/packages/AmazonDateTimeConversion/)   
