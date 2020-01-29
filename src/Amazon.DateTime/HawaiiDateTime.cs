@@ -2,96 +2,179 @@
 {
     using System;
 
-    public class HawaiiDateTime
+    public class HawaiiDateTime : DateTimeBase
     {
+        public HawaiiDateTime(long ticks)
+        {
+            var dateTime = new DateTime(ticks)
+                .ToUniversalTime()
+                .ToHawaii();
+
+            Year = dateTime.Year;
+            Month = dateTime.Month;
+            Day = dateTime.Day;
+            Hour = dateTime.Hour;
+            Minute = dateTime.Minute;
+            Second = dateTime.Second;
+            Millisecond = dateTime.Millisecond;
+            Ticks = ticks;
+
+            Offset = dateTime.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
+
+            var dateTimeParse = DateTime.Parse(Value);
+            Date = dateTimeParse.Date;
+            DayOfYear = dateTimeParse.DayOfYear;
+            DayOfWeek = dateTimeParse.DayOfWeek;
+            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+        }
+
+        public HawaiiDateTime(int year, int month, int day)
+        {
+            Year = year;
+            Month = month;
+            Day = day;
+
+            var dateTimeParse = DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T00:00:00"))
+                .ToUniversalTime()
+                .ToHawaii();
+
+            Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
+
+            dateTimeParse = DateTime.Parse(Value);
+
+            Date = dateTimeParse.Date;
+            Ticks = dateTimeParse.Ticks;
+            DayOfYear = dateTimeParse.DayOfYear;
+            DayOfWeek = dateTimeParse.DayOfWeek;
+            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+        }
+
+        public HawaiiDateTime(int year, int month, int day, int hour, int minute, int second)
+        {
+            Year = year;
+            Month = month;
+            Day = day;
+            Hour = hour;
+            Minute = minute;
+            Second = second;
+
+            var dateTimeParse =
+                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00")))
+                .ToUniversalTime()
+                .ToHawaii();
+
+            Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
+
+            dateTimeParse = DateTime.Parse(Value);
+
+            Date = dateTimeParse.Date;
+            Ticks = dateTimeParse.Ticks;
+            DayOfYear = dateTimeParse.DayOfYear;
+            DayOfWeek = dateTimeParse.DayOfWeek;
+            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+        }
+
+        public HawaiiDateTime(int year, int month, int day, int hour, int minute, int second, int millisecond)
+        {
+            Year = year;
+            Month = month;
+            Day = day;
+            Hour = hour;
+            Minute = minute;
+            Second = second;
+            Millisecond = millisecond;
+
+            var dateTimeParse =
+                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond))
+                .ToUniversalTime()
+                .ToHawaii();
+
+            Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
+
+            dateTimeParse = DateTime.Parse(Value);
+
+            Date = dateTimeParse.Date;
+            Ticks = dateTimeParse.Ticks;
+            DayOfYear = dateTimeParse.DayOfYear;
+            DayOfWeek = dateTimeParse.DayOfWeek;
+            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+        }
+
+        public HawaiiDateTime(TimeSpan timeOfDay)
+        {
+            var hawaiiNow = DateTime.UtcNow.ToHawaii();
+
+            Year = hawaiiNow.Year;
+            Month = hawaiiNow.Month;
+            Day = hawaiiNow.Day;
+
+            Hour = timeOfDay.Hours;
+            Minute = timeOfDay.Minutes;
+            Second = timeOfDay.Seconds;
+            Millisecond = timeOfDay.Milliseconds;
+
+            var dateTimeParse =
+                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond))
+                .ToUniversalTime()
+                .ToHawaii();
+
+            Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
+
+            dateTimeParse = DateTime.Parse(Value);
+
+            Date = dateTimeParse.Date;
+            Ticks = dateTimeParse.Ticks;
+            DayOfYear = dateTimeParse.DayOfYear;
+            DayOfWeek = dateTimeParse.DayOfWeek;
+            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+        }
+
         /// <summary>
         /// Get the Current 'Now' time in Hawaii
         /// </summary>
-        public static DateTime Now
-        {
-            get
-            {
-                return DateTime.UtcNow.ToHawaii();
-            }
-        }
+        public static HawaiiDateTime Now => Convert(DateTime.UtcNow);
 
-        /// <summary>
-        /// Get the Current 'Now' time in Hawaii as a string. 
-        /// <para>FORMAT: yyyy-MM-ddTHH:mm:ss.fffzzz</para>
-        /// </summary>
-        public static string NowString
+        public static HawaiiDateTime Today
         {
             get
             {
-                return string.Concat(Now.ToString(Format.StandardDateTime), NowOffsetString);
-            }
-        }
-
-        /// <summary>
-        /// Get the <see cref="TimeSpan"/> hour offset to apply to a utc time
-        /// </summary>
-        public static TimeSpan NowOffset
-        {
-            get
-            {
-                return TimeSpan.Parse(NowOffsetString);
-            }
-        }
-
-        /// <summary>
-        /// Get the string timespan hour offset to apply to a utc time
-        /// </summary>
-        public static string NowOffsetString
-        {
-            get
-            {
-                return "-10:00";
+                var utcNow = DateTime.UtcNow;
+                return new HawaiiDateTime(utcNow.Year, utcNow.Month, utcNow.Day);
             }
         }
 
         /// <summary>
         /// Hour offset for when in daylight time
         /// </summary>
-        public static string DaylightOffset
-        {
-            get
-            {
-                return "-10:00";
-            }
-        }
+        public static string DaylightOffset => "-10:00";
 
         /// <summary>
         /// Hour offset for when in standard time
         /// </summary>
-        public static string StandardOffset
-        {
-            get
-            {
-                return "-10:00";
-            }
-        }
+        public static string StandardOffset => "-10:00";
 
         /// <summary>
         /// Convert a utc <see cref="DateTime"/> value to the hawaii timezone equivalent 
         /// </summary>
-        public static DateTime Convert(DateTime utcDateTime)
+        public static HawaiiDateTime Convert(DateTime utcDateTime)
         {
-            return utcDateTime.ToUniversalTime().ToHawaii();
+            var hawaiiTime = utcDateTime.ToUniversalTime().ToHawaii();
+            return new HawaiiDateTime(hawaiiTime.Year, hawaiiTime.Month, hawaiiTime.Day, hawaiiTime.Hour, hawaiiTime.Minute, hawaiiTime.Second, hawaiiTime.Millisecond);
         }
 
         /// <summary>
-        /// Parse a utc time string to get the hawaii timezone <see cref="DateTime"/>
+        /// Parse a utc time string to get the hawaii timezone
         /// </summary>
-        public static DateTime Parse(string utcTime)
+        public static HawaiiDateTime Parse(string utcTime)
         {
             var result = DateTime.Parse(utcTime).ToUniversalTime();
-            return result.ToEastern();
+            return Convert(result);
         }
 
         /// <summary>
-        /// TryParse a utc time string to get the hawaii timezone <see cref="DateTime"/>
+        /// TryParse a utc time string to get the hawaii timezone
         /// </summary>
-        public static bool TryParse(string utcTime, out DateTime hawaiianDateTime)
+        public static bool TryParse(string utcTime, out HawaiiDateTime hawaiianDateTime)
         {
             try
             {
@@ -100,7 +183,7 @@
             }
             catch (Exception ex)
             {
-                hawaiianDateTime = default(DateTime);
+                hawaiianDateTime = default(HawaiiDateTime);
                 return false;
             }
         }

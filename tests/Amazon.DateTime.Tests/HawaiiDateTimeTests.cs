@@ -1,6 +1,5 @@
 ﻿namespace Amazon.DateTime.Tests
 {
-    using Amazon.DateTime.Calculators;
     using System;
     using Xunit;
 
@@ -21,6 +20,19 @@
             {
                 Assert.Equal(10, compare.Hours);
             }
+        }
+
+        [Fact]
+        public void Should_return_negative_10_hours_for_an_offset()
+        {
+            var offset = HawaiiDateTime.NowOffset;
+            Assert.Equal(-10, offset.Hours);
+        }
+
+        [Fact]
+        public void Should_return_a_now_datetime_string_with_offset()
+        {
+            var value = HawaiiDateTime.NowString;
         }
     }
 }

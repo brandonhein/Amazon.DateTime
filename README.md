@@ -1,52 +1,58 @@
 # Amazon.DateTime
 
-The biggest challenge I always have... is remembering timezone offsets.  Working with onprem applications in the eastern timezone, I had no problem with 'if a `DateTime` fell in between two other `DateTime`.  With the big push to get applications into the cloud, the conversion to UTC as messing with my head.  Debugging apps locally suck, especially if folks are using `DateTime.Now` everywhere, since AWS uses UTC.  And linux apps use GMT.  Ughhhh.
-
-Here's a library, trying to help try and eliminate the burden, of remembering UTC-offsets.
-
 ### NuGet Information
 [AmazonDateTimeConversion](https://www.nuget.org/packages/AmazonDateTimeConversion/)   
 ![NuGet](https://img.shields.io/nuget/v/AmazonDateTimeConversion.svg?style=flat-square&label=nuget)
 
-Enjoy
+![](/.gifs/time_is_time.PNG)
 
-### DateTime.Now (for a specific timezone)
-Use this library/package to get the 'now' time of the specific timezone
+Handling timezones and daylight savings can be a nightmare.  Such a 'simple' concept makes everyone gang up on each other.  `DateTime` can be your friend, although, it can bite you in the butt when you deploy your code to an OS doesn't use the same `TimeZoneInfo`.  `DateTime` does magic when it parses, serializes, etc, by auto converting to the local time for you...  
+
+I work in the Eastern Timezone.  But when I deploy to AWS Lambda... it's UTC/GMT time.  So `DateTime.Now` give me two different values (notice how there is NO hour offset):
 ```csharp
+var local = DateTime.Now.ToString(); //2020-01-29T08:56:01.411
+var aws = DateTime.Now.ToString(); //2020-01-29T13:56:01.393
+```
+Makes it very difficult to manage, especially if you have time sensitive requirements, and the requirements are given in for a specific timezone.
+
+### So what does this package/library do?
+All this magic library is it takes a time and owns understanding daylight savings time, and hour offset from UTC.  It also allows for easy operator logic.
+#### Get 'Now' but in the eastern sense
+```csharp
+var easternNow = EasternDateTime.Now;
+```
+#### Create a timezoneDateTime on specific like 
+```csharp
+var easternTodayAt755pm = new EasternDateTime(TimeSpan.Parse("19:55")); //timespan for today @ this hour
+var christmasAtNoon = new EasternDateTime(2020, 12, 25, 12, 0, 0); //specific day at this time in ET
+var easternDateTime = new EasternDateTime(632039429000000); //ticks
+```
+#### Get the timezoneDateTime as a string that any `DateTime` likes
+```csharp
+var easternNowAsString = EasternDateTime.Now.ToString(); //2020-01-29T08:56:01.411-05:00
+```
+#### Easily compare DateTimes with the timezone datetime
+```csharp
+var eastern11am = new EasternDateTime(TimeSpan.Parse("11:00"));
+var eastern545pm = new EasternDateTime(TimeSpan.Parse("17:45"));
+
 var utcNow = DateTime.UtcNow;
+var utcfor1145eastern = DateTime.Parse($"{utcDate.Year}-{utcDate.Month}-{utcDate.Day}T16:45:00.000+00:00");
 
-//this library converts UTC now to the specified timezone time
-DateTime easternNow = EasternDateTime.Now;
-DateTime centralNow = CentralDateTime.Now;
-DateTime mountainNow = MountainDateTime.Now;
-DateTime pacificNow = PacificDateTime.Now;
-DateTime alaskaNow = AlaskaDateTime.Now;
-DateTime hawaiiNow = HawaiiDateTime.Now;
+var isBetween = (eastern11am < utcfor1145eastern) && (eastern545pm >= utcfor1145eastern); //true
 ```
-
-### Convert DateTime to a Timezone
-If you need to convert a utc time (use case of a utc time saved in dynamo/handled in your app everywhere), you can convert the date time for your presentation layer. Just use these `DateTime` extensions
+#### Go back to unviersal time if you'd like
 ```csharp
-DateTime eastern = someDateTime.ToEastern();
-DateTime central = someDateTime.ToCentral();
-DateTime mountain = someDateTime.ToMountain();
-DateTime pacific = someDateTime.ToPacific();
-DateTime alaskan = someDateTime.ToAlaska();
-DateTime hawaiian = someDateTime.ToHawaii();
+var utcTime = EasternDateTime.Now.ToUniversalTime(); 
 ```
-
-### Daylight savings included! (well mostly...)
-In all the time conversions, this package does a check if the date time it's converting falls inside the Daylight Savings timeframe.
-
-Daylight start date: `Second Sunday in March @ 2am`   
-Daylight end date: `First Sunday in November @ 2am`  
-See https://greenwichmeantime.com/time-zone/rules/usa/ for more information
-
-There's a cool `DateTime` extension you can leverage as well in this library/package
+#### All USA Timezones are availaible
 ```csharp
-var fallsInDaylightSavingsTime = someDateTime.IsInDaylightSavingsTime();
+var central = CentralDateTime.Now;
+var mountain = MountainDateTime.Now;
+var pacific = PacificDateTime.Now;
+var alaska = AlaskaDateTime.Now;
+var hawaii = HawaiiDateTime.Now;
+var universal = UniversalDateTime.Now;
 ```
 
-#### Things to Note about Daylight Savings
-- Daylight savings is administered at the county level. (read up on Arizona Daylight rules) [not considered in this package]
-- Hawaii also doesn't practice daylight savings, therefore the entire timezone is impacted [considered in this package]
+Enjoy
