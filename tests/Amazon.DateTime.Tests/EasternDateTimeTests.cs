@@ -5,6 +5,12 @@ namespace Amazon.DateTime.Tests
 
     public class EasternDateTimeTests
     {
+        [Fact]
+        public void Should_test()
+        {
+            var now = EasternDateTime.Now;
+        }
+
         //[Fact]
         //public void Should_take_current_time_now_and_compare_eastern_time_hour_offset_correctly()
         //{

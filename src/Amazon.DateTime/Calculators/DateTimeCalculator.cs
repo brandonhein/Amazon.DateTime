@@ -58,7 +58,7 @@
             hourOffset = utcOffset.TotalHours;
 
             hourOffset = dateTime.IsInDaylightSavingsTime() && observesDaylight
-                ? hourOffset - 1
+                ? hourOffset + 1
                 : hourOffset;
 
             dt = dt.AddHours(hourOffset);
