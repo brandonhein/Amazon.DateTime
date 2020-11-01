@@ -1,7 +1,11 @@
 ﻿namespace Amazon.DateTime
 {
+    using Amazon.DateTime.Serialization;
     using System;
 
+    [Serializable]
+    [Newtonsoft.Json.JsonConverter(typeof(NewtonsoftDateTimeConverter))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(SystemTextDateTimeConverter))]
     public class CentralDateTime : DateTimeBase
     {
         /// <summary>
@@ -28,7 +32,7 @@
             Date = dateTimeParse.Date;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public CentralDateTime(int year, int month, int day)
@@ -49,7 +53,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public CentralDateTime(int year, int month, int day, int hour, int minute, int second)
@@ -74,7 +78,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public CentralDateTime(int year, int month, int day, int hour, int minute, int second, int millisecond)
@@ -100,7 +104,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public CentralDateTime(TimeSpan timeOfDay)
@@ -129,7 +133,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         /// <summary>
@@ -146,15 +150,17 @@
             }
         }
 
+        public static Timezone Timezone => Timezone.Central;
+
         /// <summary>
         /// Hour offset for when in daylight time
         /// </summary>
-        public static string DaylightOffset => "-05:00";
+        public static TimeSpan DaylightOffset => TimeSpan.Parse("-05:00");
 
         /// <summary>
         /// Hour offset for when in standard time
         /// </summary>
-        public static string StandardOffset => "-06:00";
+        public static TimeSpan StandardOffset => TimeSpan.Parse("-06:00");
 
         /// <summary>
         /// Convert a utc <see cref="DateTime"/> value to the central timezone equivalent 
@@ -189,6 +195,69 @@
                 centralDateTime = default(CentralDateTime);
                 return false;
             }
+        }
+
+        public CentralDateTime Add(TimeSpan value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.Add(value);
+            return CentralDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public CentralDateTime AddDays(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddDays(value);
+            return CentralDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public CentralDateTime AddHours(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddHours(value);
+            return CentralDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public CentralDateTime AddMilliseconds(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddMilliseconds(value);
+            return CentralDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public CentralDateTime AddMinutes(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddMinutes(value);
+            return CentralDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public CentralDateTime AddMonths(int months)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddMonths(months);
+            return CentralDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public CentralDateTime AddSeconds(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddSeconds(value);
+            return CentralDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public CentralDateTime AddTicks(long value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddTicks(value);
+            return CentralDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public CentralDateTime AddYears(int value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddYears(value);
+            return CentralDateTime.Convert(dt.ToUniversalTime());
         }
     }
 }

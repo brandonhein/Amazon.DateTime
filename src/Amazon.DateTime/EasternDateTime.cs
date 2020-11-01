@@ -1,7 +1,11 @@
 ﻿namespace Amazon.DateTime
 {
+    using Amazon.DateTime.Serialization;
     using System;
 
+    [Serializable]
+    [Newtonsoft.Json.JsonConverter(typeof(NewtonsoftDateTimeConverter))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(SystemTextDateTimeConverter))]
     public class EasternDateTime : DateTimeBase
     {
         /// <summary>
@@ -28,7 +32,7 @@
             Date = dateTimeParse.Date;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         /// <summary>
@@ -52,7 +56,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         /// <summary>
@@ -80,7 +84,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         /// <summary>
@@ -109,7 +113,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         /// <summary>
@@ -141,7 +145,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         /// <summary>
@@ -161,15 +165,17 @@
             }
         }
 
+        public static Timezone Timezone => Timezone.Eastern;
+
         /// <summary>
         /// UTC Hour offset for when in daylight time
         /// </summary>
-        public static string DaylightOffset => "-04:00";
+        public static TimeSpan DaylightOffset => TimeSpan.Parse("-04:00");
 
         /// <summary>
         /// UTC Hour offset for when in standard time
         /// </summary>
-        public static string StandardOffset => "-05:00";
+        public static TimeSpan StandardOffset => TimeSpan.Parse("-05:00");
 
         /// <summary>
         /// Convert a utc <see cref="DateTime"/> value to the eastern timezone equivalent 
@@ -204,6 +210,69 @@
                 easternDateTime = default(EasternDateTime);
                 return false;
             }
+        }
+
+        public EasternDateTime Add(TimeSpan value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.Add(value);
+            return EasternDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public EasternDateTime AddDays(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddDays(value);
+            return EasternDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public EasternDateTime AddHours(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddHours(value);
+            return EasternDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public EasternDateTime AddMilliseconds(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddMilliseconds(value);
+            return EasternDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public EasternDateTime AddMinutes(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddMinutes(value);
+            return EasternDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public EasternDateTime AddMonths(int months)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddMonths(months);
+            return EasternDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public EasternDateTime AddSeconds(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddSeconds(value);
+            return EasternDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public EasternDateTime AddTicks(long value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddTicks(value);
+            return EasternDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public EasternDateTime AddYears(int value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddYears(value);
+            return EasternDateTime.Convert(dt.ToUniversalTime());
         }
     }
 }

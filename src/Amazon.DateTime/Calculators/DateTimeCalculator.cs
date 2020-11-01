@@ -44,7 +44,7 @@
         /// </summary>
         public static bool IsInDaylightSavingsTime(this DateTime dateTime)
         {
-            return DaylightStartDate(dateTime) <= dateTime && DaylightEndDate(dateTime) >= dateTime;
+            return DaylightStartDate(dateTime) <= dateTime && DaylightEndDate(dateTime) > dateTime;
         }
 
         private static DateTime DateTimeCoversion(this DateTime dateTime, Timezone timezone, bool observesDaylight)
@@ -69,50 +69,62 @@
 
         /// <summary>
         /// Converts <see cref="DateTime"/> to an Eastern <see cref="DateTime"/>
+        /// <param name="dateTime">DateTime struct to convert</param>
+        /// <param name="observesDaylight">If the location observes daylight savings, default value = true</param>
         /// </summary>
-        public static DateTime ToEastern(this DateTime dateTime)
+        public static DateTime ToEastern(this DateTime dateTime, bool observesDaylight = true)
         {
-            return Calculate(dateTime, Timezone.Eastern, true);
+            return Calculate(dateTime, Timezone.Eastern, observesDaylight);
         }
 
         /// <summary>
         /// Converts <see cref="DateTime"/> to an Central <see cref="DateTime"/>
+        /// <param name="dateTime">DateTime struct to convert</param>
+        /// <param name="observesDaylight">If the location observes daylight savings, default value = true</param>
         /// </summary>
-        public static DateTime ToCentral(this DateTime dateTime)
+        public static DateTime ToCentral(this DateTime dateTime, bool observesDaylight = true)
         {
-            return Calculate(dateTime, Timezone.Central, true);
+            return Calculate(dateTime, Timezone.Central, observesDaylight);
         }
 
         /// <summary>
         /// Converts <see cref="DateTime"/> to an Mountain <see cref="DateTime"/>
+        /// <param name="dateTime">DateTime struct to convert</param>
+        /// <param name="observesDaylight">If the location observes daylight savings, default value = true</param>
         /// </summary>
-        public static DateTime ToMountain(this DateTime dateTime)
+        public static DateTime ToMountain(this DateTime dateTime, bool observesDaylight = true)
         {
-            return Calculate(dateTime, Timezone.Mountain, true);
+            return Calculate(dateTime, Timezone.Mountain, observesDaylight);
         }
 
         /// <summary>
         /// Converts <see cref="DateTime"/> to an Pacific <see cref="DateTime"/>
+        /// <param name="dateTime">DateTime struct to convert</param>
+        /// <param name="observesDaylight">If the location observes daylight savings, default value = true</param>
         /// </summary>
-        public static DateTime ToPacific(this DateTime dateTime)
+        public static DateTime ToPacific(this DateTime dateTime, bool observesDaylight = true)
         {
-            return Calculate(dateTime, Timezone.Pacific, true);
+            return Calculate(dateTime, Timezone.Pacific, observesDaylight);
         }
 
         /// <summary>
         /// Converts <see cref="DateTime"/> to an Alaska <see cref="DateTime"/>
+        /// <param name="dateTime">DateTime struct to convert</param>
+        /// <param name="observesDaylight">If the location observes daylight savings, default value = true</param>
         /// </summary>
-        public static DateTime ToAlaska(this DateTime dateTime)
+        public static DateTime ToAlaska(this DateTime dateTime, bool observesDaylight = true)
         {
-            return Calculate(dateTime, Timezone.Alaska, true);
+            return Calculate(dateTime, Timezone.Alaska, observesDaylight);
         }
 
         /// <summary>
         /// Converts <see cref="DateTime"/> to an Hawaii <see cref="DateTime"/>
         /// </summary>
-        public static DateTime ToHawaii(this DateTime dateTime)
+        /// <param name="dateTime">DateTime struct to convert</param>
+        /// <param name="observesDaylight">If the location observes daylight savings, default value = false</param>
+        public static DateTime ToHawaii(this DateTime dateTime, bool observesDaylight = false)
         {
-            return Calculate(dateTime, Timezone.Hawaii, false);
+            return Calculate(dateTime, Timezone.Hawaii, observesDaylight);
         }
 
         private static DateTime Calculate(this DateTime dateTime, Timezone timezone, bool observesDaylight)

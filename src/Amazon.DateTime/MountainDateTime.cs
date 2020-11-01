@@ -1,7 +1,11 @@
 ﻿namespace Amazon.DateTime
 {
+    using Amazon.DateTime.Serialization;
     using System;
 
+    [Serializable]
+    [Newtonsoft.Json.JsonConverter(typeof(NewtonsoftDateTimeConverter))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(SystemTextDateTimeConverter))]
     public class MountainDateTime : DateTimeBase
     {
         public MountainDateTime(long ticks)
@@ -25,7 +29,7 @@
             Date = dateTimeParse.Date;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public MountainDateTime(int year, int month, int day)
@@ -46,7 +50,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public MountainDateTime(int year, int month, int day, int hour, int minute, int second)
@@ -71,7 +75,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public MountainDateTime(int year, int month, int day, int hour, int minute, int second, int millisecond)
@@ -97,7 +101,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public MountainDateTime(TimeSpan timeOfDay)
@@ -126,7 +130,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         /// <summary>
@@ -143,15 +147,17 @@
             }
         }
 
+        public static Timezone Timezone => Timezone.Mountain;
+
         /// <summary>
         /// Hour offset for when in daylight time
         /// </summary>
-        public static string DaylightOffset => "-06:00";
+        public static TimeSpan DaylightOffset => TimeSpan.Parse("-06:00");
 
         /// <summary>
         /// Hour offset for when in standard time
         /// </summary>
-        public static string StandardOffset => "-07:00";
+        public static TimeSpan StandardOffset => TimeSpan.Parse("-07:00");
 
         /// <summary>
         /// Convert a utc <see cref="DateTime"/> value to the mountain timezone equivalent 
@@ -186,6 +192,69 @@
                 mountainDateTime = default(MountainDateTime);
                 return false;
             }
+        }
+
+        public MountainDateTime Add(TimeSpan value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.Add(value);
+            return MountainDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public MountainDateTime AddDays(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddDays(value);
+            return MountainDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public MountainDateTime AddHours(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddHours(value);
+            return MountainDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public MountainDateTime AddMilliseconds(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddMilliseconds(value);
+            return MountainDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public MountainDateTime AddMinutes(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddMinutes(value);
+            return MountainDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public MountainDateTime AddMonths(int months)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddMonths(months);
+            return MountainDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public MountainDateTime AddSeconds(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddSeconds(value);
+            return MountainDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public MountainDateTime AddTicks(long value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddTicks(value);
+            return MountainDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public MountainDateTime AddYears(int value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddYears(value);
+            return MountainDateTime.Convert(dt.ToUniversalTime());
         }
     }
 }

@@ -62,35 +62,47 @@
             <para>https://greenwichmeantime.com/time-zone/rules/usa/</para>
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.DateTimeCalculator.ToEastern(System.DateTime)">
+        <member name="M:Amazon.DateTime.DateTimeCalculator.ToEastern(System.DateTime,System.Boolean)">
             <summary>
             Converts <see cref="T:System.DateTime"/> to an Eastern <see cref="T:System.DateTime"/>
+            <param name="dateTime">DateTime struct to convert</param>
+            <param name="observesDaylight">If the location observes daylight savings, default value = true</param>
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.DateTimeCalculator.ToCentral(System.DateTime)">
+        <member name="M:Amazon.DateTime.DateTimeCalculator.ToCentral(System.DateTime,System.Boolean)">
             <summary>
             Converts <see cref="T:System.DateTime"/> to an Central <see cref="T:System.DateTime"/>
+            <param name="dateTime">DateTime struct to convert</param>
+            <param name="observesDaylight">If the location observes daylight savings, default value = true</param>
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.DateTimeCalculator.ToMountain(System.DateTime)">
+        <member name="M:Amazon.DateTime.DateTimeCalculator.ToMountain(System.DateTime,System.Boolean)">
             <summary>
             Converts <see cref="T:System.DateTime"/> to an Mountain <see cref="T:System.DateTime"/>
+            <param name="dateTime">DateTime struct to convert</param>
+            <param name="observesDaylight">If the location observes daylight savings, default value = true</param>
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.DateTimeCalculator.ToPacific(System.DateTime)">
+        <member name="M:Amazon.DateTime.DateTimeCalculator.ToPacific(System.DateTime,System.Boolean)">
             <summary>
             Converts <see cref="T:System.DateTime"/> to an Pacific <see cref="T:System.DateTime"/>
+            <param name="dateTime">DateTime struct to convert</param>
+            <param name="observesDaylight">If the location observes daylight savings, default value = true</param>
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.DateTimeCalculator.ToAlaska(System.DateTime)">
+        <member name="M:Amazon.DateTime.DateTimeCalculator.ToAlaska(System.DateTime,System.Boolean)">
             <summary>
             Converts <see cref="T:System.DateTime"/> to an Alaska <see cref="T:System.DateTime"/>
+            <param name="dateTime">DateTime struct to convert</param>
+            <param name="observesDaylight">If the location observes daylight savings, default value = true</param>
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.DateTimeCalculator.ToHawaii(System.DateTime)">
+        <member name="M:Amazon.DateTime.DateTimeCalculator.ToHawaii(System.DateTime,System.Boolean)">
             <summary>
             Converts <see cref="T:System.DateTime"/> to an Hawaii <see cref="T:System.DateTime"/>
             </summary>
+            <param name="dateTime">DateTime struct to convert</param>
+            <param name="observesDaylight">If the location observes daylight savings, default value = false</param>
         </member>
         <member name="T:Amazon.DateTime.TimezoneCalculator">
             <summary>
@@ -258,37 +270,37 @@
             <para>D2 is earlier or the same as D1</para>
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.DateTimeExtensions.ToEasternString(System.DateTime)">
+        <member name="M:Amazon.DateTime.DateTimeExtensions.ToEasternString(System.DateTime,System.Boolean)">
             <summary>
             Converts a UTC <see cref="T:System.DateTime"/> to a eastern time string format
             <para>FORMAT: yyyy-MM-ddTHH:mm:ss.fffzzz</para>
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.DateTimeExtensions.ToCentralString(System.DateTime)">
+        <member name="M:Amazon.DateTime.DateTimeExtensions.ToCentralString(System.DateTime,System.Boolean)">
             <summary>
             Converts a UTC <see cref="T:System.DateTime"/> to a central time string format
             <para>FORMAT: yyyy-MM-ddTHH:mm:ss.fffzzz</para>
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.DateTimeExtensions.ToMountainString(System.DateTime)">
+        <member name="M:Amazon.DateTime.DateTimeExtensions.ToMountainString(System.DateTime,System.Boolean)">
             <summary>
             Converts a UTC <see cref="T:System.DateTime"/> to a mountain time string format
             <para>FORMAT: yyyy-MM-ddTHH:mm:ss.fffzzz</para>
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.DateTimeExtensions.ToPacificString(System.DateTime)">
+        <member name="M:Amazon.DateTime.DateTimeExtensions.ToPacificString(System.DateTime,System.Boolean)">
             <summary>
             Converts a UTC <see cref="T:System.DateTime"/> to a pacific time string format
             <para>FORMAT: yyyy-MM-ddTHH:mm:ss.fffzzz</para>
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.DateTimeExtensions.ToAlaskaString(System.DateTime)">
+        <member name="M:Amazon.DateTime.DateTimeExtensions.ToAlaskaString(System.DateTime,System.Boolean)">
             <summary>
             Converts a UTC <see cref="T:System.DateTime"/> to a alaska time string format
             <para>FORMAT: yyyy-MM-ddTHH:mm:ss.fffzzz</para>
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.DateTimeExtensions.ToHawaiiString(System.DateTime)">
+        <member name="M:Amazon.DateTime.DateTimeExtensions.ToHawaiiString(System.DateTime,System.Boolean)">
             <summary>
             Converts a UTC <see cref="T:System.DateTime"/> to a hawaii time string format
             <para>FORMAT: yyyy-MM-ddTHH:mm:ss.fffzzz</para>
@@ -524,12 +536,12 @@
         </member>
         <member name="M:Amazon.DateTime.UniversalDateTime.Convert(System.DateTime)">
             <summary>
-            Convert a utc <see cref="T:System.DateTime"/> value to the hawaii timezone equivalent 
+            Convert a utc <see cref="T:System.DateTime"/> value to the GMT timezone equivalent 
             </summary>
         </member>
         <member name="M:Amazon.DateTime.UniversalDateTime.Parse(System.String)">
             <summary>
-            Parse a utc time string to get the hawaii timezone
+            Parse a utc time string to get the universal (GMT) timezone
             </summary>
         </member>
         <member name="M:Amazon.DateTime.UniversalDateTime.TryParse(System.String,Amazon.DateTime.UniversalDateTime@)">
