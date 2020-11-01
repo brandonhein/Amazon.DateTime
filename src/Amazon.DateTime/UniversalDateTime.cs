@@ -1,7 +1,11 @@
 ﻿namespace Amazon.DateTime
 {
+    using Amazon.DateTime.Serialization;
     using System;
 
+    [Serializable]
+    [Newtonsoft.Json.JsonConverter(typeof(NewtonsoftDateTimeConverter))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(SystemTextDateTimeConverter))]
     public class UniversalDateTime : DateTimeBase
     {
         public UniversalDateTime(long ticks)
@@ -24,7 +28,7 @@
             Date = dateTimeParse.Date;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public UniversalDateTime(int year, int month, int day)
@@ -44,7 +48,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public UniversalDateTime(int year, int month, int day, int hour, int minute, int second)
@@ -68,7 +72,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public UniversalDateTime(int year, int month, int day, int hour, int minute, int second, int millisecond)
@@ -93,7 +97,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public UniversalDateTime(TimeSpan timeOfDay)
@@ -121,7 +125,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public static UniversalDateTime Now => Convert(DateTime.UtcNow);
@@ -135,18 +139,20 @@
             }
         }
 
+        public static Timezone Timezone => Timezone.Default;
+
         /// <summary>
         /// Hour offset for when in daylight time
         /// </summary>
-        public static string DaylightOffset => "00:00";
+        public static TimeSpan DaylightOffset => TimeSpan.Parse("00:00");
 
         /// <summary>
         /// Hour offset for when in standard time
         /// </summary>
-        public static string StandardOffset => "00:00";
+        public static TimeSpan StandardOffset => TimeSpan.Parse("00:00");
 
         /// <summary>
-        /// Convert a utc <see cref="DateTime"/> value to the hawaii timezone equivalent 
+        /// Convert a utc <see cref="DateTime"/> value to the GMT timezone equivalent 
         /// </summary>
         public static UniversalDateTime Convert(DateTime utcDateTime)
         {
@@ -155,7 +161,7 @@
         }
 
         /// <summary>
-        /// Parse a utc time string to get the hawaii timezone
+        /// Parse a utc time string to get the universal (GMT) timezone
         /// </summary>
         public static UniversalDateTime Parse(string utcTime)
         {
@@ -178,6 +184,69 @@
                 universalDateTime = default(UniversalDateTime);
                 return false;
             }
+        }
+
+        public UniversalDateTime Add(TimeSpan value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.Add(value);
+            return UniversalDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public UniversalDateTime AddDays(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddDays(value);
+            return UniversalDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public UniversalDateTime AddHours(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddHours(value);
+            return UniversalDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public UniversalDateTime AddMilliseconds(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddMilliseconds(value);
+            return UniversalDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public UniversalDateTime AddMinutes(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddMinutes(value);
+            return UniversalDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public UniversalDateTime AddMonths(int months)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddMonths(months);
+            return UniversalDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public UniversalDateTime AddSeconds(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddSeconds(value);
+            return UniversalDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public UniversalDateTime AddTicks(long value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddTicks(value);
+            return UniversalDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public UniversalDateTime AddYears(int value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddYears(value);
+            return UniversalDateTime.Convert(dt.ToUniversalTime());
         }
     }
 }

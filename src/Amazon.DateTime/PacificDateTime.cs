@@ -1,7 +1,11 @@
 ﻿namespace Amazon.DateTime
 {
+    using Amazon.DateTime.Serialization;
     using System;
 
+    [Serializable]
+    [Newtonsoft.Json.JsonConverter(typeof(NewtonsoftDateTimeConverter))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(SystemTextDateTimeConverter))]
     public class PacificDateTime : DateTimeBase
     {
         public PacificDateTime(long ticks)
@@ -25,7 +29,7 @@
             Date = dateTimeParse.Date;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public PacificDateTime(int year, int month, int day)
@@ -46,7 +50,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public PacificDateTime(int year, int month, int day, int hour, int minute, int second)
@@ -71,7 +75,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public PacificDateTime(int year, int month, int day, int hour, int minute, int second, int millisecond)
@@ -97,7 +101,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public PacificDateTime(TimeSpan timeOfDay)
@@ -126,7 +130,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         /// <summary>
@@ -143,15 +147,17 @@
             }
         }
 
+        public static Timezone Timezone => Timezone.Pacific;
+
         /// <summary>
         /// Hour offset for when in daylight time
         /// </summary>
-        public static string DaylightOffset => "-07:00";
+        public static TimeSpan DaylightOffset => TimeSpan.Parse("-07:00");
 
         /// <summary>
         /// Hour offset for when in standard time
         /// </summary>
-        public static string StandardOffset => "-08:00";
+        public static TimeSpan StandardOffset => TimeSpan.Parse("-08:00");
 
         /// <summary>
         /// Convert a utc <see cref="DateTime"/> value to the pacific timezone equivalent 
@@ -186,6 +192,69 @@
                 pacificDateTime = default(PacificDateTime);
                 return false;
             }
+        }
+
+        public PacificDateTime Add(TimeSpan value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.Add(value);
+            return PacificDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public PacificDateTime AddDays(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddDays(value);
+            return PacificDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public PacificDateTime AddHours(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddHours(value);
+            return PacificDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public PacificDateTime AddMilliseconds(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddMilliseconds(value);
+            return PacificDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public PacificDateTime AddMinutes(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddMinutes(value);
+            return PacificDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public PacificDateTime AddMonths(int months)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddMonths(months);
+            return PacificDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public PacificDateTime AddSeconds(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddSeconds(value);
+            return PacificDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public PacificDateTime AddTicks(long value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddTicks(value);
+            return PacificDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public PacificDateTime AddYears(int value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddYears(value);
+            return PacificDateTime.Convert(dt.ToUniversalTime());
         }
     }
 }

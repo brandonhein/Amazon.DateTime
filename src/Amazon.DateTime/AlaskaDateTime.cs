@@ -1,7 +1,11 @@
 ﻿namespace Amazon.DateTime
 {
+    using Amazon.DateTime.Serialization;
     using System;
 
+    [Serializable]
+    [Newtonsoft.Json.JsonConverter(typeof(NewtonsoftDateTimeConverter))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(SystemTextDateTimeConverter))]
     public class AlaskaDateTime : DateTimeBase
     {
         public AlaskaDateTime(long ticks)
@@ -25,7 +29,7 @@
             Date = dateTimeParse.Date;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public AlaskaDateTime(int year, int month, int day)
@@ -46,7 +50,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public AlaskaDateTime(int year, int month, int day, int hour, int minute, int second)
@@ -64,7 +68,11 @@
                 .ToAlaska();
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
+
+            dateTimeParse = DateTime.Parse(Value);
+
             Date = dateTimeParse.Date;
+            Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
             TimeOfDay = dateTimeParse.TimeOfDay;
@@ -93,7 +101,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public AlaskaDateTime(TimeSpan timeOfDay)
@@ -122,7 +130,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         /// <summary>
@@ -139,15 +147,17 @@
             }
         }
 
+        public static Timezone Timezone => Timezone.Alaska;
+
         /// <summary>
         /// Hour offset for when in daylight time
         /// </summary>
-        public static string DaylightOffset => "-08:00";
+        public static TimeSpan DaylightOffset => TimeSpan.Parse("-08:00");
 
         /// <summary>
         /// Hour offset for when in standard time
         /// </summary>
-        public static string StandardOffset => "-09:00";
+        public static TimeSpan StandardOffset => TimeSpan.Parse("-09:00");
 
         /// <summary>
         /// Convert a utc <see cref="DateTime"/> value to the alaska equivalent 
@@ -182,6 +192,69 @@
                 alaskaDateTime = default(AlaskaDateTime);
                 return false;
             }
+        }
+
+        public AlaskaDateTime Add(TimeSpan value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.Add(value);
+            return AlaskaDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public AlaskaDateTime AddDays(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddDays(value);
+            return AlaskaDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public AlaskaDateTime AddHours(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddHours(value);
+            return AlaskaDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public AlaskaDateTime AddMilliseconds(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddMilliseconds(value);
+            return AlaskaDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public AlaskaDateTime AddMinutes(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddMinutes(value);
+            return AlaskaDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public AlaskaDateTime AddMonths(int months)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddMonths(months);
+            return AlaskaDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public AlaskaDateTime AddSeconds(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddSeconds(value);
+            return AlaskaDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public AlaskaDateTime AddTicks(long value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddTicks(value);
+            return AlaskaDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public AlaskaDateTime AddYears(int value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddYears(value);
+            return AlaskaDateTime.Convert(dt.ToUniversalTime());
         }
     }
 }

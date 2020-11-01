@@ -1,7 +1,11 @@
 ﻿namespace Amazon.DateTime
 {
+    using Amazon.DateTime.Serialization;
     using System;
 
+    [Serializable]
+    [Newtonsoft.Json.JsonConverter(typeof(NewtonsoftDateTimeConverter))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(SystemTextDateTimeConverter))]
     public class HawaiiDateTime : DateTimeBase
     {
         public HawaiiDateTime(long ticks)
@@ -25,7 +29,7 @@
             Date = dateTimeParse.Date;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public HawaiiDateTime(int year, int month, int day)
@@ -46,7 +50,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public HawaiiDateTime(int year, int month, int day, int hour, int minute, int second)
@@ -71,7 +75,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public HawaiiDateTime(int year, int month, int day, int hour, int minute, int second, int millisecond)
@@ -97,7 +101,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public HawaiiDateTime(TimeSpan timeOfDay)
@@ -126,7 +130,7 @@
             Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay + TimeSpan.Parse(Offset);
+            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         /// <summary>
@@ -143,15 +147,17 @@
             }
         }
 
+        public static Timezone Timezone => Timezone.Hawaii;
+
         /// <summary>
         /// Hour offset for when in daylight time
         /// </summary>
-        public static string DaylightOffset => "-10:00";
+        public static TimeSpan DaylightOffset => TimeSpan.Parse("-10:00");
 
         /// <summary>
         /// Hour offset for when in standard time
         /// </summary>
-        public static string StandardOffset => "-10:00";
+        public static TimeSpan StandardOffset => TimeSpan.Parse("-10:00");
 
         /// <summary>
         /// Convert a utc <see cref="DateTime"/> value to the hawaii timezone equivalent 
@@ -186,6 +192,69 @@
                 hawaiianDateTime = default(HawaiiDateTime);
                 return false;
             }
+        }
+
+        public HawaiiDateTime Add(TimeSpan value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.Add(value);
+            return HawaiiDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public HawaiiDateTime AddDays(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddDays(value);
+            return HawaiiDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public HawaiiDateTime AddHours(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddHours(value);
+            return HawaiiDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public HawaiiDateTime AddMilliseconds(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddMilliseconds(value);
+            return HawaiiDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public HawaiiDateTime AddMinutes(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddMinutes(value);
+            return HawaiiDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public HawaiiDateTime AddMonths(int months)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddMonths(months);
+            return HawaiiDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public HawaiiDateTime AddSeconds(double value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddSeconds(value);
+            return HawaiiDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public HawaiiDateTime AddTicks(long value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddTicks(value);
+            return HawaiiDateTime.Convert(dt.ToUniversalTime());
+        }
+
+        public HawaiiDateTime AddYears(int value)
+        {
+            var dt = DateTime.Parse(Value);
+            dt = dt.AddYears(value);
+            return HawaiiDateTime.Convert(dt.ToUniversalTime());
         }
     }
 }
