@@ -90,7 +90,9 @@
         {
             get
             {
-                var offset = Offset.StartsWith("-") ? Offset : string.Concat("+", Offset);
+                var offset = string.Format("{0:00}:{1:00}", Offset.Hours, Offset.Minutes);
+                if (!offset.StartsWith("-"))
+                    offset = string.Concat("+", offset);
                 return string.Concat(Year.ToString("0000"), "-", Month.ToString("00"), "-", Day.ToString("00"), "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond.ToString("000"), offset);
             }
         }
