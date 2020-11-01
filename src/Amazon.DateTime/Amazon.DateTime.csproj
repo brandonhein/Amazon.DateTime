@@ -7,7 +7,7 @@
     <Description>Package to help with the conversion of UTC/GMT AWS times to a specified USA Timezone.  PACKAGE NOT AFFILIATED WITH AMAZON</Description>
     <PackageProjectUrl>https://github.com/brandonhein/Amazon.DateTime</PackageProjectUrl>
     <RepositoryUrl>https://github.com/brandonhein/Amazon.DateTime</RepositoryUrl>
-    <Version>1.0.2</Version>
+    <Version>2.0.0</Version>
     <PackageId>AmazonDateTimeConversion</PackageId>
     <PackageTags>Amazon DateTime Hein</PackageTags>
   </PropertyGroup>
