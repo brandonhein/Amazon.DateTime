@@ -1,14 +1,14 @@
 ﻿namespace Amazon.DateTime
 {
-    using Amazon.DateTime.Serailization;
-    using Newtonsoft.Json;
+    using Amazon.DateTime.Serialization;
     using System;
     using System.Collections.Generic;
     using System.Runtime.Serialization;
     using System.Xml.Serialization;
 
     [Serializable]
-    [JsonConverter(typeof(JsonDateTimeConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(NewtonsoftDateTimeConverter))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(SystemTextDateTimeConverter))]
     public abstract class DateTimeBase : IEquatable<DateTimeBase>//, IComparable, IComparable<DateTime>, IEquatable<DateTime>, IFormattable, ISerializable
     {
         protected DateTimeBase()
@@ -16,55 +16,69 @@
 
         [XmlIgnore]
         [IgnoreDataMember]
-        [JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public long Ticks { get; protected set; }
         [XmlIgnore]
         [IgnoreDataMember]
-        [JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public int Second { get; protected set; }
         [XmlIgnore]
         [IgnoreDataMember]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public DateTime Date { get; protected set; }
         [XmlIgnore]
         [IgnoreDataMember]
-        [JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public int Month { get; protected set; }
         [XmlIgnore]
         [IgnoreDataMember]
-        [JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public int Minute { get; protected set; }
         [XmlIgnore]
         [IgnoreDataMember]
-        [JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public int Millisecond { get; protected set; }
         [XmlIgnore]
         [IgnoreDataMember]
-        [JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public int Hour { get; protected set; }
         [XmlIgnore]
         [IgnoreDataMember]
-        [JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public int DayOfYear { get; protected set; }
         [XmlIgnore]
         [IgnoreDataMember]
-        [JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public DayOfWeek DayOfWeek { get; protected set; }
         [XmlIgnore]
         [IgnoreDataMember]
-        [JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public int Day { get; protected set; }
         [XmlIgnore]
         [IgnoreDataMember]
-        [JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public TimeSpan TimeOfDay { get; protected set; }
         [XmlIgnore]
         [IgnoreDataMember]
-        [JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public int Year { get; protected set; }
         [XmlIgnore]
         [IgnoreDataMember]
-        [JsonIgnore]
-        public string Offset { get; protected set; }
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
+        public TimeSpan Offset { get; protected set; }
 
         ///<summary>
         ///Creates a timestamp of the format of 'yyyy-MM-ddTHH:mm:ss.fffzzz'
@@ -136,7 +150,7 @@
             hashCode = hashCode * -1521134295 + Day.GetHashCode();
             hashCode = hashCode * -1521134295 + EqualityComparer<TimeSpan>.Default.GetHashCode(TimeOfDay);
             hashCode = hashCode * -1521134295 + Year.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Offset);
+            hashCode = hashCode * -1521134295 + EqualityComparer<TimeSpan>.Default.GetHashCode(Offset);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Value);
             return hashCode;
         }
