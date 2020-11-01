@@ -1,14 +1,16 @@
-﻿namespace Amazon.DateTime.Serailization
+﻿namespace Amazon.DateTime.Serialization
 {
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using System;
 
-    public class JsonDateTimeConverter : IsoDateTimeConverter
+    public class NewtonsoftDateTimeConverter : IsoDateTimeConverter
     {
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(DateTimeBase);
+            return objectType == typeof(DateTimeBase) || objectType == typeof(EasternDateTime) || objectType == typeof(CentralDateTime) ||
+                 objectType == typeof(MountainDateTime) || objectType == typeof(PacificDateTime) || objectType == typeof(AlaskaDateTime) ||
+                 objectType == typeof(HawaiiDateTime) || objectType == typeof(UniversalDateTime);
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
