@@ -24,15 +24,13 @@
             Minute = dateTime.Minute;
             Second = dateTime.Second;
             Millisecond = dateTime.Millisecond;
-            Ticks = ticks;
 
             Offset = dateTime.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
+            Date = new EasternDateTime(Year, Month, Day);
             var dateTimeParse = DateTime.Parse(Value);
-            Date = dateTimeParse.Date;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         /// <summary>
@@ -44,19 +42,16 @@
             Month = month;
             Day = day;
 
-            var dateTimeParse = DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T00:00:00"))
-                .ToUniversalTime()
-                .ToEastern();
+            var dateTimeParse = DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T00:00:00Z"))
+                .ToUniversalTime();
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
             dateTimeParse = DateTime.Parse(Value);
-
-            Date = dateTimeParse.Date;
-            Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay;
+
+            Date = this;
         }
 
         /// <summary>
@@ -72,19 +67,15 @@
             Second = second;
 
             var dateTimeParse = 
-                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00")))
-                .ToUniversalTime()
-                .ToEastern();
+                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), "Z"))
+                .ToUniversalTime();
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
+            Date = new EasternDateTime(Year, Month, Day);
             dateTimeParse = DateTime.Parse(Value);
-
-            Date = dateTimeParse.Date;
-            Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         /// <summary>
@@ -101,19 +92,15 @@
             Millisecond = millisecond;
 
             var dateTimeParse =
-                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond))
-                .ToUniversalTime()
-                .ToEastern();
+                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond, "Z"))
+                .ToUniversalTime();
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
+            Date = new EasternDateTime(Year, Month, Day);
             dateTimeParse = DateTime.Parse(Value);
-
-            Date = dateTimeParse.Date;
-            Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         /// <summary>
@@ -121,7 +108,7 @@
         /// </summary>
         public EasternDateTime(TimeSpan timeOfDay)
         {
-            var easternNow = DateTime.UtcNow.ToEastern();
+            var easternNow = Now;
 
             Year = easternNow.Year;
             Month = easternNow.Month;
@@ -133,19 +120,15 @@
             Millisecond = timeOfDay.Milliseconds;
 
             var dateTimeParse =
-                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond))
-                .ToUniversalTime()
-                .ToEastern();
+                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond, "Z"))
+                .ToUniversalTime();
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
+            Date = new EasternDateTime(Year, Month, Day);
             dateTimeParse = DateTime.Parse(Value);
-
-            Date = dateTimeParse.Date;
-            Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         /// <summary>
@@ -160,7 +143,7 @@
         {
             get
             {
-                var utcNow = DateTime.UtcNow;
+                var utcNow = DateTime.UtcNow.ToEastern();
                 return new EasternDateTime(utcNow.Year, utcNow.Month, utcNow.Day);
             }
         }

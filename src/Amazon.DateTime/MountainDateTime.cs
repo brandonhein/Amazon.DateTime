@@ -21,15 +21,13 @@
             Minute = dateTime.Minute;
             Second = dateTime.Second;
             Millisecond = dateTime.Millisecond;
-            Ticks = ticks;
 
             Offset = dateTime.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
+            Date = new MountainDateTime(Year, Month, Day);
             var dateTimeParse = DateTime.Parse(Value);
-            Date = dateTimeParse.Date;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public MountainDateTime(int year, int month, int day)
@@ -38,19 +36,16 @@
             Month = month;
             Day = day;
 
-            var dateTimeParse = DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T00:00:00"))
-                .ToUniversalTime()
-                .ToMountain();
+            var dateTimeParse = DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T00:00:00Z"))
+                .ToUniversalTime();
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
             dateTimeParse = DateTime.Parse(Value);
-
-            Date = dateTimeParse.Date;
-            Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay;
+
+            Date = this;
         }
 
         public MountainDateTime(int year, int month, int day, int hour, int minute, int second)
@@ -63,19 +58,15 @@
             Second = second;
 
             var dateTimeParse =
-                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00")))
-                .ToUniversalTime()
-                .ToMountain();
+                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), "Z"))
+                .ToUniversalTime();
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
+            Date = new MountainDateTime(Year, Month, Day);
             dateTimeParse = DateTime.Parse(Value);
-
-            Date = dateTimeParse.Date;
-            Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public MountainDateTime(int year, int month, int day, int hour, int minute, int second, int millisecond)
@@ -89,19 +80,15 @@
             Millisecond = millisecond;
 
             var dateTimeParse =
-                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond))
-                .ToUniversalTime()
-                .ToMountain();
+                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond, "Z"))
+                .ToUniversalTime();
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
+            Date = new MountainDateTime(Year, Month, Day);
             dateTimeParse = DateTime.Parse(Value);
-
-            Date = dateTimeParse.Date;
-            Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         public MountainDateTime(TimeSpan timeOfDay)
@@ -118,19 +105,15 @@
             Millisecond = timeOfDay.Milliseconds;
 
             var dateTimeParse =
-                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond))
-                .ToUniversalTime()
-                .ToMountain();
+                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond, "Z"))
+                .ToUniversalTime();
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
+            Date = new MountainDateTime(Year, Month, Day);
             dateTimeParse = DateTime.Parse(Value);
-
-            Date = dateTimeParse.Date;
-            Ticks = dateTimeParse.Ticks;
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
-            TimeOfDay = dateTimeParse.TimeOfDay;
         }
 
         /// <summary>
@@ -142,7 +125,7 @@
         {
             get
             {
-                var utcNow = DateTime.UtcNow;
+                var utcNow = DateTime.UtcNow.ToMountain();
                 return new MountainDateTime(utcNow.Year, utcNow.Month, utcNow.Day);
             }
         }

@@ -24,18 +24,18 @@
         /// Daylight Savings starts on the Second Sunday in March at 2am
         /// <para>https://greenwichmeantime.com/time-zone/rules/usa/</para>
         /// </summary>
-        private static DateTime DaylightStartDate(this DateTime date)
+        internal static DateTime DaylightStartDate(this DateTime date)
         {
-            return new DateTime(date.Year, 3, 1).NthOf(2, DayOfWeek.Sunday).AddHours(2);
+            return DateTime.SpecifyKind(new DateTime(date.Year, 3, 1).NthOf(2, DayOfWeek.Sunday).AddHours(2), DateTimeKind.Utc);
         }
 
         /// <summary>
         /// Daylight Savings ends on the First Sunday in November at 2am
         /// <para>https://greenwichmeantime.com/time-zone/rules/usa/</para>
         /// </summary>
-        private static DateTime DaylightEndDate(this DateTime date)
+        internal static DateTime DaylightEndDate(this DateTime date)
         {
-            return new DateTime(date.Year, 11, 1).NthOf(1, DayOfWeek.Sunday).AddHours(2);
+            return DateTime.SpecifyKind(new DateTime(date.Year, 11, 1).NthOf(1, DayOfWeek.Sunday).AddHours(2), DateTimeKind.Utc);
         }
 
         /// <summary>
@@ -54,10 +54,9 @@
             var tzInfo = tz.GetTimezoneByCode(timezone);
 
             var utcOffset = tzInfo.BaseUtcOffset;
-            double hourOffset;
-            hourOffset = utcOffset.TotalHours;
+            var hourOffset = utcOffset.TotalHours;
 
-            hourOffset = dateTime.IsInDaylightSavingsTime() && observesDaylight
+            hourOffset = observesDaylight && dateTime.IsInDaylightSavingsTime()
                 ? hourOffset + 1
                 : hourOffset;
 
@@ -126,6 +125,7 @@
         {
             return Calculate(dateTime, Timezone.Hawaii, observesDaylight);
         }
+
 
         private static DateTime Calculate(this DateTime dateTime, Timezone timezone, bool observesDaylight)
         {

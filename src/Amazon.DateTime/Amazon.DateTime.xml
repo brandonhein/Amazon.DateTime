@@ -546,7 +546,7 @@
         </member>
         <member name="M:Amazon.DateTime.UniversalDateTime.TryParse(System.String,Amazon.DateTime.UniversalDateTime@)">
             <summary>
-            TryParse a utc time string to get the hawaii timezone
+            TryParse a utc time string to get the universial timezone
             </summary>
         </member>
     </members>

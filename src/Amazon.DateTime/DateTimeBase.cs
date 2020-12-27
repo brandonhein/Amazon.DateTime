@@ -9,7 +9,7 @@
     [Serializable]
     [Newtonsoft.Json.JsonConverter(typeof(NewtonsoftDateTimeConverter))]
     [System.Text.Json.Serialization.JsonConverter(typeof(SystemTextDateTimeConverter))]
-    public abstract class DateTimeBase : IEquatable<DateTimeBase>//, IComparable, IComparable<DateTime>, IEquatable<DateTime>, IFormattable, ISerializable
+    public abstract class DateTimeBase : IEquatable<DateTimeBase>, IComparable<DateTimeBase>, IComparable<DateTime>, IEquatable<DateTime>
     {
         protected DateTimeBase()
         { }
@@ -18,7 +18,7 @@
         [IgnoreDataMember]
         [Newtonsoft.Json.JsonIgnore]
         [System.Text.Json.Serialization.JsonIgnore]
-        public long Ticks { get; protected set; }
+        public long Ticks => DateTime.Parse(Value).Ticks;
         [XmlIgnore]
         [IgnoreDataMember]
         [Newtonsoft.Json.JsonIgnore]
@@ -28,7 +28,7 @@
         [IgnoreDataMember]
         [Newtonsoft.Json.JsonIgnore]
         [System.Text.Json.Serialization.JsonIgnore]
-        public DateTime Date { get; protected set; }
+        public DateTimeBase Date { get; protected set; }
         [XmlIgnore]
         [IgnoreDataMember]
         [Newtonsoft.Json.JsonIgnore]
@@ -68,7 +68,7 @@
         [IgnoreDataMember]
         [Newtonsoft.Json.JsonIgnore]
         [System.Text.Json.Serialization.JsonIgnore]
-        public TimeSpan TimeOfDay { get; protected set; }
+        public TimeSpan TimeOfDay => TimeSpan.Parse(string.Concat(Hour, ":", Minute, ":", Second));
         [XmlIgnore]
         [IgnoreDataMember]
         [Newtonsoft.Json.JsonIgnore]
@@ -95,6 +95,15 @@
                     offset = string.Concat("+", offset);
                 return string.Concat(Year.ToString("0000"), "-", Month.ToString("00"), "-", Day.ToString("00"), "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond.ToString("000"), offset);
             }
+        }
+
+        [XmlIgnore]
+        [IgnoreDataMember]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
+        protected string UtcValue
+        {
+            get { return string.Concat(Year.ToString("0000"), "-", Month.ToString("00"), "-", Day.ToString("00"), "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond.ToString("000"), "Z"); }
         }
 
         /// <summary>
@@ -155,6 +164,33 @@
             hashCode = hashCode * -1521134295 + EqualityComparer<TimeSpan>.Default.GetHashCode(Offset);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Value);
             return hashCode;
+        }
+
+        public bool Equals(DateTime other)
+        {
+            return this == other;
+        }
+
+        public int CompareTo(DateTime other)
+        {
+            if (this < other)
+                return -1;
+
+            if (this > other)
+                return 1;
+
+            return 0;
+        }
+
+        public int CompareTo(DateTimeBase other)
+        {
+            if (this < other)
+                return -1;
+
+            if (this > other)
+                return 1;
+
+            return 0;
         }
 
         /// <summary>
