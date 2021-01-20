@@ -54,5 +54,25 @@ var alaska = AlaskaDateTime.Now;
 var hawaii = HawaiiDateTime.Now;
 var universal = UniversalDateTime.Now;
 ```
+
 ![](/.gifs/when_will_then_be_now.gif)  
+
+#### Swagger Definition makes a weird format... what gives!?!?!
+Yep. I know. Thats the disadvantage to the object type design pattern.  I set up this library to use both Newtonsoft and System.Text.Json converters (at the attribute level) to serialize and deserialize the `DateTime` string we all know and use.  But when it comes to Swagger model definitions... it still treats these object types like objects.  If you follow my [Hein.Swagger](https://github.com/brandonhein/Hein.Swagger) repository, you can only imagine I like my API documentation to match the output from the API.
+
+To do this you need to create/register the object type in the swagger defintion.  You can do so by doing something like this:
+```csharp
+services.AddSwaggerGen(x =>
+{
+    x.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "My API"
+    });
+
+    //registering the DateTime type you will be using as a string/date-time
+    x.MapType<EasternDateTime>(() => 
+      new OpenApiSchema() { Type = "string", Format = "date-time" });
+});
+```
+
 Enjoy
