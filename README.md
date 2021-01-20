@@ -8,12 +8,12 @@
 
 Handling timezones and daylight savings can be a nightmare.  Such a 'simple' concept makes everyone gang up on each other.  `DateTime` can be your friend, although, it can bite you in the butt when you deploy your code to an OS doesn't use the same `TimeZoneInfo`.  `DateTime` does magic when it parses, serializes, etc, by auto converting to the local time for you...  
 
-I work in the Eastern Timezone.  But when I deploy to AWS Lambda... it's UTC/GMT time.  So `DateTime.Now` give me two different values (notice how there is NO hour offset):
+I work in the Eastern Timezone.  But when I deploy to AWS Lambda... it's UTC/GMT time.  So `DateTime.Now` gives me two different values (notice how there is NO hour offset):
 ```csharp
 var local = DateTime.Now.ToString(); //2020-01-29T08:56:01.411
 var aws = DateTime.Now.ToString(); //2020-01-29T13:56:01.393
 ```
-Makes it very difficult to manage, especially if you have time sensitive requirements, and the requirements are given in for a specific timezone.
+Makes it very difficult to manage, especially if you have time sensitive requirements, and the requirements are (indirectly) given in for a specific timezone.
 
 ### So what does this package/library do?
 All this magic library is it takes a time and owns understanding daylight savings time, and hour offset from UTC.  It also allows for easy operator logic.
