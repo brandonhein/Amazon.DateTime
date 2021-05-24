@@ -24,9 +24,8 @@
             Offset = dateTime.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
             Date = new UniversalDateTime(Year, Month, Day);
-            var dateTimeParse = DateTime.Parse(Value);
-            DayOfYear = dateTimeParse.DayOfYear;
-            DayOfWeek = dateTimeParse.DayOfWeek;
+            DayOfYear = Date.DayOfYear;
+            DayOfWeek = Date.DayOfWeek;
         }
 
         public UniversalDateTime(int year, int month, int day)
@@ -35,7 +34,7 @@
             Month = month;
             Day = day;
 
-            var dateTimeParse = DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T00:00:00Z"))
+            var dateTimeParse = DateTime.Parse(string.Concat(Year, "-", Month.ToString("00"), "-", Day.ToString("00"), "T00:00:00Z"))
                 .ToUniversalTime();
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
@@ -57,15 +56,14 @@
             Second = second;
 
             var dateTimeParse =
-                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), "Z"))
+                DateTime.Parse(string.Concat(Year, "-", Month.ToString("00"), "-", Day.ToString("00"), "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), "Z"))
                 .ToUniversalTime();
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
             Date = new UniversalDateTime(Year, Month, Day);
-            dateTimeParse = DateTime.Parse(Value);
-            DayOfYear = dateTimeParse.DayOfYear;
-            DayOfWeek = dateTimeParse.DayOfWeek;
+            DayOfYear = Date.DayOfYear;
+            DayOfWeek = Date.DayOfWeek;
         }
 
         public UniversalDateTime(int year, int month, int day, int hour, int minute, int second, int millisecond)
@@ -79,15 +77,14 @@
             Millisecond = millisecond;
 
             var dateTimeParse =
-                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond, "Z"))
+                DateTime.Parse(string.Concat(Year, "-", Month.ToString("00"), "-", Day.ToString("00"), "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond.ToString("00"), "Z"))
                 .ToUniversalTime();
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
             Date = new UniversalDateTime(Year, Month, Day);
-            dateTimeParse = DateTime.Parse(Value);
-            DayOfYear = dateTimeParse.DayOfYear;
-            DayOfWeek = dateTimeParse.DayOfWeek;
+            DayOfYear = Date.DayOfYear;
+            DayOfWeek = Date.DayOfWeek;
         }
 
         public UniversalDateTime(TimeSpan timeOfDay)
@@ -104,15 +101,14 @@
             Millisecond = timeOfDay.Milliseconds;
 
             var dateTimeParse =
-                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond))
+                DateTime.Parse(string.Concat(Year, "-", Month.ToString("00"), "-", Day.ToString("00"), "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond.ToString("00"), "Z"))
                 .ToUniversalTime();
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
             Date = new UniversalDateTime(Year, Month, Day);
-            dateTimeParse = DateTime.Parse(Value);
-            DayOfYear = dateTimeParse.DayOfYear;
-            DayOfWeek = dateTimeParse.DayOfWeek;
+            DayOfYear = Date.DayOfYear;
+            DayOfWeek = Date.DayOfWeek;
         }
 
         public static UniversalDateTime Now => Convert(DateTime.UtcNow);
@@ -148,22 +144,29 @@
         }
 
         /// <summary>
-        /// Parse a utc time string to get the universal (GMT) timezone
+        /// Parse a datetime string to get the universal (GMT) timezone
         /// </summary>
-        public static UniversalDateTime Parse(string utcTime)
+        public static UniversalDateTime Parse(string dateTime)
         {
-            var result = DateTime.Parse(utcTime).ToUniversalTime();
-            return Convert(result);
+            var dt = DateTime.Parse(dateTime);
+            if (dt.Kind == DateTimeKind.Unspecified)
+            {
+                return new UniversalDateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
+            }
+            else
+            {
+                return Convert(dt);
+            }
         }
 
         /// <summary>
-        /// TryParse a utc time string to get the universial timezone
+        /// TryParse a datetime string to get the universial timezone
         /// </summary>
-        public static bool TryParse(string utcTime, out UniversalDateTime universalDateTime)
+        public static bool TryParse(string dateTime, out UniversalDateTime universalDateTime)
         {
             try
             {
-                universalDateTime = Parse(utcTime);
+                universalDateTime = Parse(dateTime);
                 return true;
             }
             catch (Exception ex)

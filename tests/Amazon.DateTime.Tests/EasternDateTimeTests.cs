@@ -9,6 +9,19 @@ namespace Amazon.DateTime.Tests
         public void Should_test()
         {
             var now = EasternDateTime.Now;
+
+            var nowString = now.ToString("ddd M/d/yyyy H:mm t");
+        }
+
+        [Fact]
+        public void Should_recreate_issue()
+        {
+            var dateTimeString = "2021-05-20T21:55";
+            //var dateTime = DateTime.Parse(dateTimeString);
+
+            //var easternDateTime = new EasternDateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, 0);
+
+            var easternDateTime = EasternDateTime.Parse(dateTimeString);
         }
 
         //[Fact]

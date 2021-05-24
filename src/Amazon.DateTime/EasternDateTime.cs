@@ -28,9 +28,8 @@
             Offset = dateTime.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
             Date = new EasternDateTime(Year, Month, Day);
-            var dateTimeParse = DateTime.Parse(Value);
-            DayOfYear = dateTimeParse.DayOfYear;
-            DayOfWeek = dateTimeParse.DayOfWeek;
+            DayOfYear = Date.DayOfYear;
+            DayOfWeek = Date.DayOfWeek;
         }
 
         /// <summary>
@@ -42,7 +41,7 @@
             Month = month;
             Day = day;
 
-            var dateTimeParse = DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T00:00:00Z"))
+            var dateTimeParse = DateTime.Parse(string.Concat(Year, "-", Month.ToString("00"), "-", Day.ToString("00"), "T00:00:00Z"))
                 .ToUniversalTime();
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
@@ -67,15 +66,14 @@
             Second = second;
 
             var dateTimeParse = 
-                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), "Z"))
+                DateTime.Parse(string.Concat(Year, "-", Month.ToString("00"), "-", Day.ToString("00"), "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), "Z"))
                 .ToUniversalTime();
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
             Date = new EasternDateTime(Year, Month, Day);
-            dateTimeParse = DateTime.Parse(Value);
-            DayOfYear = dateTimeParse.DayOfYear;
-            DayOfWeek = dateTimeParse.DayOfWeek;
+            DayOfYear = Date.DayOfYear;
+            DayOfWeek = Date.DayOfWeek;
         }
 
         /// <summary>
@@ -92,15 +90,14 @@
             Millisecond = millisecond;
 
             var dateTimeParse =
-                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond, "Z"))
+                DateTime.Parse(string.Concat(Year, "-", Month.ToString("00"), "-", Day.ToString("00"), "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond.ToString("00"), "Z"))
                 .ToUniversalTime();
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
             Date = new EasternDateTime(Year, Month, Day);
-            dateTimeParse = DateTime.Parse(Value);
-            DayOfYear = dateTimeParse.DayOfYear;
-            DayOfWeek = dateTimeParse.DayOfWeek;
+            DayOfYear = Date.DayOfYear;
+            DayOfWeek = Date.DayOfWeek;
         }
 
         /// <summary>
@@ -120,15 +117,14 @@
             Millisecond = timeOfDay.Milliseconds;
 
             var dateTimeParse =
-                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond, "Z"))
+                DateTime.Parse(string.Concat(Year, "-", Month.ToString("00"), "-", Day.ToString("00"), "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond.ToString("00"), "Z"))
                 .ToUniversalTime();
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
             Date = new EasternDateTime(Year, Month, Day);
-            dateTimeParse = DateTime.Parse(Value);
-            DayOfYear = dateTimeParse.DayOfYear;
-            DayOfWeek = dateTimeParse.DayOfWeek;
+            DayOfYear = Date.DayOfYear;
+            DayOfWeek = Date.DayOfWeek;
         }
 
         /// <summary>
@@ -170,22 +166,29 @@
         }
 
         /// <summary>
-        /// Parse a utc time string to get the eastern timezone
+        /// Parse a datetime string to get the <see cref="EasternDateTime"/>
         /// </summary>
-        public static EasternDateTime Parse(string utcTime)
+        public static EasternDateTime Parse(string dateTime)
         {
-            var result = DateTime.Parse(utcTime).ToUniversalTime();
-            return Convert(result);
+            var dt = DateTime.Parse(dateTime);
+            if (dt.Kind == DateTimeKind.Unspecified)
+            {
+                return new EasternDateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
+            }
+            else
+            {
+                return Convert(dt);
+            }
         }
 
         /// <summary>
-        /// TryParse a utc time string to get the eastern timezone
+        /// TryParse a datetime string to get the eastern timezone
         /// </summary>
-        public static bool TryParse(string utcTime, out EasternDateTime easternDateTime)
+        public static bool TryParse(string dateTime, out EasternDateTime easternDateTime)
         {
             try
             {
-                easternDateTime = Parse(utcTime);
+                easternDateTime = Parse(dateTime);
                 return true;
             }
             catch (Exception ex)

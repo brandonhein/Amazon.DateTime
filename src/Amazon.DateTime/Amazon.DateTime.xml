@@ -26,7 +26,7 @@
         </member>
         <member name="M:Amazon.DateTime.AlaskaDateTime.Parse(System.String)">
             <summary>
-            Parse a utc time string to get the alaska <see cref="T:System.DateTime"/>
+            Parse a dateTime string to get the <see cref="T:Amazon.DateTime.AlaskaDateTime"/>
             </summary>
         </member>
         <member name="M:Amazon.DateTime.AlaskaDateTime.TryParse(System.String,Amazon.DateTime.AlaskaDateTime@)">
@@ -141,12 +141,12 @@
         </member>
         <member name="M:Amazon.DateTime.CentralDateTime.Parse(System.String)">
             <summary>
-            Parse a utc time string to get the central timezone
+            Parse a datetime string to get the <see cref="T:Amazon.DateTime.CentralDateTime"/>
             </summary>
         </member>
         <member name="M:Amazon.DateTime.CentralDateTime.TryParse(System.String,Amazon.DateTime.CentralDateTime@)">
             <summary>
-            TryParse a utc time string to get the central timezone
+            TryParse a datetime string to get the central timezone
             </summary>
         </member>
         <member name="P:Amazon.DateTime.DateTimeBase.Value">
@@ -386,12 +386,12 @@
         </member>
         <member name="M:Amazon.DateTime.EasternDateTime.Parse(System.String)">
             <summary>
-            Parse a utc time string to get the eastern timezone
+            Parse a datetime string to get the <see cref="T:Amazon.DateTime.EasternDateTime"/>
             </summary>
         </member>
         <member name="M:Amazon.DateTime.EasternDateTime.TryParse(System.String,Amazon.DateTime.EasternDateTime@)">
             <summary>
-            TryParse a utc time string to get the eastern timezone
+            TryParse a datetime string to get the eastern timezone
             </summary>
         </member>
         <member name="P:Amazon.DateTime.HawaiiDateTime.Now">
@@ -416,12 +416,12 @@
         </member>
         <member name="M:Amazon.DateTime.HawaiiDateTime.Parse(System.String)">
             <summary>
-            Parse a utc time string to get the hawaii timezone
+            Parse a datetime string to get the <see cref="T:Amazon.DateTime.HawaiiDateTime"/>
             </summary>
         </member>
         <member name="M:Amazon.DateTime.HawaiiDateTime.TryParse(System.String,Amazon.DateTime.HawaiiDateTime@)">
             <summary>
-            TryParse a utc time string to get the hawaii timezone
+            TryParse a datetime string to get the hawaii timezone
             </summary>
         </member>
         <member name="P:Amazon.DateTime.MountainDateTime.Now">
@@ -446,12 +446,12 @@
         </member>
         <member name="M:Amazon.DateTime.MountainDateTime.Parse(System.String)">
             <summary>
-            Parse a utc time string to get the mountain timezone
+            Parse a datetime string to get the <see cref="T:Amazon.DateTime.MountainDateTime"/>
             </summary>
         </member>
         <member name="M:Amazon.DateTime.MountainDateTime.TryParse(System.String,Amazon.DateTime.MountainDateTime@)">
             <summary>
-            TryParse a utc time string to get the mountain timezone
+            TryParse a datetime string to get the mountain timezone
             </summary>
         </member>
         <member name="P:Amazon.DateTime.PacificDateTime.Now">
@@ -476,12 +476,12 @@
         </member>
         <member name="M:Amazon.DateTime.PacificDateTime.Parse(System.String)">
             <summary>
-            Parse a utc time string to get the pacific timezone
+            Parse a datetime string to get the <see cref="T:Amazon.DateTime.PacificDateTime"/>
             </summary>
         </member>
         <member name="M:Amazon.DateTime.PacificDateTime.TryParse(System.String,Amazon.DateTime.PacificDateTime@)">
             <summary>
-            TryParse a utc time string to get the pacific timezone
+            TryParse a datetime string to get the pacific timezone
             </summary>
         </member>
         <member name="T:Amazon.DateTime.Timezone">
@@ -541,12 +541,12 @@
         </member>
         <member name="M:Amazon.DateTime.UniversalDateTime.Parse(System.String)">
             <summary>
-            Parse a utc time string to get the universal (GMT) timezone
+            Parse a datetime string to get the universal (GMT) timezone
             </summary>
         </member>
         <member name="M:Amazon.DateTime.UniversalDateTime.TryParse(System.String,Amazon.DateTime.UniversalDateTime@)">
             <summary>
-            TryParse a utc time string to get the universial timezone
+            TryParse a datetime string to get the universial timezone
             </summary>
         </member>
     </members>
