@@ -148,22 +148,29 @@
         }
 
         /// <summary>
-        /// Parse a utc time string to get the mountain timezone
+        /// Parse a datetime string to get the <see cref="MountainDateTime"/>
         /// </summary>
-        public static MountainDateTime Parse(string utcTime)
+        public static MountainDateTime Parse(string dateTime)
         {
-            var result = DateTime.Parse(utcTime).ToUniversalTime();
-            return Convert(result);
+            var dt = DateTime.Parse(dateTime);
+            if (dt.Kind == DateTimeKind.Unspecified)
+            {
+                return new MountainDateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
+            }
+            else
+            {
+                return Convert(dt);
+            }
         }
 
         /// <summary>
-        /// TryParse a utc time string to get the mountain timezone
+        /// TryParse a datetime string to get the mountain timezone
         /// </summary>
-        public static bool TryParse(string utcTime, out MountainDateTime mountainDateTime)
+        public static bool TryParse(string dateTime, out MountainDateTime mountainDateTime)
         {
             try
             {
-                mountainDateTime = Parse(utcTime);
+                mountainDateTime = Parse(dateTime);
                 return true;
             }
             catch (Exception ex)

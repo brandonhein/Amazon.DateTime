@@ -148,22 +148,29 @@
         }
 
         /// <summary>
-        /// Parse a utc time string to get the hawaii timezone
+        /// Parse a datetime string to get the <see cref="HawaiiDateTime"/>
         /// </summary>
-        public static HawaiiDateTime Parse(string utcTime)
+        public static HawaiiDateTime Parse(string dateTime)
         {
-            var result = DateTime.Parse(utcTime).ToUniversalTime();
-            return Convert(result);
+            var dt = DateTime.Parse(dateTime);
+            if (dt.Kind == DateTimeKind.Unspecified)
+            {
+                return new HawaiiDateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
+            }
+            else
+            {
+                return Convert(dt);
+            }
         }
 
         /// <summary>
-        /// TryParse a utc time string to get the hawaii timezone
+        /// TryParse a datetime string to get the hawaii timezone
         /// </summary>
-        public static bool TryParse(string utcTime, out HawaiiDateTime hawaiianDateTime)
+        public static bool TryParse(string dateTime, out HawaiiDateTime hawaiianDateTime)
         {
             try
             {
-                hawaiianDateTime = Parse(utcTime);
+                hawaiianDateTime = Parse(dateTime);
                 return true;
             }
             catch (Exception ex)

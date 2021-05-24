@@ -166,22 +166,29 @@
         }
 
         /// <summary>
-        /// Parse a utc time string to get the eastern timezone
+        /// Parse a datetime string to get the <see cref="EasternDateTime"/>
         /// </summary>
-        public static EasternDateTime Parse(string utcTime)
+        public static EasternDateTime Parse(string dateTime)
         {
-            var result = DateTime.Parse(utcTime).ToUniversalTime();
-            return Convert(result);
+            var dt = DateTime.Parse(dateTime);
+            if (dt.Kind == DateTimeKind.Unspecified)
+            {
+                return new EasternDateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
+            }
+            else
+            {
+                return Convert(dt);
+            }
         }
 
         /// <summary>
-        /// TryParse a utc time string to get the eastern timezone
+        /// TryParse a datetime string to get the eastern timezone
         /// </summary>
-        public static bool TryParse(string utcTime, out EasternDateTime easternDateTime)
+        public static bool TryParse(string dateTime, out EasternDateTime easternDateTime)
         {
             try
             {
-                easternDateTime = Parse(utcTime);
+                easternDateTime = Parse(dateTime);
                 return true;
             }
             catch (Exception ex)

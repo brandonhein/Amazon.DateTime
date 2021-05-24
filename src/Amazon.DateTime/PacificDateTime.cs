@@ -148,22 +148,29 @@
         }
 
         /// <summary>
-        /// Parse a utc time string to get the pacific timezone
+        /// Parse a datetime string to get the <see cref="PacificDateTime"/>
         /// </summary>
-        public static PacificDateTime Parse(string utcTime)
+        public static PacificDateTime Parse(string dateTime)
         {
-            var result = DateTime.Parse(utcTime).ToUniversalTime();
-            return Convert(result);
+            var dt = DateTime.Parse(dateTime);
+            if (dt.Kind == DateTimeKind.Unspecified)
+            {
+                return new PacificDateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
+            }
+            else
+            {
+                return Convert(dt);
+            }
         }
 
         /// <summary>
-        /// TryParse a utc time string to get the pacific timezone
+        /// TryParse a datetime string to get the pacific timezone
         /// </summary>
-        public static bool TryParse(string utcTime, out PacificDateTime pacificDateTime)
+        public static bool TryParse(string dateTime, out PacificDateTime pacificDateTime)
         {
             try
             {
-                pacificDateTime = Parse(utcTime);
+                pacificDateTime = Parse(dateTime);
                 return true;
             }
             catch (Exception ex)

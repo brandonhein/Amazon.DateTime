@@ -149,22 +149,29 @@
         }
 
         /// <summary>
-        /// Parse a utc time string to get the alaska <see cref="DateTime"/>
+        /// Parse a dateTime string to get the <see cref="AlaskaDateTime"/>
         /// </summary>
-        public static AlaskaDateTime Parse(string utcTime)
+        public static AlaskaDateTime Parse(string dateTime)
         {
-            var result = DateTime.Parse(utcTime).ToUniversalTime();
-            return Convert(result);
+            var dt = DateTime.Parse(dateTime);
+            if (dt.Kind == DateTimeKind.Unspecified)
+            {
+                return new AlaskaDateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
+            }
+            else
+            {
+                return Convert(dt);
+            }
         }
 
         /// <summary>
         /// TryParse a utc time string to get the alaska <see cref="DateTime"/>
         /// </summary>
-        public static bool TryParse(string utcTime, out AlaskaDateTime alaskaDateTime)
+        public static bool TryParse(string dateTime, out AlaskaDateTime alaskaDateTime)
         {
             try
             {
-                alaskaDateTime = Parse(utcTime);
+                alaskaDateTime = Parse(dateTime);
                 return true;
             }
             catch (Exception ex)

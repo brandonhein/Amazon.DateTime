@@ -144,22 +144,29 @@
         }
 
         /// <summary>
-        /// Parse a utc time string to get the universal (GMT) timezone
+        /// Parse a datetime string to get the universal (GMT) timezone
         /// </summary>
-        public static UniversalDateTime Parse(string utcTime)
+        public static UniversalDateTime Parse(string dateTime)
         {
-            var result = DateTime.Parse(utcTime).ToUniversalTime();
-            return Convert(result);
+            var dt = DateTime.Parse(dateTime);
+            if (dt.Kind == DateTimeKind.Unspecified)
+            {
+                return new UniversalDateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
+            }
+            else
+            {
+                return Convert(dt);
+            }
         }
 
         /// <summary>
-        /// TryParse a utc time string to get the universial timezone
+        /// TryParse a datetime string to get the universial timezone
         /// </summary>
-        public static bool TryParse(string utcTime, out UniversalDateTime universalDateTime)
+        public static bool TryParse(string dateTime, out UniversalDateTime universalDateTime)
         {
             try
             {
-                universalDateTime = Parse(utcTime);
+                universalDateTime = Parse(dateTime);
                 return true;
             }
             catch (Exception ex)

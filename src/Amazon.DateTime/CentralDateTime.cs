@@ -151,22 +151,29 @@
         }
 
         /// <summary>
-        /// Parse a utc time string to get the central timezone
+        /// Parse a datetime string to get the <see cref="CentralDateTime"/>
         /// </summary>
-        public static CentralDateTime Parse(string utcTime)
+        public static CentralDateTime Parse(string dateTime)
         {
-            var result = DateTime.Parse(utcTime).ToUniversalTime();
-            return Convert(result);
+            var dt = DateTime.Parse(dateTime);
+            if (dt.Kind == DateTimeKind.Unspecified)
+            {
+                return new CentralDateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
+            }
+            else
+            {
+                return Convert(dt);
+            }
         }
 
         /// <summary>
-        /// TryParse a utc time string to get the central timezone
+        /// TryParse a datetime string to get the central timezone
         /// </summary>
-        public static bool TryParse(string utcTime, out CentralDateTime centralDateTime)
+        public static bool TryParse(string dateTime, out CentralDateTime centralDateTime)
         {
             try
             {
-                centralDateTime = Parse(utcTime);
+                centralDateTime = Parse(dateTime);
                 return true;
             }
             catch (Exception ex)
