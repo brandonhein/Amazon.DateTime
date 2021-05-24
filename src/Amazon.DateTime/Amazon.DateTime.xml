@@ -146,7 +146,7 @@
         </member>
         <member name="M:Amazon.DateTime.CentralDateTime.TryParse(System.String,Amazon.DateTime.CentralDateTime@)">
             <summary>
-            TryParse a utc time string to get the central timezone
+            TryParse a datetime string to get the central timezone
             </summary>
         </member>
         <member name="P:Amazon.DateTime.DateTimeBase.Value">
