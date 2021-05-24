@@ -103,7 +103,7 @@
         [System.Text.Json.Serialization.JsonIgnore]
         protected string UtcValue
         {
-            get { return string.Concat(Year.ToString("0000"), "-", Month.ToString("00"), "-", Day.ToString("00"), "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond.ToString("000"), "Z"); }
+            get { return $"{DateTime.Parse(Value).ToUniversalTime().ToString(Format.StandardDateTime)}Z"; }
         }
 
         /// <summary>
@@ -120,6 +120,24 @@
         public override string ToString()
         {
             return Value;
+        }
+
+        public string ToString(string format)
+        {
+            var dateTimeOffset = DateTimeOffset.Parse(Value);
+            return dateTimeOffset.ToString(format);
+        }
+
+        public string ToString(IFormatProvider provider)
+        {
+            var dateTimeOffset = DateTimeOffset.Parse(Value);
+            return dateTimeOffset.ToString(provider);
+        }
+
+        public string ToString(string format, IFormatProvider provider)
+        {
+            var dateTimeOffset = DateTimeOffset.Parse(Value);
+            return dateTimeOffset.ToString(format, provider);
         }
 
         public override bool Equals(object obj)
