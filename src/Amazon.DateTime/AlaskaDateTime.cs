@@ -24,9 +24,9 @@
 
             Offset = dateTime.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
-            var dateTimeParse = DateTime.Parse(Value);
-            DayOfYear = dateTimeParse.DayOfYear;
-            DayOfWeek = dateTimeParse.DayOfWeek;
+            Date = new AlaskaDateTime(Year, Month, Day);
+            DayOfYear = Date.DayOfYear;
+            DayOfWeek = Date.DayOfWeek;
         }
 
         public AlaskaDateTime(int year, int month, int day)
@@ -43,6 +43,8 @@
             dateTimeParse = DateTime.Parse(Value);
             DayOfYear = dateTimeParse.DayOfYear;
             DayOfWeek = dateTimeParse.DayOfWeek;
+
+            Date = this;
         }
 
         public AlaskaDateTime(int year, int month, int day, int hour, int minute, int second)
@@ -60,9 +62,9 @@
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
-            dateTimeParse = DateTime.Parse(Value);
-            DayOfYear = dateTimeParse.DayOfYear;
-            DayOfWeek = dateTimeParse.DayOfWeek;
+            Date = new AlaskaDateTime(Year, Month, Day);
+            DayOfYear = Date.DayOfYear;
+            DayOfWeek = Date.DayOfWeek;
         }
 
         public AlaskaDateTime(int year, int month, int day, int hour, int minute, int second, int millisecond)
@@ -81,9 +83,9 @@
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
-            dateTimeParse = DateTime.Parse(Value);
-            DayOfYear = dateTimeParse.DayOfYear;
-            DayOfWeek = dateTimeParse.DayOfWeek;
+            Date = new AlaskaDateTime(Year, Month, Day);
+            DayOfYear = Date.DayOfYear;
+            DayOfWeek = Date.DayOfWeek;
         }
 
         public AlaskaDateTime(TimeSpan timeOfDay)
@@ -106,9 +108,9 @@
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
-            dateTimeParse = DateTime.Parse(Value);
-            DayOfYear = dateTimeParse.DayOfYear;
-            DayOfWeek = dateTimeParse.DayOfWeek;
+            Date = new AlaskaDateTime(Year, Month, Day);
+            DayOfYear = Date.DayOfYear;
+            DayOfWeek = Date.DayOfWeek;
         }
 
         /// <summary>

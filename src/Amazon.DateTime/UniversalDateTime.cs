@@ -24,9 +24,8 @@
             Offset = dateTime.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
             Date = new UniversalDateTime(Year, Month, Day);
-            var dateTimeParse = DateTime.Parse(Value);
-            DayOfYear = dateTimeParse.DayOfYear;
-            DayOfWeek = dateTimeParse.DayOfWeek;
+            DayOfYear = Date.DayOfYear;
+            DayOfWeek = Date.DayOfWeek;
         }
 
         public UniversalDateTime(int year, int month, int day)
@@ -63,9 +62,8 @@
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
             Date = new UniversalDateTime(Year, Month, Day);
-            dateTimeParse = DateTime.Parse(Value);
-            DayOfYear = dateTimeParse.DayOfYear;
-            DayOfWeek = dateTimeParse.DayOfWeek;
+            DayOfYear = Date.DayOfYear;
+            DayOfWeek = Date.DayOfWeek;
         }
 
         public UniversalDateTime(int year, int month, int day, int hour, int minute, int second, int millisecond)
@@ -85,9 +83,8 @@
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
             Date = new UniversalDateTime(Year, Month, Day);
-            dateTimeParse = DateTime.Parse(Value);
-            DayOfYear = dateTimeParse.DayOfYear;
-            DayOfWeek = dateTimeParse.DayOfWeek;
+            DayOfYear = Date.DayOfYear;
+            DayOfWeek = Date.DayOfWeek;
         }
 
         public UniversalDateTime(TimeSpan timeOfDay)
@@ -110,9 +107,8 @@
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
             Date = new UniversalDateTime(Year, Month, Day);
-            dateTimeParse = DateTime.Parse(Value);
-            DayOfYear = dateTimeParse.DayOfYear;
-            DayOfWeek = dateTimeParse.DayOfWeek;
+            DayOfYear = Date.DayOfYear;
+            DayOfWeek = Date.DayOfWeek;
         }
 
         public static UniversalDateTime Now => Convert(DateTime.UtcNow);

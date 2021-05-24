@@ -25,9 +25,8 @@
             Offset = dateTime.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
             Date = new HawaiiDateTime(Year, Month, Day);
-            var dateTimeParse = DateTime.Parse(Value);
-            DayOfYear = dateTimeParse.DayOfYear;
-            DayOfWeek = dateTimeParse.DayOfWeek;
+            DayOfYear = Date.DayOfYear;
+            DayOfWeek = Date.DayOfWeek;
         }
 
         public HawaiiDateTime(int year, int month, int day)
@@ -64,9 +63,8 @@
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
             Date = new HawaiiDateTime(Year, Month, Day);
-            dateTimeParse = DateTime.Parse(Value);
-            DayOfYear = dateTimeParse.DayOfYear;
-            DayOfWeek = dateTimeParse.DayOfWeek;
+            DayOfYear = Date.DayOfYear;
+            DayOfWeek = Date.DayOfWeek;
         }
 
         public HawaiiDateTime(int year, int month, int day, int hour, int minute, int second, int millisecond)
@@ -85,9 +83,9 @@
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
-            dateTimeParse = DateTime.Parse(Value);
-            DayOfYear = dateTimeParse.DayOfYear;
-            DayOfWeek = dateTimeParse.DayOfWeek;
+            Date = new HawaiiDateTime(Year, Month, Day);
+            DayOfYear = Date.DayOfYear;
+            DayOfWeek = Date.DayOfWeek;
         }
 
         public HawaiiDateTime(TimeSpan timeOfDay)
@@ -110,9 +108,8 @@
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
 
             Date = new HawaiiDateTime(Year, Month, Day);
-            dateTimeParse = DateTime.Parse(Value);
-            DayOfYear = dateTimeParse.DayOfYear;
-            DayOfWeek = dateTimeParse.DayOfWeek;
+            DayOfYear = Date.DayOfYear;
+            DayOfWeek = Date.DayOfWeek;
         }
 
         /// <summary>
