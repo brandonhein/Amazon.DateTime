@@ -34,7 +34,7 @@
             Month = month;
             Day = day;
 
-            var dateTimeParse = DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T00:00:00Z"))
+            var dateTimeParse = DateTime.Parse(string.Concat(Year, "-", Month.ToString("00"), "-", Day.ToString("00"), "T00:00:00Z"))
                 .ToUniversalTime();
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
@@ -56,7 +56,7 @@
             Second = second;
 
             var dateTimeParse =
-                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), "Z"))
+                DateTime.Parse(string.Concat(Year, "-", Month.ToString("00"), "-", Day.ToString("00"), "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), "Z"))
                 .ToUniversalTime();
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
@@ -77,7 +77,7 @@
             Millisecond = millisecond;
 
             var dateTimeParse =
-                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond, "Z"))
+                DateTime.Parse(string.Concat(Year, "-", Month.ToString("00"), "-", Day.ToString("00"), "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond.ToString("00"), "Z"))
                 .ToUniversalTime();
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
@@ -101,7 +101,7 @@
             Millisecond = timeOfDay.Milliseconds;
 
             var dateTimeParse =
-                DateTime.Parse(string.Concat(Year, "-", Month, "-", Day, "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond))
+                DateTime.Parse(string.Concat(Year, "-", Month.ToString("00"), "-", Day.ToString("00"), "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond.ToString("00"), "Z"))
                 .ToUniversalTime();
 
             Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
