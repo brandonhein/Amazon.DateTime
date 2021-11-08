@@ -39,6 +39,11 @@
         /// <para>https://greenwichmeantime.com/time-zone/rules/usa/</para>
         /// </summary>
         public static bool IsInDaylightSavingsTime(this DateTime dateTime)
-            => DaylightStartDate(dateTime) <= dateTime && DaylightEndDate(dateTime) > dateTime;
+            => DaylightStartDate(dateTime) < dateTime && DaylightEndDate(dateTime) > dateTime;
+
+        internal static bool IsDaylightStartDateAndTime(this DateTime dateTime)
+            => DaylightStartDate(dateTime) == dateTime;
+        internal static bool IsDaylightEndDateAndTime(this DateTime dateTime)
+            => DaylightEndDate(dateTime) == dateTime;
     }
 }

@@ -6,9 +6,9 @@
     public enum Timezone
     {
         /// <summary>
-        /// Default
+        /// Not Set
         /// </summary>
-        Default,
+        NotSet,
         /// <summary>
         /// Eastern Timezone
         /// </summary>

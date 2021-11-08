@@ -66,6 +66,19 @@
             Millisecond = millisecond;
 
             var standardParse = DateTimeOffset.Parse($"{Year.ToString("0000")}-{Month.ToString("00")}-{Day.ToString("00")}T{Hour.ToString("00")}:{Minute.ToString("00")}:{Second.ToString("00")}.{Millisecond.ToString("000")}{string.Format("{0:00}:{1:00}", StandardOffset.Hours, StandardOffset.Minutes)}");
+
+            //for the weird instance 2am falls on that DateTime you create
+            if (Hour == 2)
+            {
+                var dayAt2 = DateTimeOffset.Parse($"{Year.ToString("0000")}-{Month.ToString("00")}-{Day.ToString("00")}T{Hour.ToString("00")}:00:00.000{string.Format("{0:00}:{1:00}", StandardOffset.Hours, StandardOffset.Minutes)}");
+                var isDaylightStartTime = dayAt2.DateTime.IsDaylightStartDateAndTime();
+                if (isDaylightStartTime)
+                {
+                    Hour = hour + 1;
+                    standardParse = DateTimeOffset.Parse($"{Year.ToString("0000")}-{Month.ToString("00")}-{Day.ToString("00")}T{Hour.ToString("00")}:{Minute.ToString("00")}:{Second.ToString("00")}.{Millisecond.ToString("000")}{string.Format("{0:00}:{1:00}", StandardOffset.Hours, StandardOffset.Minutes)}");
+                }
+            }
+
             Offset = standardParse.DateTime.IsInDaylightSavingsTime()
                 ? DaylightOffset
                 : StandardOffset;
@@ -75,13 +88,29 @@
             DayOfWeek = Date.DayOfWeek;
         }
 
+        private PacificDateTime(int year, int month, int day, int hour, int minute, int second, int millisecond, TimeSpan offset)
+        {
+            Year = year;
+            Month = month;
+            Day = day;
+            Hour = hour;
+            Minute = minute;
+            Second = second;
+            Millisecond = millisecond;
+
+            Offset = offset;
+            Date = new PacificDateTime(Year, Month, Day);
+            DayOfYear = Date.DayOfYear;
+            DayOfWeek = Date.DayOfWeek;
+        }
+
         /// <summary>
-        /// Get the Current 'Now' time in Eastern Timezone
+        /// Get the Current 'Now' time in Pacific Timezone
         /// </summary>
         public static PacificDateTime Now => Convert(DateTime.UtcNow);
 
         /// <summary>
-        /// Get the Current 'Today' date in Eastern Timezone
+        /// Get the Current 'Today' date in Pacific Timezone
         /// </summary>
         public static PacificDateTime Today
         {
@@ -118,7 +147,7 @@
         public static TimeSpan StandardOffset => TimeSpan.Parse("-08:00");
 
         /// <summary>
-        /// Convert a <see cref="DateTime"/> value to the eastern timezone equivalent 
+        /// Convert a <see cref="DateTime"/> value to the <see cref="PacificDateTime"/> equivalent
         /// </summary>
         public static PacificDateTime Convert(DateTime dateTime)
         {
@@ -131,18 +160,26 @@
             if (dateTime.Kind == DateTimeKind.Utc)
             {
                 var dtOffset = new DateTimeOffset(dateTime).ToOffset(StandardOffset);
+                var dtOffset2 = new DateTimeOffset(dateTime).ToOffset(DaylightOffset);
+
                 var inDaylight = dtOffset.DateTime.IsInDaylightSavingsTime();
-                if (inDaylight)
+                var inDaylight2 = dtOffset2.DateTime.IsInDaylightSavingsTime();
+
+                if (!inDaylight && inDaylight2 && dtOffset.Month == 3)
+                    dtOffset = new DateTimeOffset(dateTime).ToOffset(StandardOffset);
+                else if (!inDaylight2 && inDaylight && dtOffset.Month == 11)
+                    dtOffset = new DateTimeOffset(dateTime).ToOffset(StandardOffset);
+                else
                     dtOffset = new DateTimeOffset(dateTime).ToOffset(DaylightOffset);
 
-                return new PacificDateTime(dtOffset.Year, dtOffset.Month, dtOffset.Day, dtOffset.Hour, dtOffset.Minute, dtOffset.Second, dtOffset.Millisecond);
+                return new PacificDateTime(dtOffset.Year, dtOffset.Month, dtOffset.Day, dtOffset.Hour, dtOffset.Minute, dtOffset.Second, dtOffset.Millisecond, dtOffset.Offset);
             }
 
             return default(PacificDateTime);
         }
 
         /// <summary>
-        /// Convert a <see cref="DateTimeOffset"/> value to the eastern timezone equivalent 
+        /// Convert a <see cref="DateTimeOffset"/> value to the <see cref="PacificDateTime"/> equivalent
         /// </summary>
         public static PacificDateTime Convert(DateTimeOffset dateTimeOffset)
             => Convert(dateTimeOffset.UtcDateTime);

@@ -38,6 +38,11 @@
         [IgnoreDataMember]
         [Newtonsoft.Json.JsonIgnore]
         [System.Text.Json.Serialization.JsonIgnore]
+        public MonthsOfYear MonthOfYear => (MonthsOfYear)Month;
+        [XmlIgnore]
+        [IgnoreDataMember]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public int Minute { get; protected set; }
         [XmlIgnore]
         [IgnoreDataMember]
@@ -79,6 +84,11 @@
         [Newtonsoft.Json.JsonIgnore]
         [System.Text.Json.Serialization.JsonIgnore]
         public TimeSpan Offset { get; protected set; }
+
+        /// <summary>
+        /// Indicates whether this instance of <see cref="DateTimeBase"/> is within the daylight saving time range for the current time zone.
+        /// </summary>
+        public bool IsDaylightSavingTime() => DateTimeOffset.Parse(Value).DateTime.IsInDaylightSavingsTime();
 
         ///<summary>
         ///Creates a timestamp of the format of 'yyyy-MM-ddTHH:mm:ss.fffzzz'
