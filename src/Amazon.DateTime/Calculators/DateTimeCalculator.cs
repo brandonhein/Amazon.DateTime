@@ -26,7 +26,7 @@
         /// </summary>
         internal static DateTime DaylightStartDate(this DateTime date)
         {
-            return DateTime.SpecifyKind(new DateTime(date.Year, 3, 1).NthOf(2, DayOfWeek.Sunday).AddHours(2), DateTimeKind.Utc);
+            return new DateTime(date.Year, 3, 1).NthOf(2, DayOfWeek.Sunday).AddHours(2));
         }
 
         /// <summary>
@@ -35,7 +35,7 @@
         /// </summary>
         internal static DateTime DaylightEndDate(this DateTime date)
         {
-            return DateTime.SpecifyKind(new DateTime(date.Year, 11, 1).NthOf(1, DayOfWeek.Sunday).AddHours(2), DateTimeKind.Utc);
+            return new DateTime(date.Year, 11, 1).NthOf(1, DayOfWeek.Sunday).AddHours(2);
         }
 
         /// <summary>
@@ -49,21 +49,7 @@
 
         private static DateTime DateTimeCoversion(this DateTime dateTime, Timezone timezone, bool observesDaylight)
         {
-            var dt = dateTime.ToUniversalTime();
-            var tz = TimeZoneInfo.Utc;
-            var tzInfo = tz.GetTimezoneByCode(timezone);
 
-            var utcOffset = tzInfo.BaseUtcOffset;
-            var hourOffset = utcOffset.TotalHours;
-
-            hourOffset = observesDaylight && dateTime.IsInDaylightSavingsTime()
-                ? hourOffset + 1
-                : hourOffset;
-
-            dt = dt.AddHours(hourOffset);
-
-            var result = new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
-            return result;
         }
 
         /// <summary>
