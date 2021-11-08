@@ -18,7 +18,7 @@
         [IgnoreDataMember]
         [Newtonsoft.Json.JsonIgnore]
         [System.Text.Json.Serialization.JsonIgnore]
-        public long Ticks => DateTime.Parse(Value).Ticks;
+        public long Ticks => DateTimeOffset.Parse(Value).Ticks;
         [XmlIgnore]
         [IgnoreDataMember]
         [Newtonsoft.Json.JsonIgnore]
@@ -68,7 +68,7 @@
         [IgnoreDataMember]
         [Newtonsoft.Json.JsonIgnore]
         [System.Text.Json.Serialization.JsonIgnore]
-        public TimeSpan TimeOfDay => TimeSpan.Parse(string.Concat(Hour, ":", Minute, ":", Second));
+        public TimeSpan TimeOfDay => TimeSpan.Parse(string.Concat(Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00")));
         [XmlIgnore]
         [IgnoreDataMember]
         [Newtonsoft.Json.JsonIgnore]
@@ -110,17 +110,12 @@
         /// Converts the value of the current DateTimeBase object to Coordinated Universal Time (UTC)
         /// </summary>
         public DateTime ToUniversalTime()
-        {
-            return DateTime.Parse(Value).ToUniversalTime();
-        }
+            => DateTimeOffset.Parse(Value).UtcDateTime;
 
         /// <summary>
         /// returns same string as the <see cref="Value"/> property
         /// </summary>
-        public override string ToString()
-        {
-            return Value;
-        }
+        public override string ToString() => Value;
 
         public string ToString(string format)
         {
@@ -184,10 +179,7 @@
             return hashCode;
         }
 
-        public bool Equals(DateTime other)
-        {
-            return this == other;
-        }
+        public bool Equals(DateTime other) => this == other;
 
         public int CompareTo(DateTime other)
         {
@@ -215,130 +207,100 @@
         /// D1 is equal to D2
         /// </summary>
         public static bool operator ==(DateTimeBase d1, DateTimeBase d2)
-        {
-            return Compare.Dates(d1, d2) == 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) == 0;
 
         /// <summary>
         /// D1 is equal to D2
         /// </summary>
         public static bool operator ==(DateTime d1, DateTimeBase d2)
-        {
-            return Compare.Dates(d1, d2) == 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) == 0;
 
         /// <summary>
         /// D1 is equal to D2
         /// </summary>
         public static bool operator ==(DateTimeBase d1, DateTime d2)
-        {
-            return Compare.Dates(d1, d2) == 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) == 0;
 
         /// <summary>
         /// D1 is not equal to D2
         /// </summary>
         public static bool operator !=(DateTimeBase d1, DateTimeBase d2)
-        {
-            return Compare.Dates(d1, d2) != 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) != 0;
 
         /// <summary>
         /// D1 is not equal to D2
         /// </summary>
         public static bool operator !=(DateTime d1, DateTimeBase d2)
-        {
-            return Compare.Dates(d1, d2) != 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) != 0;
 
         /// <summary>
         /// D1 is not equal to D2
         /// </summary>
         public static bool operator !=(DateTimeBase d1, DateTime d2)
-        {
-            return Compare.Dates(d1, d2) != 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) != 0;
 
         /// <summary>
         /// D1 is earlier than D2
         /// <para>D2 is later than D1</para>
         /// </summary>
         public static bool operator <(DateTimeBase d1, DateTimeBase d2)
-        {
-            return Compare.Dates(d1, d2) < 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) < 0;
 
         /// <summary>
         /// D1 is earlier than D2
         /// <para>D2 is later than D1</para>
         /// </summary>
         public static bool operator <(DateTime d1, DateTimeBase d2)
-        {
-            return Compare.Dates(d1, d2) < 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) < 0;
 
         /// <summary>
         /// D1 is earlier than D2
         /// <para>D2 is later than D1</para>
         /// </summary>
         public static bool operator <(DateTimeBase d1, DateTime d2)
-        {
-            return Compare.Dates(d1, d2) < 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) < 0;
 
         /// <summary>
         /// D1 is later than D2
         /// <para>D2 is earlier than D1</para>
         /// </summary>
         public static bool operator >(DateTimeBase d1, DateTimeBase d2)
-        {
-            return Compare.Dates(d1, d2) > 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) > 0;
 
         /// <summary>
         /// D1 is later than D2
         /// <para>D2 is earlier than D1</para>
         /// </summary>
         public static bool operator >(DateTime d1, DateTimeBase d2)
-        {
-            return Compare.Dates(d1, d2) > 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) > 0;
 
         /// <summary>
         /// D1 is later than D2
         /// <para>D2 is earlier than D1</para>
         /// </summary>
         public static bool operator >(DateTimeBase d1, DateTime d2)
-        {
-            return Compare.Dates(d1, d2) > 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) > 0;
 
         /// <summary>
         /// D1 is earlier or the same as D2
         /// <para>D2 is later or the same as D1</para>
         /// </summary>
         public static bool operator <=(DateTimeBase d1, DateTimeBase d2)
-        {
-            return Compare.Dates(d1, d2) <= 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) <= 0;
 
         /// <summary>
         /// D1 is earlier or thae same as D2
         /// <para>D2 is later or the same as D1</para>
         /// </summary>
         public static bool operator <=(DateTime d1, DateTimeBase d2)
-        {
-            return Compare.Dates(d1, d2) <= 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) <= 0;
 
         /// <summary>
         /// D1 is earlier or the same as D2
         /// <para>D2 is later or the same as D1</para>
         /// </summary>
         public static bool operator <=(DateTimeBase d1, DateTime d2)
-        {
-            return Compare.Dates(d1, d2) <= 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) <= 0;
 
         /// <summary>
         /// D1 is later or the same as D2
@@ -346,9 +308,7 @@
         /// <para>D2 is earlier or the same as D1</para>
         /// </summary>
         public static bool operator >=(DateTimeBase d1, DateTimeBase d2)
-        {
-            return Compare.Dates(d1, d2) >= 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) >= 0;
 
         /// <summary>
         /// D1 is later or the same as D2
@@ -356,9 +316,7 @@
         /// <para>D2 is earlier or the same as D1</para>
         /// </summary>
         public static bool operator >=(DateTime d1, DateTimeBase d2)
-        {
-            return Compare.Dates(d1, d2) >= 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) >= 0;
 
         /// <summary>
         /// D1 is later or the same as D2
@@ -366,8 +324,6 @@
         /// <para>D2 is earlier or the same as D1</para>
         /// </summary>
         public static bool operator >=(DateTimeBase d1, DateTime d2)
-        {
-            return Compare.Dates(d1, d2) >= 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) >= 0;
     }
 }
