@@ -10,6 +10,7 @@
     {
         public UniversalDateTime(long ticks)
         {
+            Kind = Timezone;
             var dt = new DateTimeOffset(ticks, StandardOffset);
 
             Year = dt.Year;
@@ -31,6 +32,7 @@
 
         public UniversalDateTime(int year, int month, int day)
         {
+            Kind = Timezone;
             Year = year;
             Month = month;
             Day = day;
@@ -57,6 +59,7 @@
 
         public UniversalDateTime(int year, int month, int day, int hour, int minute, int second, int millisecond)
         {
+            Kind = Timezone;
             Year = year;
             Month = month;
             Day = day;
@@ -90,6 +93,7 @@
 
         private UniversalDateTime(int year, int month, int day, int hour, int minute, int second, int millisecond, TimeSpan offset)
         {
+            Kind = Timezone;
             Year = year;
             Month = month;
             Day = day;
@@ -112,24 +116,7 @@
         /// <summary>
         /// Get the Current 'Today' date in Universal Timezone
         /// </summary>
-        public static UniversalDateTime Today
-        {
-            get
-            {
-                var offsetToAdd = new TimeSpan(Math.Abs(StandardOffset.Ticks));
-
-                var dtOffset = new DateTimeOffset(DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Utc)).ToOffset(offsetToAdd);
-                var inDaylight = dtOffset.DateTime.IsInDaylightSavingsTime();
-                if (inDaylight)
-                {
-                    offsetToAdd = new TimeSpan(Math.Abs(DaylightOffset.Ticks));
-                    dtOffset = new DateTimeOffset(DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Utc)).ToOffset(offsetToAdd);
-                }
-
-                var result = Convert(dtOffset.DateTime);
-                return result.Add(result.Offset);
-            }
-        }
+        public static UniversalDateTime Today => (UniversalDateTime)Now.Date;
 
         /// <summary>
         /// <seealso cref="Amazon.DateTime.Timezone"/> enum assoicated to this class
@@ -168,6 +155,8 @@
                 if (!inDaylight && inDaylight2 && dtOffset.Month == 3)
                     dtOffset = new DateTimeOffset(dateTime).ToOffset(StandardOffset);
                 else if (!inDaylight2 && inDaylight && dtOffset.Month == 11)
+                    dtOffset = new DateTimeOffset(dateTime).ToOffset(StandardOffset);
+                else if (!inDaylight && !inDaylight2)
                     dtOffset = new DateTimeOffset(dateTime).ToOffset(StandardOffset);
                 else
                     dtOffset = new DateTimeOffset(dateTime).ToOffset(DaylightOffset);

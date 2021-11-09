@@ -84,6 +84,11 @@
         [Newtonsoft.Json.JsonIgnore]
         [System.Text.Json.Serialization.JsonIgnore]
         public TimeSpan Offset { get; protected set; }
+        [XmlIgnore]
+        [IgnoreDataMember]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
+        public Timezone Kind { get; protected set; }
 
         /// <summary>
         /// Indicates whether this instance of <see cref="DateTimeBase"/> is within the daylight saving time range for the current time zone.
@@ -113,14 +118,26 @@
         [System.Text.Json.Serialization.JsonIgnore]
         protected string UtcValue
         {
-            get { return $"{DateTime.Parse(Value).ToUniversalTime().ToString(Format.StandardDateTime)}Z"; }
+            get { return $"{ToUniversalTime().ToString(Format.StandardDateTime)}Z"; }
         }
 
         /// <summary>
         /// Converts the value of the current DateTimeBase object to Coordinated Universal Time (UTC)
         /// </summary>
         public DateTime ToUniversalTime()
-            => DateTimeOffset.Parse(Value).UtcDateTime;
+            => ToDateTimeOffset().UtcDateTime;
+
+        /// <summary>
+        /// Converts the value of the current DateTimeBase object to a DateTime struct
+        /// </summary>
+        public DateTime ToDateTime()
+            => ToDateTimeOffset().DateTime;
+
+        /// <summary>
+        /// Converts the value of the current DateTimeBase object to a DateTimeOffset struct
+        /// </summary>
+        public DateTimeOffset ToDateTimeOffset()
+            => DateTimeOffset.Parse(Value);
 
         /// <summary>
         /// returns same string as the <see cref="Value"/> property

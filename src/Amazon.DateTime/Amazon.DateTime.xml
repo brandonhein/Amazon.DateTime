@@ -96,12 +96,12 @@
         </member>
         <member name="P:Amazon.DateTime.CentralDateTime.Now">
             <summary>
-            Get the Current 'Now' time in Eastern Timezone
+            Get the Current 'Now' time in Central Timezone
             </summary>
         </member>
         <member name="P:Amazon.DateTime.CentralDateTime.Today">
             <summary>
-            Get the Current 'Today' date in Eastern Timezone
+            Get the Current 'Today' date in Central Timezone
             </summary>
         </member>
         <member name="P:Amazon.DateTime.CentralDateTime.Timezone">
@@ -458,12 +458,12 @@
         </member>
         <member name="P:Amazon.DateTime.HawaiiDateTime.Now">
             <summary>
-            Get the Current 'Now' time in Eastern Timezone
+            Get the Current 'Now' time in Hawaiian Timezone
             </summary>
         </member>
         <member name="P:Amazon.DateTime.HawaiiDateTime.Today">
             <summary>
-            Get the Current 'Today' date in Eastern Timezone
+            Get the Current 'Today' date in Hawaiian Timezone
             </summary>
         </member>
         <member name="P:Amazon.DateTime.HawaiiDateTime.Timezone">
@@ -618,12 +618,12 @@
         </member>
         <member name="P:Amazon.DateTime.MountainDateTime.Now">
             <summary>
-            Get the Current 'Now' time in Eastern Timezone
+            Get the Current 'Now' time in Mountain Timezone
             </summary>
         </member>
         <member name="P:Amazon.DateTime.MountainDateTime.Today">
             <summary>
-            Get the Current 'Today' date in Eastern Timezone
+            Get the Current 'Today' date in Mountain Timezone
             </summary>
         </member>
         <member name="P:Amazon.DateTime.MountainDateTime.Timezone">
