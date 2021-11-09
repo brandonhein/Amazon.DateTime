@@ -288,5 +288,11 @@
             dt = dt.AddYears(value);
             return new AlaskaDateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
         }
+
+        public static AlaskaDateTime operator +(AlaskaDateTime dateTime, TimeSpan timeSpan)
+            => dateTime.Add(timeSpan);
+
+        public static AlaskaDateTime operator -(AlaskaDateTime dateTime, TimeSpan timeSpan)
+            => dateTime.Add(timeSpan.Negate());
     }
 }

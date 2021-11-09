@@ -288,5 +288,11 @@
             dt = dt.AddYears(value);
             return new EasternDateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
         }
+
+        public static EasternDateTime operator +(EasternDateTime dateTime, TimeSpan timeSpan)
+            => dateTime.Add(timeSpan);
+
+        public static EasternDateTime operator -(EasternDateTime dateTime, TimeSpan timeSpan)
+            => dateTime.Add(timeSpan.Negate());
     }
 }

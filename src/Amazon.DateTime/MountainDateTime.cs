@@ -294,5 +294,11 @@
             dt = dt.AddYears(value);
             return new MountainDateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
         }
+
+        public static MountainDateTime operator +(MountainDateTime dateTime, TimeSpan timeSpan)
+            => dateTime.Add(timeSpan);
+
+        public static MountainDateTime operator -(MountainDateTime dateTime, TimeSpan timeSpan)
+            => dateTime.Add(timeSpan.Negate());
     }
 }

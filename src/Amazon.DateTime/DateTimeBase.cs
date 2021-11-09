@@ -140,6 +140,18 @@
             => DateTimeOffset.Parse(Value);
 
         /// <summary>
+        /// Returns the number of seconds that have elapsed since 1970-01-01T00:00:00Z.
+        /// </summary>
+        public long ToUnixTimeSeconds()
+            => DateTimeOffset.Parse(Value).ToUnixTimeSeconds();
+
+        /// <summary>
+        /// Returns the number of milliseconds that have elapsed since 1970-01-01T00:00:00.000Z.
+        /// </summary>
+        public long ToUnixTimeMilliseconds()
+            => DateTimeOffset.Parse(Value).ToUnixTimeMilliseconds();
+
+        /// <summary>
         /// returns same string as the <see cref="Value"/> property
         /// </summary>
         public override string ToString() => Value;
@@ -352,5 +364,11 @@
         /// </summary>
         public static bool operator >=(DateTimeBase d1, DateTime d2)
             => DateTimeCompare.Dates(d1, d2) >= 0;
+
+        /// <summary>
+        /// Subtracts one DateTimeBase object from another and yields a time interval.
+        /// </summary>
+        public static TimeSpan operator -(DateTimeBase left, DateTimeBase right)
+            => left.ToUniversalTime() - right.ToUniversalTime();
     }
 }

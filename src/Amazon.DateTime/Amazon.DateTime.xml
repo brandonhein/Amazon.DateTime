@@ -200,6 +200,26 @@
             Converts the value of the current DateTimeBase object to Coordinated Universal Time (UTC)
             </summary>
         </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.ToDateTime">
+            <summary>
+            Converts the value of the current DateTimeBase object to a DateTime struct
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.ToDateTimeOffset">
+            <summary>
+            Converts the value of the current DateTimeBase object to a DateTimeOffset struct
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.ToUnixTimeSeconds">
+            <summary>
+            Returns the number of seconds that have elapsed since 1970-01-01T00:00:00Z.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.ToUnixTimeMilliseconds">
+            <summary>
+            Returns the number of milliseconds that have elapsed since 1970-01-01T00:00:00.000Z.
+            </summary>
+        </member>
         <member name="M:Amazon.DateTime.DateTimeBase.ToString">
             <summary>
             returns same string as the <see cref="P:Amazon.DateTime.DateTimeBase.Value"/> property
@@ -308,6 +328,11 @@
             D1 is later or the same as D2
             D2 is earlier or the same as D1
             <para>D2 is earlier or the same as D1</para>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.op_Subtraction(Amazon.DateTime.DateTimeBase,Amazon.DateTime.DateTimeBase)">
+            <summary>
+            Subtracts one DateTimeBase object from another and yields a time interval.
             </summary>
         </member>
         <member name="T:Amazon.DateTime.DateTimeCalculator">

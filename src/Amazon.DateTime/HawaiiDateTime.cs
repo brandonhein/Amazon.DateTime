@@ -288,5 +288,11 @@
             dt = dt.AddYears(value);
             return new HawaiiDateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
         }
+
+        public static HawaiiDateTime operator +(HawaiiDateTime dateTime, TimeSpan timeSpan)
+            => dateTime.Add(timeSpan);
+
+        public static HawaiiDateTime operator -(HawaiiDateTime dateTime, TimeSpan timeSpan)
+            => dateTime.Add(timeSpan.Negate());
     }
 }

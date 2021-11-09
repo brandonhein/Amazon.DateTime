@@ -288,5 +288,11 @@
             dt = dt.AddYears(value);
             return new PacificDateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
         }
+
+        public static PacificDateTime operator +(PacificDateTime dateTime, TimeSpan timeSpan)
+            => dateTime.Add(timeSpan);
+
+        public static PacificDateTime operator -(PacificDateTime dateTime, TimeSpan timeSpan)
+            => dateTime.Add(timeSpan.Negate());
     }
 }
