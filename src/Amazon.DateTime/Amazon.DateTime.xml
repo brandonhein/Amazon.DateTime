@@ -225,6 +225,21 @@
             returns same string as the <see cref="P:Amazon.DateTime.DateTimeBase.Value"/> property
             </summary>
         </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.ToString(System.String)">
+            <summary>
+            Converts the value of the current <see cref="T:Amazon.DateTime.DateTimeBase"/> object to its equivalent string representation using the specified format.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.ToString(System.IFormatProvider)">
+            <summary>
+            Converts the value of the current <see cref="T:Amazon.DateTime.DateTimeBase"/> object to its equivalent string representation using the specified culture-specific formatting information.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.ToString(System.String,System.IFormatProvider)">
+            <summary>
+            Converts the value of the current <see cref="T:Amazon.DateTime.DateTimeBase"/> object to its equivalent string representation using the specified format and culture-specific format information.
+            </summary>
+        </member>
         <member name="M:Amazon.DateTime.DateTimeBase.op_Equality(Amazon.DateTime.DateTimeBase,Amazon.DateTime.DateTimeBase)">
             <summary>
             D1 is equal to D2
@@ -332,7 +347,27 @@
         </member>
         <member name="M:Amazon.DateTime.DateTimeBase.op_Subtraction(Amazon.DateTime.DateTimeBase,Amazon.DateTime.DateTimeBase)">
             <summary>
-            Subtracts one DateTimeBase object from another and yields a time interval.
+            Subtracts one <see cref="T:Amazon.DateTime.DateTimeBase"/> object from another and yields a time interval.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.op_Subtraction(Amazon.DateTime.DateTimeBase,System.DateTime)">
+            <summary>
+            Subtracts one <see cref="T:Amazon.DateTime.DateTimeBase"/> object from another and yields a time interval.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.op_Subtraction(Amazon.DateTime.DateTimeBase,System.DateTimeOffset)">
+            <summary>
+            Subtracts one <see cref="T:Amazon.DateTime.DateTimeBase"/> object from another and yields a time interval.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.op_Subtraction(System.DateTime,Amazon.DateTime.DateTimeBase)">
+            <summary>
+            Subtracts one <see cref="T:Amazon.DateTime.DateTimeBase"/> object from another and yields a time interval.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.op_Subtraction(System.DateTimeOffset,Amazon.DateTime.DateTimeBase)">
+            <summary>
+            Subtracts one <see cref="T:Amazon.DateTime.DateTimeBase"/> object from another and yields a time interval.
             </summary>
         </member>
         <member name="T:Amazon.DateTime.DateTimeCalculator">

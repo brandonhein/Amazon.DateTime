@@ -156,23 +156,23 @@
         /// </summary>
         public override string ToString() => Value;
 
+        /// <summary>
+        /// Converts the value of the current <see cref="DateTimeBase"/> object to its equivalent string representation using the specified format.
+        /// </summary>
         public string ToString(string format)
-        {
-            var dateTimeOffset = DateTimeOffset.Parse(Value);
-            return dateTimeOffset.ToString(format);
-        }
+            => DateTimeOffset.Parse(Value).ToString(format);
 
+        /// <summary>
+        /// Converts the value of the current <see cref="DateTimeBase"/> object to its equivalent string representation using the specified culture-specific formatting information.
+        /// </summary>
         public string ToString(IFormatProvider provider)
-        {
-            var dateTimeOffset = DateTimeOffset.Parse(Value);
-            return dateTimeOffset.ToString(provider);
-        }
+            => DateTimeOffset.Parse(Value).ToString(provider);
 
+        /// <summary>
+        /// Converts the value of the current <see cref="DateTimeBase"/> object to its equivalent string representation using the specified format and culture-specific format information.
+        /// </summary>
         public string ToString(string format, IFormatProvider provider)
-        {
-            var dateTimeOffset = DateTimeOffset.Parse(Value);
-            return dateTimeOffset.ToString(format, provider);
-        }
+            => DateTimeOffset.Parse(Value).ToString(format, provider);
 
         public override bool Equals(object obj)
         {
@@ -366,9 +366,33 @@
             => DateTimeCompare.Dates(d1, d2) >= 0;
 
         /// <summary>
-        /// Subtracts one DateTimeBase object from another and yields a time interval.
+        /// Subtracts one <see cref="DateTimeBase"/> object from another and yields a time interval.
         /// </summary>
         public static TimeSpan operator -(DateTimeBase left, DateTimeBase right)
+            => left.ToUniversalTime() - right.ToUniversalTime();
+
+        /// <summary>
+        /// Subtracts one <see cref="DateTimeBase"/> object from another and yields a time interval.
+        /// </summary>
+        public static TimeSpan operator -(DateTimeBase left, DateTime right)
+            => left.ToUniversalTime() - right.ToUniversalTime();
+
+        /// <summary>
+        /// Subtracts one <see cref="DateTimeBase"/> object from another and yields a time interval.
+        /// </summary>
+        public static TimeSpan operator -(DateTimeBase left, DateTimeOffset right)
+            => left.ToUniversalTime() - right.ToUniversalTime();
+
+        /// <summary>
+        /// Subtracts one <see cref="DateTimeBase"/> object from another and yields a time interval.
+        /// </summary>
+        public static TimeSpan operator -(DateTime left, DateTimeBase right)
+            => left.ToUniversalTime() - right.ToUniversalTime();
+
+        /// <summary>
+        /// Subtracts one <see cref="DateTimeBase"/> object from another and yields a time interval.
+        /// </summary>
+        public static TimeSpan operator -(DateTimeOffset left, DateTimeBase right)
             => left.ToUniversalTime() - right.ToUniversalTime();
     }
 }

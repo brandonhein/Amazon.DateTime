@@ -36,6 +36,10 @@ namespace Amazon.DateTime.Tests
 
             var nov15th = new EasternDateTime(2021, 11, 15);
             var feb6th = new EasternDateTime(2021, 2, 6);
+            var feb6thUtc = DateTime.Parse("2022-02-06T12:12:12.000Z");
+            var feb6th2 = EasternDateTime.Convert(feb6thUtc);
+
+            var july4th2 = EasternDateTime.Parse("2022-07-04T12:12:12.000Z");
             var july4th = new EasternDateTime(2021, 7, 4);
         }
 
