@@ -6,117 +6,92 @@
     <members>
         <member name="P:Amazon.DateTime.AlaskaDateTime.Now">
             <summary>
-            Get the Current 'Now' time in Alaska
+            Get the Current 'Now' time in Alaska Timezone
+            </summary>
+        </member>
+        <member name="P:Amazon.DateTime.AlaskaDateTime.Today">
+            <summary>
+            Get the Current 'Today' date in Alaska Timezone
+            </summary>
+        </member>
+        <member name="P:Amazon.DateTime.AlaskaDateTime.Timezone">
+            <summary>
+            <seealso cref="T:Amazon.DateTime.Timezone"/> enum assoicated to this class
             </summary>
         </member>
         <member name="P:Amazon.DateTime.AlaskaDateTime.DaylightOffset">
             <summary>
-            Hour offset for when in daylight time
+            UTC Hour offset for when in daylight time
             </summary>
         </member>
         <member name="P:Amazon.DateTime.AlaskaDateTime.StandardOffset">
             <summary>
-            Hour offset for when in standard time
+            UTC Hour offset for when in standard time
             </summary>
         </member>
         <member name="M:Amazon.DateTime.AlaskaDateTime.Convert(System.DateTime)">
             <summary>
-            Convert a utc <see cref="T:System.DateTime"/> value to the alaska equivalent 
+            Convert a <see cref="T:System.DateTime"/> value to the <see cref="T:Amazon.DateTime.AlaskaDateTime"/> equivalent
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.AlaskaDateTime.Convert(System.DateTimeOffset)">
+            <summary>
+            Convert a <see cref="T:System.DateTimeOffset"/> value to the <see cref="T:Amazon.DateTime.AlaskaDateTime"/> equivalent
             </summary>
         </member>
         <member name="M:Amazon.DateTime.AlaskaDateTime.Parse(System.String)">
             <summary>
-            Parse a dateTime string to get the <see cref="T:Amazon.DateTime.AlaskaDateTime"/>
+            Parse a datetime string to get the <see cref="T:Amazon.DateTime.AlaskaDateTime"/>
             </summary>
         </member>
         <member name="M:Amazon.DateTime.AlaskaDateTime.TryParse(System.String,Amazon.DateTime.AlaskaDateTime@)">
             <summary>
-            TryParse a utc time string to get the alaska <see cref="T:System.DateTime"/>
+            Trys to Parse a datetime string to get the <see cref="T:Amazon.DateTime.AlaskaDateTime"/>
             </summary>
         </member>
-        <member name="T:Amazon.DateTime.DateTimeCalculator">
+        <member name="M:Amazon.DateTime.AlaskaDateTime.Add(System.TimeSpan)">
             <summary>
-            DateTimeCalculator
+            Returns a new <seealso cref="T:Amazon.DateTime.AlaskaDateTime"/> object that adds a specified time interval to the value of this instance.
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.DateTimeCalculator.NthOf(System.DateTime,System.Int32,System.DayOfWeek)">
+        <member name="M:Amazon.DateTime.AlaskaDateTime.AddDays(System.Double)">
             <summary>
-            Get the nth day of a specific month
+            Returns a new <seealso cref="T:Amazon.DateTime.AlaskaDateTime"/> object that adds a specified number of days to the value of this instance.
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.DateTimeCalculator.DaylightStartDate(System.DateTime)">
+        <member name="M:Amazon.DateTime.AlaskaDateTime.AddHours(System.Double)">
             <summary>
-            Daylight Savings starts on the Second Sunday in March at 2am
-            <para>https://greenwichmeantime.com/time-zone/rules/usa/</para>
+            Returns a new <seealso cref="T:Amazon.DateTime.AlaskaDateTime"/> object that adds a specified number of hours to the value of this instance.
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.DateTimeCalculator.DaylightEndDate(System.DateTime)">
+        <member name="M:Amazon.DateTime.AlaskaDateTime.AddMilliseconds(System.Double)">
             <summary>
-            Daylight Savings ends on the First Sunday in November at 2am
-            <para>https://greenwichmeantime.com/time-zone/rules/usa/</para>
+            Returns a new <seealso cref="T:Amazon.DateTime.AlaskaDateTime"/> object that adds a specified number of milliseconds to the value of this instance.
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.DateTimeCalculator.IsInDaylightSavingsTime(System.DateTime)">
+        <member name="M:Amazon.DateTime.AlaskaDateTime.AddMinutes(System.Double)">
             <summary>
-            Figures out if the current date time falls inside Daylight savings time
-            <para>https://greenwichmeantime.com/time-zone/rules/usa/</para>
+            Returns a new <seealso cref="T:Amazon.DateTime.AlaskaDateTime"/> object that adds a specified number of minutes to the value of this instance.
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.DateTimeCalculator.ToEastern(System.DateTime,System.Boolean)">
+        <member name="M:Amazon.DateTime.AlaskaDateTime.AddMonths(System.Int32)">
             <summary>
-            Converts <see cref="T:System.DateTime"/> to an Eastern <see cref="T:System.DateTime"/>
-            <param name="dateTime">DateTime struct to convert</param>
-            <param name="observesDaylight">If the location observes daylight savings, default value = true</param>
+            Returns a new <seealso cref="T:Amazon.DateTime.AlaskaDateTime"/> object that adds a specified number of months to the value of this instance.
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.DateTimeCalculator.ToCentral(System.DateTime,System.Boolean)">
+        <member name="M:Amazon.DateTime.AlaskaDateTime.AddSeconds(System.Double)">
             <summary>
-            Converts <see cref="T:System.DateTime"/> to an Central <see cref="T:System.DateTime"/>
-            <param name="dateTime">DateTime struct to convert</param>
-            <param name="observesDaylight">If the location observes daylight savings, default value = true</param>
+            Returns a new <seealso cref="T:Amazon.DateTime.AlaskaDateTime"/> object that adds a specified number of seconds to the value of this instance.
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.DateTimeCalculator.ToMountain(System.DateTime,System.Boolean)">
+        <member name="M:Amazon.DateTime.AlaskaDateTime.AddTicks(System.Int64)">
             <summary>
-            Converts <see cref="T:System.DateTime"/> to an Mountain <see cref="T:System.DateTime"/>
-            <param name="dateTime">DateTime struct to convert</param>
-            <param name="observesDaylight">If the location observes daylight savings, default value = true</param>
+            Returns a new <seealso cref="T:Amazon.DateTime.AlaskaDateTime"/> object that adds a specified number of ticks to the value of this instance.
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.DateTimeCalculator.ToPacific(System.DateTime,System.Boolean)">
+        <member name="M:Amazon.DateTime.AlaskaDateTime.AddYears(System.Int32)">
             <summary>
-            Converts <see cref="T:System.DateTime"/> to an Pacific <see cref="T:System.DateTime"/>
-            <param name="dateTime">DateTime struct to convert</param>
-            <param name="observesDaylight">If the location observes daylight savings, default value = true</param>
-            </summary>
-        </member>
-        <member name="M:Amazon.DateTime.DateTimeCalculator.ToAlaska(System.DateTime,System.Boolean)">
-            <summary>
-            Converts <see cref="T:System.DateTime"/> to an Alaska <see cref="T:System.DateTime"/>
-            <param name="dateTime">DateTime struct to convert</param>
-            <param name="observesDaylight">If the location observes daylight savings, default value = true</param>
-            </summary>
-        </member>
-        <member name="M:Amazon.DateTime.DateTimeCalculator.ToHawaii(System.DateTime,System.Boolean)">
-            <summary>
-            Converts <see cref="T:System.DateTime"/> to an Hawaii <see cref="T:System.DateTime"/>
-            </summary>
-            <param name="dateTime">DateTime struct to convert</param>
-            <param name="observesDaylight">If the location observes daylight savings, default value = false</param>
-        </member>
-        <member name="T:Amazon.DateTime.TimezoneCalculator">
-            <summary>
-            Timezone Calculator
-            </summary>
-        </member>
-        <member name="M:Amazon.DateTime.TimezoneCalculator.GetTimezoneByCode(System.TimeZoneInfo,Amazon.DateTime.Timezone)">
-            <summary>
-            Get <see cref="T:System.TimeZoneInfo"/> by <see cref="T:Amazon.DateTime.Timezone"/> code
-            </summary>
-        </member>
-        <member name="M:Amazon.DateTime.CentralDateTime.#ctor(System.Int64)">
-            <summary>
-            Create a CentralDateTime by ticks
+            Returns a new <seealso cref="T:Amazon.DateTime.AlaskaDateTime"/> object that adds a specified number of years to the value of this instance.
             </summary>
         </member>
         <member name="P:Amazon.DateTime.CentralDateTime.Now">
@@ -124,19 +99,34 @@
             Get the Current 'Now' time in Central Timezone
             </summary>
         </member>
+        <member name="P:Amazon.DateTime.CentralDateTime.Today">
+            <summary>
+            Get the Current 'Today' date in Central Timezone
+            </summary>
+        </member>
+        <member name="P:Amazon.DateTime.CentralDateTime.Timezone">
+            <summary>
+            <seealso cref="T:Amazon.DateTime.Timezone"/> enum assoicated to this class
+            </summary>
+        </member>
         <member name="P:Amazon.DateTime.CentralDateTime.DaylightOffset">
             <summary>
-            Hour offset for when in daylight time
+            UTC Hour offset for when in daylight time
             </summary>
         </member>
         <member name="P:Amazon.DateTime.CentralDateTime.StandardOffset">
             <summary>
-            Hour offset for when in standard time
+            UTC Hour offset for when in standard time
             </summary>
         </member>
         <member name="M:Amazon.DateTime.CentralDateTime.Convert(System.DateTime)">
             <summary>
-            Convert a utc <see cref="T:System.DateTime"/> value to the central timezone equivalent 
+            Convert a <see cref="T:System.DateTime"/> value to the eastern timezone equivalent 
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.CentralDateTime.Convert(System.DateTimeOffset)">
+            <summary>
+            Convert a <see cref="T:System.DateTimeOffset"/> value to the eastern timezone equivalent 
             </summary>
         </member>
         <member name="M:Amazon.DateTime.CentralDateTime.Parse(System.String)">
@@ -146,7 +136,57 @@
         </member>
         <member name="M:Amazon.DateTime.CentralDateTime.TryParse(System.String,Amazon.DateTime.CentralDateTime@)">
             <summary>
-            TryParse a datetime string to get the central timezone
+            Trys to Parse a datetime string to get the <see cref="T:Amazon.DateTime.CentralDateTime"/>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.CentralDateTime.Add(System.TimeSpan)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.CentralDateTime"/> object that adds a specified time interval to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.CentralDateTime.AddDays(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.CentralDateTime"/> object that adds a specified number of days to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.CentralDateTime.AddHours(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.CentralDateTime"/> object that adds a specified number of hours to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.CentralDateTime.AddMilliseconds(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.CentralDateTime"/> object that adds a specified number of milliseconds to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.CentralDateTime.AddMinutes(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.CentralDateTime"/> object that adds a specified number of minutes to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.CentralDateTime.AddMonths(System.Int32)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.CentralDateTime"/> object that adds a specified number of months to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.CentralDateTime.AddSeconds(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.CentralDateTime"/> object that adds a specified number of seconds to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.CentralDateTime.AddTicks(System.Int64)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.CentralDateTime"/> object that adds a specified number of ticks to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.CentralDateTime.AddYears(System.Int32)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.CentralDateTime"/> object that adds a specified number of years to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.IsDaylightSavingTime">
+            <summary>
+            Indicates whether this instance of <see cref="T:Amazon.DateTime.DateTimeBase"/> is within the daylight saving time range for the current time zone.
             </summary>
         </member>
         <member name="P:Amazon.DateTime.DateTimeBase.Value">
@@ -160,9 +200,44 @@
             Converts the value of the current DateTimeBase object to Coordinated Universal Time (UTC)
             </summary>
         </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.ToDateTime">
+            <summary>
+            Converts the value of the current DateTimeBase object to a DateTime struct
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.ToDateTimeOffset">
+            <summary>
+            Converts the value of the current DateTimeBase object to a DateTimeOffset struct
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.ToUnixTimeSeconds">
+            <summary>
+            Returns the number of seconds that have elapsed since 1970-01-01T00:00:00Z.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.ToUnixTimeMilliseconds">
+            <summary>
+            Returns the number of milliseconds that have elapsed since 1970-01-01T00:00:00.000Z.
+            </summary>
+        </member>
         <member name="M:Amazon.DateTime.DateTimeBase.ToString">
             <summary>
             returns same string as the <see cref="P:Amazon.DateTime.DateTimeBase.Value"/> property
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.ToString(System.String)">
+            <summary>
+            Converts the value of the current <see cref="T:Amazon.DateTime.DateTimeBase"/> object to its equivalent string representation using the specified format.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.ToString(System.IFormatProvider)">
+            <summary>
+            Converts the value of the current <see cref="T:Amazon.DateTime.DateTimeBase"/> object to its equivalent string representation using the specified culture-specific formatting information.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeBase.ToString(System.String,System.IFormatProvider)">
+            <summary>
+            Converts the value of the current <see cref="T:Amazon.DateTime.DateTimeBase"/> object to its equivalent string representation using the specified format and culture-specific format information.
             </summary>
         </member>
         <member name="M:Amazon.DateTime.DateTimeBase.op_Equality(Amazon.DateTime.DateTimeBase,Amazon.DateTime.DateTimeBase)">
@@ -270,93 +345,85 @@
             <para>D2 is earlier or the same as D1</para>
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.DateTimeExtensions.ToEasternString(System.DateTime,System.Boolean)">
+        <member name="M:Amazon.DateTime.DateTimeBase.op_Subtraction(Amazon.DateTime.DateTimeBase,Amazon.DateTime.DateTimeBase)">
             <summary>
-            Converts a UTC <see cref="T:System.DateTime"/> to a eastern time string format
-            <para>FORMAT: yyyy-MM-ddTHH:mm:ss.fffzzz</para>
+            Subtracts one <see cref="T:Amazon.DateTime.DateTimeBase"/> object from another and yields a time interval.
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.DateTimeExtensions.ToCentralString(System.DateTime,System.Boolean)">
+        <member name="M:Amazon.DateTime.DateTimeBase.op_Subtraction(Amazon.DateTime.DateTimeBase,System.DateTime)">
             <summary>
-            Converts a UTC <see cref="T:System.DateTime"/> to a central time string format
-            <para>FORMAT: yyyy-MM-ddTHH:mm:ss.fffzzz</para>
+            Subtracts one <see cref="T:Amazon.DateTime.DateTimeBase"/> object from another and yields a time interval.
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.DateTimeExtensions.ToMountainString(System.DateTime,System.Boolean)">
+        <member name="M:Amazon.DateTime.DateTimeBase.op_Subtraction(Amazon.DateTime.DateTimeBase,System.DateTimeOffset)">
             <summary>
-            Converts a UTC <see cref="T:System.DateTime"/> to a mountain time string format
-            <para>FORMAT: yyyy-MM-ddTHH:mm:ss.fffzzz</para>
+            Subtracts one <see cref="T:Amazon.DateTime.DateTimeBase"/> object from another and yields a time interval.
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.DateTimeExtensions.ToPacificString(System.DateTime,System.Boolean)">
+        <member name="M:Amazon.DateTime.DateTimeBase.op_Subtraction(System.DateTime,Amazon.DateTime.DateTimeBase)">
             <summary>
-            Converts a UTC <see cref="T:System.DateTime"/> to a pacific time string format
-            <para>FORMAT: yyyy-MM-ddTHH:mm:ss.fffzzz</para>
+            Subtracts one <see cref="T:Amazon.DateTime.DateTimeBase"/> object from another and yields a time interval.
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.DateTimeExtensions.ToAlaskaString(System.DateTime,System.Boolean)">
+        <member name="M:Amazon.DateTime.DateTimeBase.op_Subtraction(System.DateTimeOffset,Amazon.DateTime.DateTimeBase)">
             <summary>
-            Converts a UTC <see cref="T:System.DateTime"/> to a alaska time string format
-            <para>FORMAT: yyyy-MM-ddTHH:mm:ss.fffzzz</para>
+            Subtracts one <see cref="T:Amazon.DateTime.DateTimeBase"/> object from another and yields a time interval.
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.DateTimeExtensions.ToHawaiiString(System.DateTime,System.Boolean)">
+        <member name="T:Amazon.DateTime.DateTimeCalculator">
             <summary>
-            Converts a UTC <see cref="T:System.DateTime"/> to a hawaii time string format
-            <para>FORMAT: yyyy-MM-ddTHH:mm:ss.fffzzz</para>
+            DateTimeCalculator
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.Compare.Dates(Amazon.DateTime.DateTimeBase,Amazon.DateTime.DateTimeBase)">
+        <member name="M:Amazon.DateTime.DateTimeCalculator.NthOf(System.DateTime,System.Int32,System.DayOfWeek)">
+            <summary>
+            Get the nth day of a specific month
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeCalculator.DaylightStartDate(System.DateTime)">
+            <summary>
+            Daylight Savings starts on the Second Sunday in March at 2am
+            <para>https://greenwichmeantime.com/time-zone/rules/usa/</para>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeCalculator.DaylightEndDate(System.DateTime)">
+            <summary>
+            Daylight Savings ends on the First Sunday in November at 2am
+            <para>https://greenwichmeantime.com/time-zone/rules/usa/</para>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeCalculator.IsInDaylightSavingsTime(System.DateTime)">
+            <summary>
+            Figures out if the current date time falls inside Daylight savings time
+            <para>https://greenwichmeantime.com/time-zone/rules/usa/</para>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.DateTimeCompare.Dates(Amazon.DateTime.DateTimeBase,Amazon.DateTime.DateTimeBase)">
             <summary>
             <para>IF result is less than 0; THEN t1 is earlier than t2</para>
             <para>IF result is 0; THEN t1 is the same as t2</para>
             <para>IF result is greater than 0; THEN t1 is later than t2</para>
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.Compare.Dates(Amazon.DateTime.DateTimeBase,System.DateTime)">
+        <member name="M:Amazon.DateTime.DateTimeCompare.Dates(Amazon.DateTime.DateTimeBase,System.DateTime)">
             <summary>
             <para>IF result is less than 0; THEN t1 is earlier than t2</para>
             <para>IF result is 0; THEN t1 is the same as t2</para>
             <para>IF result is greater than 0; THEN t1 is later than t2</para>
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.Compare.Dates(System.DateTime,Amazon.DateTime.DateTimeBase)">
+        <member name="M:Amazon.DateTime.DateTimeCompare.Dates(System.DateTime,Amazon.DateTime.DateTimeBase)">
             <summary>
             <para>IF result is less than 0; THEN t1 is earlier than t2</para>
             <para>IF result is 0; THEN t1 is the same as t2</para>
             <para>IF result is greater than 0; THEN t1 is later than t2</para>
             </summary>
         </member>
-        <member name="M:Amazon.DateTime.Compare.Dates(System.DateTime,System.DateTime)">
+        <member name="M:Amazon.DateTime.DateTimeCompare.Dates(System.DateTime,System.DateTime)">
             <summary>
             <para>IF result is less than 0; THEN t1 is earlier than t2</para>
             <para>IF result is 0; THEN t1 is the same as t2</para>
             <para>IF result is greater than 0; THEN t1 is later than t2</para>
-            </summary>
-        </member>
-        <member name="M:Amazon.DateTime.EasternDateTime.#ctor(System.Int64)">
-            <summary>
-            Create a EasternDateTime by ticks
-            </summary>
-        </member>
-        <member name="M:Amazon.DateTime.EasternDateTime.#ctor(System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Creates a EasternDateTime of a specific day
-            </summary>
-        </member>
-        <member name="M:Amazon.DateTime.EasternDateTime.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Creates a EasternDateTime of a specific date and time
-            </summary>
-        </member>
-        <member name="M:Amazon.DateTime.EasternDateTime.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Creates a EasternDateTime of a specific date and time
-            </summary>
-        </member>
-        <member name="M:Amazon.DateTime.EasternDateTime.#ctor(System.TimeSpan)">
-            <summary>
-            Creates a new EasternDateTime of 'Today at this time (hours and minutes)'
             </summary>
         </member>
         <member name="P:Amazon.DateTime.EasternDateTime.Now">
@@ -367,6 +434,11 @@
         <member name="P:Amazon.DateTime.EasternDateTime.Today">
             <summary>
             Get the Current 'Today' date in Eastern Timezone
+            </summary>
+        </member>
+        <member name="P:Amazon.DateTime.EasternDateTime.Timezone">
+            <summary>
+            <seealso cref="T:Amazon.DateTime.Timezone"/> enum assoicated to this class
             </summary>
         </member>
         <member name="P:Amazon.DateTime.EasternDateTime.DaylightOffset">
@@ -381,7 +453,12 @@
         </member>
         <member name="M:Amazon.DateTime.EasternDateTime.Convert(System.DateTime)">
             <summary>
-            Convert a utc <see cref="T:System.DateTime"/> value to the eastern timezone equivalent 
+            Convert a <see cref="T:System.DateTime"/> value to the eastern timezone equivalent 
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.EasternDateTime.Convert(System.DateTimeOffset)">
+            <summary>
+            Convert a <see cref="T:System.DateTimeOffset"/> value to the eastern timezone equivalent 
             </summary>
         </member>
         <member name="M:Amazon.DateTime.EasternDateTime.Parse(System.String)">
@@ -391,27 +468,87 @@
         </member>
         <member name="M:Amazon.DateTime.EasternDateTime.TryParse(System.String,Amazon.DateTime.EasternDateTime@)">
             <summary>
-            TryParse a datetime string to get the eastern timezone
+            Trys to Parse a datetime string to get the <see cref="T:Amazon.DateTime.EasternDateTime"/>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.EasternDateTime.Add(System.TimeSpan)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.EasternDateTime"/> object that adds a specified time interval to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.EasternDateTime.AddDays(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.EasternDateTime"/> object that adds a specified number of days to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.EasternDateTime.AddHours(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.EasternDateTime"/> object that adds a specified number of hours to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.EasternDateTime.AddMilliseconds(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.EasternDateTime"/> object that adds a specified number of milliseconds to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.EasternDateTime.AddMinutes(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.EasternDateTime"/> object that adds a specified number of minutes to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.EasternDateTime.AddMonths(System.Int32)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.EasternDateTime"/> object that adds a specified number of months to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.EasternDateTime.AddSeconds(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.EasternDateTime"/> object that adds a specified number of seconds to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.EasternDateTime.AddTicks(System.Int64)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.EasternDateTime"/> object that adds a specified number of ticks to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.EasternDateTime.AddYears(System.Int32)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.EasternDateTime"/> object that adds a specified number of years to the value of this instance.
             </summary>
         </member>
         <member name="P:Amazon.DateTime.HawaiiDateTime.Now">
             <summary>
-            Get the Current 'Now' time in Hawaii
+            Get the Current 'Now' time in Hawaiian Timezone
+            </summary>
+        </member>
+        <member name="P:Amazon.DateTime.HawaiiDateTime.Today">
+            <summary>
+            Get the Current 'Today' date in Hawaiian Timezone
+            </summary>
+        </member>
+        <member name="P:Amazon.DateTime.HawaiiDateTime.Timezone">
+            <summary>
+            <seealso cref="T:Amazon.DateTime.Timezone"/> enum assoicated to this class
             </summary>
         </member>
         <member name="P:Amazon.DateTime.HawaiiDateTime.DaylightOffset">
             <summary>
-            Hour offset for when in daylight time
+            UTC Hour offset for when in daylight time
             </summary>
         </member>
         <member name="P:Amazon.DateTime.HawaiiDateTime.StandardOffset">
             <summary>
-            Hour offset for when in standard time
+            UTC Hour offset for when in standard time
             </summary>
         </member>
         <member name="M:Amazon.DateTime.HawaiiDateTime.Convert(System.DateTime)">
             <summary>
-            Convert a utc <see cref="T:System.DateTime"/> value to the hawaii timezone equivalent 
+            Convert a <see cref="T:System.DateTime"/> value to the eastern timezone equivalent 
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.HawaiiDateTime.Convert(System.DateTimeOffset)">
+            <summary>
+            Convert a <see cref="T:System.DateTimeOffset"/> value to the eastern timezone equivalent 
             </summary>
         </member>
         <member name="M:Amazon.DateTime.HawaiiDateTime.Parse(System.String)">
@@ -421,7 +558,122 @@
         </member>
         <member name="M:Amazon.DateTime.HawaiiDateTime.TryParse(System.String,Amazon.DateTime.HawaiiDateTime@)">
             <summary>
-            TryParse a datetime string to get the hawaii timezone
+            Trys to Parse a datetime string to get the <see cref="T:Amazon.DateTime.HawaiiDateTime"/>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.HawaiiDateTime.Add(System.TimeSpan)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.HawaiiDateTime"/> object that adds a specified time interval to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.HawaiiDateTime.AddDays(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.HawaiiDateTime"/> object that adds a specified number of days to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.HawaiiDateTime.AddHours(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.HawaiiDateTime"/> object that adds a specified number of hours to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.HawaiiDateTime.AddMilliseconds(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.HawaiiDateTime"/> object that adds a specified number of milliseconds to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.HawaiiDateTime.AddMinutes(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.HawaiiDateTime"/> object that adds a specified number of minutes to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.HawaiiDateTime.AddMonths(System.Int32)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.HawaiiDateTime"/> object that adds a specified number of months to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.HawaiiDateTime.AddSeconds(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.HawaiiDateTime"/> object that adds a specified number of seconds to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.HawaiiDateTime.AddTicks(System.Int64)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.HawaiiDateTime"/> object that adds a specified number of ticks to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.HawaiiDateTime.AddYears(System.Int32)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.HawaiiDateTime"/> object that adds a specified number of years to the value of this instance.
+            </summary>
+        </member>
+        <member name="T:Amazon.DateTime.MonthsOfYear">
+            <summary>
+            Calendar Month
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.MonthsOfYear.NotSet">
+            <summary>
+            Not Set
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.MonthsOfYear.January">
+            <summary>
+            January
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.MonthsOfYear.February">
+            <summary>
+            February
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.MonthsOfYear.March">
+            <summary>
+            March
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.MonthsOfYear.April">
+            <summary>
+            April
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.MonthsOfYear.May">
+            <summary>
+            May
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.MonthsOfYear.June">
+            <summary>
+            June
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.MonthsOfYear.July">
+            <summary>
+            July
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.MonthsOfYear.August">
+            <summary>
+            August
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.MonthsOfYear.September">
+            <summary>
+            September
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.MonthsOfYear.October">
+            <summary>
+            October
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.MonthsOfYear.November">
+            <summary>
+            November
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.MonthsOfYear.December">
+            <summary>
+            December
             </summary>
         </member>
         <member name="P:Amazon.DateTime.MountainDateTime.Now">
@@ -429,19 +681,34 @@
             Get the Current 'Now' time in Mountain Timezone
             </summary>
         </member>
+        <member name="P:Amazon.DateTime.MountainDateTime.Today">
+            <summary>
+            Get the Current 'Today' date in Mountain Timezone
+            </summary>
+        </member>
+        <member name="P:Amazon.DateTime.MountainDateTime.Timezone">
+            <summary>
+            <seealso cref="T:Amazon.DateTime.Timezone"/> enum assoicated to this class
+            </summary>
+        </member>
         <member name="P:Amazon.DateTime.MountainDateTime.DaylightOffset">
             <summary>
-            Hour offset for when in daylight time
+            UTC Hour offset for when in daylight time
             </summary>
         </member>
         <member name="P:Amazon.DateTime.MountainDateTime.StandardOffset">
             <summary>
-            Hour offset for when in standard time
+            UTC Hour offset for when in standard time
             </summary>
         </member>
         <member name="M:Amazon.DateTime.MountainDateTime.Convert(System.DateTime)">
             <summary>
-            Convert a utc <see cref="T:System.DateTime"/> value to the mountain timezone equivalent 
+            Convert a <see cref="T:System.DateTime"/> value to the eastern timezone equivalent 
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.MountainDateTime.Convert(System.DateTimeOffset)">
+            <summary>
+            Convert a <see cref="T:System.DateTimeOffset"/> value to the eastern timezone equivalent 
             </summary>
         </member>
         <member name="M:Amazon.DateTime.MountainDateTime.Parse(System.String)">
@@ -451,7 +718,52 @@
         </member>
         <member name="M:Amazon.DateTime.MountainDateTime.TryParse(System.String,Amazon.DateTime.MountainDateTime@)">
             <summary>
-            TryParse a datetime string to get the mountain timezone
+            Trys to Parse a datetime string to get the <see cref="T:Amazon.DateTime.MountainDateTime"/>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.MountainDateTime.Add(System.TimeSpan)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.MountainDateTime"/> object that adds a specified time interval to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.MountainDateTime.AddDays(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.MountainDateTime"/> object that adds a specified number of days to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.MountainDateTime.AddHours(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.MountainDateTime"/> object that adds a specified number of hours to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.MountainDateTime.AddMilliseconds(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.MountainDateTime"/> object that adds a specified number of milliseconds to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.MountainDateTime.AddMinutes(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.MountainDateTime"/> object that adds a specified number of minutes to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.MountainDateTime.AddMonths(System.Int32)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.MountainDateTime"/> object that adds a specified number of months to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.MountainDateTime.AddSeconds(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.MountainDateTime"/> object that adds a specified number of seconds to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.MountainDateTime.AddTicks(System.Int64)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.MountainDateTime"/> object that adds a specified number of ticks to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.MountainDateTime.AddYears(System.Int32)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.MountainDateTime"/> object that adds a specified number of years to the value of this instance.
             </summary>
         </member>
         <member name="P:Amazon.DateTime.PacificDateTime.Now">
@@ -459,19 +771,34 @@
             Get the Current 'Now' time in Pacific Timezone
             </summary>
         </member>
+        <member name="P:Amazon.DateTime.PacificDateTime.Today">
+            <summary>
+            Get the Current 'Today' date in Pacific Timezone
+            </summary>
+        </member>
+        <member name="P:Amazon.DateTime.PacificDateTime.Timezone">
+            <summary>
+            <seealso cref="T:Amazon.DateTime.Timezone"/> enum assoicated to this class
+            </summary>
+        </member>
         <member name="P:Amazon.DateTime.PacificDateTime.DaylightOffset">
             <summary>
-            Hour offset for when in daylight time
+            UTC Hour offset for when in daylight time
             </summary>
         </member>
         <member name="P:Amazon.DateTime.PacificDateTime.StandardOffset">
             <summary>
-            Hour offset for when in standard time
+            UTC Hour offset for when in standard time
             </summary>
         </member>
         <member name="M:Amazon.DateTime.PacificDateTime.Convert(System.DateTime)">
             <summary>
-            Convert a utc <see cref="T:System.DateTime"/> value to the pacific timezone equivalent 
+            Convert a <see cref="T:System.DateTime"/> value to the <see cref="T:Amazon.DateTime.PacificDateTime"/> equivalent
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.PacificDateTime.Convert(System.DateTimeOffset)">
+            <summary>
+            Convert a <see cref="T:System.DateTimeOffset"/> value to the <see cref="T:Amazon.DateTime.PacificDateTime"/> equivalent
             </summary>
         </member>
         <member name="M:Amazon.DateTime.PacificDateTime.Parse(System.String)">
@@ -481,7 +808,77 @@
         </member>
         <member name="M:Amazon.DateTime.PacificDateTime.TryParse(System.String,Amazon.DateTime.PacificDateTime@)">
             <summary>
-            TryParse a datetime string to get the pacific timezone
+            Trys to Parse a datetime string to get the <see cref="T:Amazon.DateTime.PacificDateTime"/>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.PacificDateTime.Add(System.TimeSpan)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.PacificDateTime"/> object that adds a specified time interval to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.PacificDateTime.AddDays(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.PacificDateTime"/> object that adds a specified number of days to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.PacificDateTime.AddHours(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.PacificDateTime"/> object that adds a specified number of hours to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.PacificDateTime.AddMilliseconds(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.PacificDateTime"/> object that adds a specified number of milliseconds to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.PacificDateTime.AddMinutes(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.PacificDateTime"/> object that adds a specified number of minutes to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.PacificDateTime.AddMonths(System.Int32)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.PacificDateTime"/> object that adds a specified number of months to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.PacificDateTime.AddSeconds(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.PacificDateTime"/> object that adds a specified number of seconds to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.PacificDateTime.AddTicks(System.Int64)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.PacificDateTime"/> object that adds a specified number of ticks to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.PacificDateTime.AddYears(System.Int32)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.PacificDateTime"/> object that adds a specified number of years to the value of this instance.
+            </summary>
+        </member>
+        <member name="T:Amazon.DateTime.QuartersOfYear">
+            <summary>
+            Quarter of the Year
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.QuartersOfYear.First">
+            <summary>
+            Q1
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.QuartersOfYear.Second">
+            <summary>
+            Q2
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.QuartersOfYear.Third">
+            <summary>
+            Q3
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.QuartersOfYear.Fourth">
+            <summary>
+            Q4
             </summary>
         </member>
         <member name="T:Amazon.DateTime.Timezone">
@@ -489,9 +886,9 @@
             Timezone Enum
             </summary>
         </member>
-        <member name="F:Amazon.DateTime.Timezone.Default">
+        <member name="F:Amazon.DateTime.Timezone.NotSet">
             <summary>
-            Default
+            Not Set
             </summary>
         </member>
         <member name="F:Amazon.DateTime.Timezone.Eastern">
@@ -524,29 +921,94 @@
             Hawaii Timezone
             </summary>
         </member>
+        <member name="P:Amazon.DateTime.UniversalDateTime.Now">
+            <summary>
+            Get the Current 'Now' time in Universal Timezone
+            </summary>
+        </member>
+        <member name="P:Amazon.DateTime.UniversalDateTime.Today">
+            <summary>
+            Get the Current 'Today' date in Universal Timezone
+            </summary>
+        </member>
+        <member name="P:Amazon.DateTime.UniversalDateTime.Timezone">
+            <summary>
+            <seealso cref="T:Amazon.DateTime.Timezone"/> enum assoicated to this class
+            </summary>
+        </member>
         <member name="P:Amazon.DateTime.UniversalDateTime.DaylightOffset">
             <summary>
-            Hour offset for when in daylight time
+            UTC Hour offset for when in daylight time
             </summary>
         </member>
         <member name="P:Amazon.DateTime.UniversalDateTime.StandardOffset">
             <summary>
-            Hour offset for when in standard time
+            UTC Hour offset for when in standard time
             </summary>
         </member>
         <member name="M:Amazon.DateTime.UniversalDateTime.Convert(System.DateTime)">
             <summary>
-            Convert a utc <see cref="T:System.DateTime"/> value to the GMT timezone equivalent 
+            Convert a <see cref="T:System.DateTime"/> value to the <see cref="T:Amazon.DateTime.UniversalDateTime"/> equivalent
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.UniversalDateTime.Convert(System.DateTimeOffset)">
+            <summary>
+            Convert a <see cref="T:System.DateTimeOffset"/> value to the <see cref="T:Amazon.DateTime.UniversalDateTime"/> equivalent
             </summary>
         </member>
         <member name="M:Amazon.DateTime.UniversalDateTime.Parse(System.String)">
             <summary>
-            Parse a datetime string to get the universal (GMT) timezone
+            Parse a datetime string to get the <see cref="T:Amazon.DateTime.UniversalDateTime"/>
             </summary>
         </member>
         <member name="M:Amazon.DateTime.UniversalDateTime.TryParse(System.String,Amazon.DateTime.UniversalDateTime@)">
             <summary>
-            TryParse a datetime string to get the universial timezone
+            Trys to Parse a datetime string to get the <see cref="T:Amazon.DateTime.UniversalDateTime"/>
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.UniversalDateTime.Add(System.TimeSpan)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.UniversalDateTime"/> object that adds a specified time interval to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.UniversalDateTime.AddDays(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.UniversalDateTime"/> object that adds a specified number of days to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.UniversalDateTime.AddHours(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.UniversalDateTime"/> object that adds a specified number of hours to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.UniversalDateTime.AddMilliseconds(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.UniversalDateTime"/> object that adds a specified number of milliseconds to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.UniversalDateTime.AddMinutes(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.UniversalDateTime"/> object that adds a specified number of minutes to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.UniversalDateTime.AddMonths(System.Int32)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.UniversalDateTime"/> object that adds a specified number of months to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.UniversalDateTime.AddSeconds(System.Double)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.UniversalDateTime"/> object that adds a specified number of seconds to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.UniversalDateTime.AddTicks(System.Int64)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.UniversalDateTime"/> object that adds a specified number of ticks to the value of this instance.
+            </summary>
+        </member>
+        <member name="M:Amazon.DateTime.UniversalDateTime.AddYears(System.Int32)">
+            <summary>
+            Returns a new <seealso cref="T:Amazon.DateTime.UniversalDateTime"/> object that adds a specified number of years to the value of this instance.
             </summary>
         </member>
     </members>

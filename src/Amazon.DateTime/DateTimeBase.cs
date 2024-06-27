@@ -18,7 +18,7 @@
         [IgnoreDataMember]
         [Newtonsoft.Json.JsonIgnore]
         [System.Text.Json.Serialization.JsonIgnore]
-        public long Ticks => DateTime.Parse(Value).Ticks;
+        public long Ticks => DateTimeOffset.Parse(Value).Ticks;
         [XmlIgnore]
         [IgnoreDataMember]
         [Newtonsoft.Json.JsonIgnore]
@@ -34,6 +34,11 @@
         [Newtonsoft.Json.JsonIgnore]
         [System.Text.Json.Serialization.JsonIgnore]
         public int Month { get; protected set; }
+        [XmlIgnore]
+        [IgnoreDataMember]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
+        public MonthsOfYear MonthOfYear => (MonthsOfYear)Month;
         [XmlIgnore]
         [IgnoreDataMember]
         [Newtonsoft.Json.JsonIgnore]
@@ -68,7 +73,7 @@
         [IgnoreDataMember]
         [Newtonsoft.Json.JsonIgnore]
         [System.Text.Json.Serialization.JsonIgnore]
-        public TimeSpan TimeOfDay => TimeSpan.Parse(string.Concat(Hour, ":", Minute, ":", Second));
+        public TimeSpan TimeOfDay => TimeSpan.Parse(string.Concat(Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00")));
         [XmlIgnore]
         [IgnoreDataMember]
         [Newtonsoft.Json.JsonIgnore]
@@ -79,6 +84,21 @@
         [Newtonsoft.Json.JsonIgnore]
         [System.Text.Json.Serialization.JsonIgnore]
         public TimeSpan Offset { get; protected set; }
+        [XmlIgnore]
+        [IgnoreDataMember]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
+        public Timezone Kind { get; protected set; }
+        [XmlIgnore]
+        [IgnoreDataMember]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
+        public QuartersOfYear QuarterOfYear => ToDateTime().GetQuarter();
+
+        /// <summary>
+        /// Indicates whether this instance of <see cref="DateTimeBase"/> is within the daylight saving time range for the current time zone.
+        /// </summary>
+        public bool IsDaylightSavingTime() => DateTimeOffset.Parse(Value).DateTime.IsInDaylightSavingsTime();
 
         ///<summary>
         ///Creates a timestamp of the format of 'yyyy-MM-ddTHH:mm:ss.fffzzz'
@@ -103,42 +123,61 @@
         [System.Text.Json.Serialization.JsonIgnore]
         protected string UtcValue
         {
-            get { return $"{DateTime.Parse(Value).ToUniversalTime().ToString(Format.StandardDateTime)}Z"; }
+            get { return $"{ToUniversalTime().ToString(Format.StandardDateTime)}Z"; }
         }
 
         /// <summary>
         /// Converts the value of the current DateTimeBase object to Coordinated Universal Time (UTC)
         /// </summary>
         public DateTime ToUniversalTime()
-        {
-            return DateTime.Parse(Value).ToUniversalTime();
-        }
+            => ToDateTimeOffset().UtcDateTime;
+
+        /// <summary>
+        /// Converts the value of the current DateTimeBase object to a DateTime struct
+        /// </summary>
+        public DateTime ToDateTime()
+            => ToDateTimeOffset().DateTime;
+
+        /// <summary>
+        /// Converts the value of the current DateTimeBase object to a DateTimeOffset struct
+        /// </summary>
+        public DateTimeOffset ToDateTimeOffset()
+            => DateTimeOffset.Parse(Value);
+
+        /// <summary>
+        /// Returns the number of seconds that have elapsed since 1970-01-01T00:00:00Z.
+        /// </summary>
+        public long ToUnixTimeSeconds()
+            => DateTimeOffset.Parse(Value).ToUnixTimeSeconds();
+
+        /// <summary>
+        /// Returns the number of milliseconds that have elapsed since 1970-01-01T00:00:00.000Z.
+        /// </summary>
+        public long ToUnixTimeMilliseconds()
+            => DateTimeOffset.Parse(Value).ToUnixTimeMilliseconds();
 
         /// <summary>
         /// returns same string as the <see cref="Value"/> property
         /// </summary>
-        public override string ToString()
-        {
-            return Value;
-        }
+        public override string ToString() => Value;
 
+        /// <summary>
+        /// Converts the value of the current <see cref="DateTimeBase"/> object to its equivalent string representation using the specified format.
+        /// </summary>
         public string ToString(string format)
-        {
-            var dateTimeOffset = DateTimeOffset.Parse(Value);
-            return dateTimeOffset.ToString(format);
-        }
+            => DateTimeOffset.Parse(Value).ToString(format);
 
+        /// <summary>
+        /// Converts the value of the current <see cref="DateTimeBase"/> object to its equivalent string representation using the specified culture-specific formatting information.
+        /// </summary>
         public string ToString(IFormatProvider provider)
-        {
-            var dateTimeOffset = DateTimeOffset.Parse(Value);
-            return dateTimeOffset.ToString(provider);
-        }
+            => DateTimeOffset.Parse(Value).ToString(provider);
 
+        /// <summary>
+        /// Converts the value of the current <see cref="DateTimeBase"/> object to its equivalent string representation using the specified format and culture-specific format information.
+        /// </summary>
         public string ToString(string format, IFormatProvider provider)
-        {
-            var dateTimeOffset = DateTimeOffset.Parse(Value);
-            return dateTimeOffset.ToString(format, provider);
-        }
+            => DateTimeOffset.Parse(Value).ToString(format, provider);
 
         public override bool Equals(object obj)
         {
@@ -184,10 +223,7 @@
             return hashCode;
         }
 
-        public bool Equals(DateTime other)
-        {
-            return this == other;
-        }
+        public bool Equals(DateTime other) => this == other;
 
         public int CompareTo(DateTime other)
         {
@@ -215,130 +251,100 @@
         /// D1 is equal to D2
         /// </summary>
         public static bool operator ==(DateTimeBase d1, DateTimeBase d2)
-        {
-            return Compare.Dates(d1, d2) == 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) == 0;
 
         /// <summary>
         /// D1 is equal to D2
         /// </summary>
         public static bool operator ==(DateTime d1, DateTimeBase d2)
-        {
-            return Compare.Dates(d1, d2) == 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) == 0;
 
         /// <summary>
         /// D1 is equal to D2
         /// </summary>
         public static bool operator ==(DateTimeBase d1, DateTime d2)
-        {
-            return Compare.Dates(d1, d2) == 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) == 0;
 
         /// <summary>
         /// D1 is not equal to D2
         /// </summary>
         public static bool operator !=(DateTimeBase d1, DateTimeBase d2)
-        {
-            return Compare.Dates(d1, d2) != 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) != 0;
 
         /// <summary>
         /// D1 is not equal to D2
         /// </summary>
         public static bool operator !=(DateTime d1, DateTimeBase d2)
-        {
-            return Compare.Dates(d1, d2) != 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) != 0;
 
         /// <summary>
         /// D1 is not equal to D2
         /// </summary>
         public static bool operator !=(DateTimeBase d1, DateTime d2)
-        {
-            return Compare.Dates(d1, d2) != 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) != 0;
 
         /// <summary>
         /// D1 is earlier than D2
         /// <para>D2 is later than D1</para>
         /// </summary>
         public static bool operator <(DateTimeBase d1, DateTimeBase d2)
-        {
-            return Compare.Dates(d1, d2) < 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) < 0;
 
         /// <summary>
         /// D1 is earlier than D2
         /// <para>D2 is later than D1</para>
         /// </summary>
         public static bool operator <(DateTime d1, DateTimeBase d2)
-        {
-            return Compare.Dates(d1, d2) < 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) < 0;
 
         /// <summary>
         /// D1 is earlier than D2
         /// <para>D2 is later than D1</para>
         /// </summary>
         public static bool operator <(DateTimeBase d1, DateTime d2)
-        {
-            return Compare.Dates(d1, d2) < 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) < 0;
 
         /// <summary>
         /// D1 is later than D2
         /// <para>D2 is earlier than D1</para>
         /// </summary>
         public static bool operator >(DateTimeBase d1, DateTimeBase d2)
-        {
-            return Compare.Dates(d1, d2) > 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) > 0;
 
         /// <summary>
         /// D1 is later than D2
         /// <para>D2 is earlier than D1</para>
         /// </summary>
         public static bool operator >(DateTime d1, DateTimeBase d2)
-        {
-            return Compare.Dates(d1, d2) > 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) > 0;
 
         /// <summary>
         /// D1 is later than D2
         /// <para>D2 is earlier than D1</para>
         /// </summary>
         public static bool operator >(DateTimeBase d1, DateTime d2)
-        {
-            return Compare.Dates(d1, d2) > 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) > 0;
 
         /// <summary>
         /// D1 is earlier or the same as D2
         /// <para>D2 is later or the same as D1</para>
         /// </summary>
         public static bool operator <=(DateTimeBase d1, DateTimeBase d2)
-        {
-            return Compare.Dates(d1, d2) <= 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) <= 0;
 
         /// <summary>
         /// D1 is earlier or thae same as D2
         /// <para>D2 is later or the same as D1</para>
         /// </summary>
         public static bool operator <=(DateTime d1, DateTimeBase d2)
-        {
-            return Compare.Dates(d1, d2) <= 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) <= 0;
 
         /// <summary>
         /// D1 is earlier or the same as D2
         /// <para>D2 is later or the same as D1</para>
         /// </summary>
         public static bool operator <=(DateTimeBase d1, DateTime d2)
-        {
-            return Compare.Dates(d1, d2) <= 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) <= 0;
 
         /// <summary>
         /// D1 is later or the same as D2
@@ -346,9 +352,7 @@
         /// <para>D2 is earlier or the same as D1</para>
         /// </summary>
         public static bool operator >=(DateTimeBase d1, DateTimeBase d2)
-        {
-            return Compare.Dates(d1, d2) >= 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) >= 0;
 
         /// <summary>
         /// D1 is later or the same as D2
@@ -356,9 +360,7 @@
         /// <para>D2 is earlier or the same as D1</para>
         /// </summary>
         public static bool operator >=(DateTime d1, DateTimeBase d2)
-        {
-            return Compare.Dates(d1, d2) >= 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) >= 0;
 
         /// <summary>
         /// D1 is later or the same as D2
@@ -366,8 +368,36 @@
         /// <para>D2 is earlier or the same as D1</para>
         /// </summary>
         public static bool operator >=(DateTimeBase d1, DateTime d2)
-        {
-            return Compare.Dates(d1, d2) >= 0;
-        }
+            => DateTimeCompare.Dates(d1, d2) >= 0;
+
+        /// <summary>
+        /// Subtracts one <see cref="DateTimeBase"/> object from another and yields a time interval.
+        /// </summary>
+        public static TimeSpan operator -(DateTimeBase left, DateTimeBase right)
+            => left.ToUniversalTime() - right.ToUniversalTime();
+
+        /// <summary>
+        /// Subtracts one <see cref="DateTimeBase"/> object from another and yields a time interval.
+        /// </summary>
+        public static TimeSpan operator -(DateTimeBase left, DateTime right)
+            => left.ToUniversalTime() - right.ToUniversalTime();
+
+        /// <summary>
+        /// Subtracts one <see cref="DateTimeBase"/> object from another and yields a time interval.
+        /// </summary>
+        public static TimeSpan operator -(DateTimeBase left, DateTimeOffset right)
+            => left.ToUniversalTime() - right.ToUniversalTime();
+
+        /// <summary>
+        /// Subtracts one <see cref="DateTimeBase"/> object from another and yields a time interval.
+        /// </summary>
+        public static TimeSpan operator -(DateTime left, DateTimeBase right)
+            => left.ToUniversalTime() - right.ToUniversalTime();
+
+        /// <summary>
+        /// Subtracts one <see cref="DateTimeBase"/> object from another and yields a time interval.
+        /// </summary>
+        public static TimeSpan operator -(DateTimeOffset left, DateTimeBase right)
+            => left.ToUniversalTime() - right.ToUniversalTime();
     }
 }

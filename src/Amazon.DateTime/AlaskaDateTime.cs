@@ -4,25 +4,27 @@
     using System;
 
     [Serializable]
+    [System.ComponentModel.TypeConverter(typeof(ComponentModelDateTimeConverter<AlaskaDateTime>))]
     [Newtonsoft.Json.JsonConverter(typeof(NewtonsoftDateTimeConverter))]
     [System.Text.Json.Serialization.JsonConverter(typeof(SystemTextDateTimeConverter))]
     public class AlaskaDateTime : DateTimeBase
     {
         public AlaskaDateTime(long ticks)
         {
-            var dateTime = new DateTime(ticks)
-                .ToUniversalTime()
-                .ToAlaska();
+            Kind = Timezone;
+            var dt = new DateTimeOffset(ticks, StandardOffset);
 
-            Year = dateTime.Year;
-            Month = dateTime.Month;
-            Day = dateTime.Day;
-            Hour = dateTime.Hour;
-            Minute = dateTime.Minute;
-            Second = dateTime.Second;
-            Millisecond = dateTime.Millisecond;
+            Year = dt.Year;
+            Month = dt.Month;
+            Day = dt.Day;
+            Hour = dt.Hour;
+            Minute = dt.Minute;
+            Second = dt.Second;
+            Millisecond = dt.Millisecond;
 
-            Offset = dateTime.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
+            Offset = dt.DateTime.IsInDaylightSavingsTime()
+                ? DaylightOffset
+                : StandardOffset;
 
             Date = new AlaskaDateTime(Year, Month, Day);
             DayOfYear = Date.DayOfYear;
@@ -31,44 +33,34 @@
 
         public AlaskaDateTime(int year, int month, int day)
         {
+            Kind = Timezone;
             Year = year;
             Month = month;
             Day = day;
 
-            var dateTimeParse = DateTime.Parse(string.Concat(Year, "-", Month.ToString("00"), "-", Day.ToString("00"), "T00:00:00Z"))
-                .ToUniversalTime();
+            var standardParse = DateTimeOffset.Parse($"{Year.ToString("0000")}-{Month.ToString("00")}-{Day.ToString("00")}T00:00:00{string.Format("{0:00}:{1:00}", StandardOffset.Hours, StandardOffset.Minutes)}");
+            Offset = standardParse.DateTime.IsInDaylightSavingsTime()
+                ? DaylightOffset
+                : StandardOffset;
 
-            Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
-
-            dateTimeParse = DateTime.Parse(Value);
-            DayOfYear = dateTimeParse.DayOfYear;
-            DayOfWeek = dateTimeParse.DayOfWeek;
+            var dtParse = DateTimeOffset.Parse(Value);
+            DayOfYear = dtParse.DayOfYear;
+            DayOfWeek = dtParse.DayOfWeek;
 
             Date = this;
         }
 
+        public AlaskaDateTime(int year, int month, int day, int hour, int minute)
+            : this(year, month, day, hour, minute, 0)
+        { }
+
         public AlaskaDateTime(int year, int month, int day, int hour, int minute, int second)
-        {
-            Year = year;
-            Month = month;
-            Day = day;
-            Hour = hour;
-            Minute = minute;
-            Second = second;
-
-            var dateTimeParse =
-                DateTime.Parse(string.Concat(Year, "-", Month.ToString("00"), "-", Day.ToString("00"), "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), "Z"))
-                .ToUniversalTime();
-
-            Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
-
-            Date = new AlaskaDateTime(Year, Month, Day);
-            DayOfYear = Date.DayOfYear;
-            DayOfWeek = Date.DayOfWeek;
-        }
+            : this(year, month, day, hour, minute, second, 0)
+        { }
 
         public AlaskaDateTime(int year, int month, int day, int hour, int minute, int second, int millisecond)
         {
+            Kind = Timezone;
             Year = year;
             Month = month;
             Day = day;
@@ -77,95 +69,122 @@
             Second = second;
             Millisecond = millisecond;
 
-            var dateTimeParse =
-                DateTime.Parse(string.Concat(Year, "-", Month.ToString("00"), "-", Day.ToString("00"), "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond.ToString("00"), "Z"))
-                .ToUniversalTime();
+            var standardParse = DateTimeOffset.Parse($"{Year.ToString("0000")}-{Month.ToString("00")}-{Day.ToString("00")}T{Hour.ToString("00")}:{Minute.ToString("00")}:{Second.ToString("00")}.{Millisecond.ToString("000")}{string.Format("{0:00}:{1:00}", StandardOffset.Hours, StandardOffset.Minutes)}");
 
-            Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
+            //for the weird instance 2am falls on that DateTime you create
+            if (Hour == 2)
+            {
+                var dayAt2 = DateTimeOffset.Parse($"{Year.ToString("0000")}-{Month.ToString("00")}-{Day.ToString("00")}T{Hour.ToString("00")}:00:00.000{string.Format("{0:00}:{1:00}", StandardOffset.Hours, StandardOffset.Minutes)}");
+                var isDaylightStartTime = dayAt2.DateTime.IsDaylightStartDateAndTime();
+                if (isDaylightStartTime)
+                {
+                    Hour = hour + 1;
+                    standardParse = DateTimeOffset.Parse($"{Year.ToString("0000")}-{Month.ToString("00")}-{Day.ToString("00")}T{Hour.ToString("00")}:{Minute.ToString("00")}:{Second.ToString("00")}.{Millisecond.ToString("000")}{string.Format("{0:00}:{1:00}", StandardOffset.Hours, StandardOffset.Minutes)}");
+                }
+            }
+
+            Offset = standardParse.DateTime.IsInDaylightSavingsTime()
+                ? DaylightOffset
+                : StandardOffset;
 
             Date = new AlaskaDateTime(Year, Month, Day);
             DayOfYear = Date.DayOfYear;
             DayOfWeek = Date.DayOfWeek;
         }
 
-        public AlaskaDateTime(TimeSpan timeOfDay)
+        private AlaskaDateTime(int year, int month, int day, int hour, int minute, int second, int millisecond, TimeSpan offset)
         {
-            var alaskaNow = DateTime.UtcNow.ToAlaska();
+            Kind = Timezone;
+            Year = year;
+            Month = month;
+            Day = day;
+            Hour = hour;
+            Minute = minute;
+            Second = second;
+            Millisecond = millisecond;
 
-            Year = alaskaNow.Year;
-            Month = alaskaNow.Month;
-            Day = alaskaNow.Day;
-
-            Hour = timeOfDay.Hours;
-            Minute = timeOfDay.Minutes;
-            Second = timeOfDay.Seconds;
-            Millisecond = timeOfDay.Milliseconds;
-
-            var dateTimeParse =
-                DateTime.Parse(string.Concat(Year, "-", Month.ToString("00"), "-", Day.ToString("00"), "T", Hour.ToString("00"), ":", Minute.ToString("00"), ":", Second.ToString("00"), ".", Millisecond.ToString("00"), "Z"))
-                .ToUniversalTime()
-                .ToAlaska();
-
-            Offset = dateTimeParse.IsInDaylightSavingsTime() ? DaylightOffset : StandardOffset;
-
+            Offset = offset;
             Date = new AlaskaDateTime(Year, Month, Day);
             DayOfYear = Date.DayOfYear;
             DayOfWeek = Date.DayOfWeek;
         }
 
         /// <summary>
-        /// Get the Current 'Now' time in Alaska
+        /// Get the Current 'Now' time in Alaska Timezone
         /// </summary>
         public static AlaskaDateTime Now => Convert(DateTime.UtcNow);
 
-        public static AlaskaDateTime Today
-        {
-            get
-            {
-                var utcNow = DateTime.UtcNow.ToAlaska();
-                return new AlaskaDateTime(utcNow.Year, utcNow.Month, utcNow.Day);
-            }
-        }
+        /// <summary>
+        /// Get the Current 'Today' date in Alaska Timezone
+        /// </summary>
+        public static AlaskaDateTime Today => (AlaskaDateTime)Now.Date;
 
+        /// <summary>
+        /// <seealso cref="Amazon.DateTime.Timezone"/> enum assoicated to this class
+        /// </summary>
         public static Timezone Timezone => Timezone.Alaska;
 
         /// <summary>
-        /// Hour offset for when in daylight time
+        /// UTC Hour offset for when in daylight time
         /// </summary>
         public static TimeSpan DaylightOffset => TimeSpan.Parse("-08:00");
 
         /// <summary>
-        /// Hour offset for when in standard time
+        /// UTC Hour offset for when in standard time
         /// </summary>
         public static TimeSpan StandardOffset => TimeSpan.Parse("-09:00");
 
         /// <summary>
-        /// Convert a utc <see cref="DateTime"/> value to the alaska equivalent 
+        /// Convert a <see cref="DateTime"/> value to the <see cref="AlaskaDateTime"/> equivalent
         /// </summary>
-        public static AlaskaDateTime Convert(DateTime utcDateTime)
+        public static AlaskaDateTime Convert(DateTime dateTime)
         {
-            var alaskaTime = utcDateTime.ToUniversalTime().ToAlaska();
-            return new AlaskaDateTime(alaskaTime.Year, alaskaTime.Month, alaskaTime.Day, alaskaTime.Hour, alaskaTime.Minute, alaskaTime.Second, alaskaTime.Millisecond);
+            if (dateTime.Kind == DateTimeKind.Unspecified)
+                return new AlaskaDateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Millisecond);
+
+            if (dateTime.Kind == DateTimeKind.Local)
+                dateTime = dateTime.ToUniversalTime();
+
+            if (dateTime.Kind == DateTimeKind.Utc)
+            {
+                var dtOffset = new DateTimeOffset(dateTime).ToOffset(StandardOffset);
+                var dtOffset2 = new DateTimeOffset(dateTime).ToOffset(DaylightOffset);
+
+                var inDaylight = dtOffset.DateTime.IsInDaylightSavingsTime();
+                var inDaylight2 = dtOffset2.DateTime.IsInDaylightSavingsTime();
+
+                if (!inDaylight && inDaylight2 && dtOffset.Month == 3)
+                    dtOffset = new DateTimeOffset(dateTime).ToOffset(StandardOffset);
+                else if (!inDaylight2 && inDaylight && dtOffset.Month == 11)
+                    dtOffset = new DateTimeOffset(dateTime).ToOffset(StandardOffset);
+                else if (!inDaylight && !inDaylight2)
+                    dtOffset = new DateTimeOffset(dateTime).ToOffset(StandardOffset);
+                else
+                    dtOffset = new DateTimeOffset(dateTime).ToOffset(DaylightOffset);
+
+                return new AlaskaDateTime(dtOffset.Year, dtOffset.Month, dtOffset.Day, dtOffset.Hour, dtOffset.Minute, dtOffset.Second, dtOffset.Millisecond, dtOffset.Offset);
+            }
+
+            return default(AlaskaDateTime);
         }
 
         /// <summary>
-        /// Parse a dateTime string to get the <see cref="AlaskaDateTime"/>
+        /// Convert a <see cref="DateTimeOffset"/> value to the <see cref="AlaskaDateTime"/> equivalent
+        /// </summary>
+        public static AlaskaDateTime Convert(DateTimeOffset dateTimeOffset)
+            => Convert(dateTimeOffset.UtcDateTime);
+
+        /// <summary>
+        /// Parse a datetime string to get the <see cref="AlaskaDateTime"/>
         /// </summary>
         public static AlaskaDateTime Parse(string dateTime)
         {
             var dt = DateTime.Parse(dateTime);
-            if (dt.Kind == DateTimeKind.Unspecified)
-            {
-                return new AlaskaDateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
-            }
-            else
-            {
-                return Convert(dt);
-            }
+            return Convert(dt);
         }
 
         /// <summary>
-        /// TryParse a utc time string to get the alaska <see cref="DateTime"/>
+        /// Trys to Parse a datetime string to get the <see cref="AlaskaDateTime"/>
         /// </summary>
         public static bool TryParse(string dateTime, out AlaskaDateTime alaskaDateTime)
         {
@@ -181,67 +200,100 @@
             }
         }
 
+        /// <summary>
+        /// Returns a new <seealso cref="AlaskaDateTime"/> object that adds a specified time interval to the value of this instance.
+        /// </summary>
         public AlaskaDateTime Add(TimeSpan value)
         {
-            var dt = DateTime.Parse(Value);
+            var dt = DateTimeOffset.Parse(Value);
             dt = dt.Add(value);
-            return AlaskaDateTime.Convert(dt.ToUniversalTime());
+            return new AlaskaDateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
         }
 
+        /// <summary>
+        /// Returns a new <seealso cref="AlaskaDateTime"/> object that adds a specified number of days to the value of this instance.
+        /// </summary>
         public AlaskaDateTime AddDays(double value)
         {
-            var dt = DateTime.Parse(Value);
+            var dt = DateTimeOffset.Parse(Value);
             dt = dt.AddDays(value);
-            return AlaskaDateTime.Convert(dt.ToUniversalTime());
+            return new AlaskaDateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
         }
 
+        /// <summary>
+        /// Returns a new <seealso cref="AlaskaDateTime"/> object that adds a specified number of hours to the value of this instance.
+        /// </summary>
         public AlaskaDateTime AddHours(double value)
         {
-            var dt = DateTime.Parse(Value);
+            var dt = DateTimeOffset.Parse(Value);
             dt = dt.AddHours(value);
-            return AlaskaDateTime.Convert(dt.ToUniversalTime());
+            return new AlaskaDateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
         }
 
+        /// <summary>
+        /// Returns a new <seealso cref="AlaskaDateTime"/> object that adds a specified number of milliseconds to the value of this instance.
+        /// </summary>
         public AlaskaDateTime AddMilliseconds(double value)
         {
-            var dt = DateTime.Parse(Value);
+            var dt = DateTimeOffset.Parse(Value);
             dt = dt.AddMilliseconds(value);
-            return AlaskaDateTime.Convert(dt.ToUniversalTime());
+            return new AlaskaDateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
         }
 
+        /// <summary>
+        /// Returns a new <seealso cref="AlaskaDateTime"/> object that adds a specified number of minutes to the value of this instance.
+        /// </summary>
         public AlaskaDateTime AddMinutes(double value)
         {
-            var dt = DateTime.Parse(Value);
+            var dt = DateTimeOffset.Parse(Value);
             dt = dt.AddMinutes(value);
-            return AlaskaDateTime.Convert(dt.ToUniversalTime());
+            return new AlaskaDateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
         }
 
+        /// <summary>
+        /// Returns a new <seealso cref="AlaskaDateTime"/> object that adds a specified number of months to the value of this instance.
+        /// </summary>
         public AlaskaDateTime AddMonths(int months)
         {
-            var dt = DateTime.Parse(Value);
+            var dt = DateTimeOffset.Parse(Value);
             dt = dt.AddMonths(months);
-            return AlaskaDateTime.Convert(dt.ToUniversalTime());
+            return new AlaskaDateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
         }
 
+        /// <summary>
+        /// Returns a new <seealso cref="AlaskaDateTime"/> object that adds a specified number of seconds to the value of this instance.
+        /// </summary>
         public AlaskaDateTime AddSeconds(double value)
         {
-            var dt = DateTime.Parse(Value);
+            var dt = DateTimeOffset.Parse(Value);
             dt = dt.AddSeconds(value);
-            return AlaskaDateTime.Convert(dt.ToUniversalTime());
+            return new AlaskaDateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
         }
 
+        /// <summary>
+        /// Returns a new <seealso cref="AlaskaDateTime"/> object that adds a specified number of ticks to the value of this instance.
+        /// </summary>
         public AlaskaDateTime AddTicks(long value)
         {
-            var dt = DateTime.Parse(Value);
+            var dt = DateTimeOffset.Parse(Value);
             dt = dt.AddTicks(value);
-            return AlaskaDateTime.Convert(dt.ToUniversalTime());
+            return new AlaskaDateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
         }
 
+        /// <summary>
+        /// Returns a new <seealso cref="AlaskaDateTime"/> object that adds a specified number of years to the value of this instance.
+        /// </summary>
         public AlaskaDateTime AddYears(int value)
         {
-            var dt = DateTime.Parse(Value);
+            var dt = DateTimeOffset.Parse(Value);
             dt = dt.AddYears(value);
-            return AlaskaDateTime.Convert(dt.ToUniversalTime());
+            return new AlaskaDateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
         }
+
+        public static AlaskaDateTime operator +(AlaskaDateTime dateTime, TimeSpan timeSpan)
+            => dateTime.Add(timeSpan);
+
+        public static AlaskaDateTime operator -(AlaskaDateTime dateTime, TimeSpan timeSpan)
+            => dateTime.Add(timeSpan.Negate());
     }
 }
