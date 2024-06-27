@@ -4,6 +4,7 @@
     using System;
 
     [Serializable]
+    [System.ComponentModel.TypeConverter(typeof(ComponentModelDateTimeConverter<EasternDateTime>))]
     [Newtonsoft.Json.JsonConverter(typeof(NewtonsoftDateTimeConverter))]
     [System.Text.Json.Serialization.JsonConverter(typeof(SystemTextDateTimeConverter))]
     public class EasternDateTime : DateTimeBase

@@ -45,5 +45,25 @@
             => DaylightStartDate(dateTime) == dateTime;
         internal static bool IsDaylightEndDateAndTime(this DateTime dateTime)
             => DaylightEndDate(dateTime) == dateTime;
+
+        internal static QuartersOfYear GetQuarter(this DateTime date)
+        {
+            var jan = new DateTime(date.Year, 1, 1);
+            var apr = new DateTime(date.Year, 4, 1);
+            var jul = new DateTime(date.Year, 7, 1);
+            var oct = new DateTime(date.Year, 10, 1);
+            var dec = new DateTime(date.Year + 1, 1, 1);
+
+            if (jan <= date && apr > date)
+                return QuartersOfYear.First;
+            else if (apr <= date && jul > date)
+                return QuartersOfYear.Second;
+            else if (jul <= date && oct > date)
+                return QuartersOfYear.Third;
+            else if (oct <= date && dec > date)
+                return QuartersOfYear.Fourth;
+
+            return QuartersOfYear.First;
+        }
     }
 }

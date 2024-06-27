@@ -856,6 +856,31 @@
             Returns a new <seealso cref="T:Amazon.DateTime.PacificDateTime"/> object that adds a specified number of years to the value of this instance.
             </summary>
         </member>
+        <member name="T:Amazon.DateTime.QuartersOfYear">
+            <summary>
+            Quarter of the Year
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.QuartersOfYear.First">
+            <summary>
+            Q1
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.QuartersOfYear.Second">
+            <summary>
+            Q2
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.QuartersOfYear.Third">
+            <summary>
+            Q3
+            </summary>
+        </member>
+        <member name="F:Amazon.DateTime.QuartersOfYear.Fourth">
+            <summary>
+            Q4
+            </summary>
+        </member>
         <member name="T:Amazon.DateTime.Timezone">
             <summary>
             Timezone Enum

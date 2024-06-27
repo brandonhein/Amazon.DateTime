@@ -89,6 +89,11 @@
         [Newtonsoft.Json.JsonIgnore]
         [System.Text.Json.Serialization.JsonIgnore]
         public Timezone Kind { get; protected set; }
+        [XmlIgnore]
+        [IgnoreDataMember]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
+        public QuartersOfYear QuarterOfYear => ToDateTime().GetQuarter();
 
         /// <summary>
         /// Indicates whether this instance of <see cref="DateTimeBase"/> is within the daylight saving time range for the current time zone.
